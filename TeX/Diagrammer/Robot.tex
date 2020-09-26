@@ -1,0 +1,22 @@
+\subsection{Robot}
+
+\figOC{Diagrammer/SumoBot_Bdd.png}{0.6}{System Blokdiagram over sumobot}
+
+\subsubsection*{\textbf{Batteri}}\hfill\\
+Forsyner vores system
+\subsubsection*{\textbf{Motorstyring}}\hfill\\
+Kontrollerer hastighed (vha. PWM) og rotationsretning via H-bro. Bliver styret af PSoC
+\subsubsection*{\textbf{Motor}}\hfill\\
+En DC-motor der roterer hjul efter en given hastighed og retning fra motorstyring
+\subsubsection*{\textbf{PSU}}\hfill\\
+Forsyner korrekt spænding til de enkelte delelementer i systemet
+\subsubsection*{\textbf{RPi}}\hfill\\
+Ansvarlig for den trådløse kommunikation mellem controller og PSoC.
+\subsubsection*{\textbf{PSoC}}\hfill\\
+Hovedstyringen for SumoBot. \\
+Styrer motorstyring afhængig af signal fra RPI’en
+Derudover modtager input fra attacksensor, der bearbejder disse til indikering af liv (afventer videre detaljer omkring spilregler)
+\subsubsection*{\textbf{AttackSencor}}\hfill\\
+Registrering af ”angreb”, som gives videre til PSoC.
+\subsubsection*{\textbf{Scoreboard}}\hfill\\
+En visuel indikering til brugeren af antal liv for de enkelte SumoBots

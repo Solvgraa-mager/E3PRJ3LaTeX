@@ -1,5 +1,5 @@
 \section{Koncept}
-\noindent Kender vi ikke alle problemet med en drukmås der har drukket for mange øller og får lyst til at skrige i en mikrofon? Det hidtil eneste kendte produkt til at afhjælpe dette problem, har været karaoke, dog med den ulempe at alle andre på baren skal høre på det. Robo-Sumo-Battle vil specifikt afhjælpe dette problem ved i stedet at lade personen bruge sin stemme til at styre to små chubby robotter der dyrker sumo-brydning, som samtidig er sjov at se på - vi bruger således en gammel japansk tradition til at afhjælpe problemerne med en nyere japansk tradition. 
+ Kender vi ikke alle problemet med en drukmås der har drukket for mange øller og får lyst til at skrige i en mikrofon? Det hidtil eneste kendte produkt til at afhjælpe dette problem, har været karaoke, dog med den ulempe at alle andre på baren skal høre på det. Robo-Sumo-Battle vil specifikt afhjælpe dette problem ved i stedet at lade personen bruge sin stemme til at styre to små chubby robotter der dyrker sumo-brydning, som samtidig er sjov at se på - vi bruger således en gammel japansk tradition til at afhjælpe problemerne med en nyere japansk tradition. 
 
 Produktet er et spil for to spillere, hvor hver spiller styrer en to-hjulet robot rundt på en bane.
 
@@ -7,23 +7,11 @@ Styringen foregår via én kontrolenhed pr. spiller og vil være baseret på sen
 Disse signaler bliver digitalt behandlet og sendt til robotterne som styrekommandoer via den embedded software i spilplatformen.
 Spillet er tænkt udført som en traditionel japansk sumokamp --- de to robotter mødes i en ring og kæmper. Vinderen er den robot med flest liv efter endt tid - eller den sidste robot i ringen.
 
-\subsection{Spilregler}
-\begin{itemize}
-    \item De to robotter anbringes på et markeret \textit{startfelt}.
-    \item Når robotterne er anbragt korrekt, startes en nedtælling fra 3, hvorefter spillet går i gang. 
-    \item Hver robot har fra spillets start 3 liv.
-    \item Spillet varer i 5 minutter.
-    \item I spillets varighed vinder man ved hhv. at:
-    \begin{itemize}
-        \item Skubbe modstanderen udover den markerede bane.
-        \item Bringe modstanderens liv ned til 0 ved at påkøre modstanderen bagfra eller fra siden.
-        \item Modstanderen selv bringer sig udover den markerede bane. 
-    \end{itemize}
-\end{itemize}
-\\\noindent
+\input{TeX/Formalia/Regler}
+
 Til styringen af robotterne medfølger der til spillet et instrument med veldefinerede frekvensområder: en blokfløjte. Hertil også et \textit{d-pad}.
-\\\noindent
-\noindent Til disse instrumenter tilknytter der sig som udgangspunkt følgende kommandoer: frem, tilbage, højre og venstre. Disse kommandoer eksekveres med udgangspunkt i \figref{Formalia/blokfloejte_noder} som følgende: 
+\\
+ Til disse instrumenter tilknytter der sig som udgangspunkt følgende kommandoer: frem, tilbage, højre og venstre. Disse kommandoer eksekveres med udgangspunkt i \figref{Formalia/blokfloejte_noder} som følgende: 
 \begin{itemize}
     \item A: Fremad
     \item B: Bagud
@@ -31,7 +19,7 @@ Til styringen af robotterne medfølger der til spillet et instrument med veldefi
     \item D': Højre
 \end{itemize}
 
-\fig{Formalia/blokfloejte_noder}{0.2}{}
+\fig{Formalia/blokfloejte_noder}{0.6}{}
 
 
 

@@ -1,27 +1,62 @@
-\documentclass[a4paper,11pt,onecolumn]{IEEEtran}
+\documentclass[%
+a4paper,%
+%11pt,%
+conference,
+%onecolumn%
+]{IEEEtran}
 \usepackage{EEpreamble}
 
 \begin{document}
 
 \title{
-E3PRJ3\\Gruppe 6\\Robo-Sumo-Battle 
+Robo-Sumo-Battle 
 }
-\author{
-      \begin{tabular}{ll}
-            Villiam Holger Bo & 201907166\\
-            Adam Ryager Høj & 201803767\\
-            Rasmus Kahr & 201803491\\
-            David Vestergaard Kristensen & 201908226\\
-            Frederik William Lassen & 201905905\\
-            Daniel Schultz & 201709325\\
-            Simon Fogh Thomsen & 201906472
-      \end{tabular}
+% \author{
+%       \begin{tabular}{ll}
+%             Villiam Holger Bo & 201907166\\
+%             Adam Ryager Høj & 201803767\\
+%             Rasmus Kahr & 201803491\\
+%             David Vestergaard Kristensen & 201908226\\
+%             Frederik William Lassen & 201905905\\
+%             Daniel Schultz & 201709325\\
+%             Simon Fogh Thomsen & 201906472
+%       \end{tabular}
+% }
+
+\author{\IEEEauthorblockN{%
+Villiam Holger Bo\IEEEauthorrefmark{1}, %
+Adam Ryager Høj\IEEEauthorrefmark{2}, %
+Rasmus Kahr\IEEEauthorrefmark{3}, %
+David Vestergaard Kristensen\IEEEauthorrefmark{4}\\%
+Frederik William Lassen\IEEEauthorrefmark{5}, %
+Daniel Schultz\IEEEauthorrefmark{6}, %
+Simon Fogh Thomsen\IEEEauthorrefmark{7}%
 }
+\IEEEauthorblockA{E3PRJ3 --- Gruppe 6,
+Aarhus School of Engineering\\
+Aarhus Universitet\\
+StudieID: %
+\IEEEauthorrefmark{1}201907166,
+\IEEEauthorrefmark{2}201803767,
+\IEEEauthorrefmark{3}201803491,
+\IEEEauthorrefmark{4}201908226,\\
+\IEEEauthorrefmark{5}201905905,
+\IEEEauthorrefmark{6}201709325,
+\IEEEauthorrefmark{7}201906472
+}
+}
+
 \maketitle
 \tableofcontents
+
 \input{TeX/Formalia/ProjectGoals.tex}
+\figOC{Formalia/RigtBillede.png}{0.8}{Rigt billede der viser hvordan produktet er tiltænkt.}
 \input{TeX/Formalia/Beskrivelse.tex}
 \input{TeX/Formalia/Krav.tex}
-\input{TeX/Blokdiagrammer.tex}
-\fig{Formalia/RigtBillede.png}{1}{Rigt billede der viser hvordan produktet er tiltænkt.}
+\input{TeX/Formalia/Accepttestspecifikation}
+\input{TeX/Diagrammer/Blokdiagrammer.tex}
+
+
+
 \end{document}
+

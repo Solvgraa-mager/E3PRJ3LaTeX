@@ -1,7 +1,5 @@
-\section{Blokdiagrammer}
-
-\fig{Diagrammer/BDDBilkontrol.eps}{1}{Diagram der viser de forskellige elementer i bilkontrollen og selve controllerenhederne.}
 \subsection{Bilkontrol}
+\figOC{Diagrammer/BDDBilkontrol.eps}{1}{Diagram der viser de forskellige elementer i bilkontrollen og selve controllerenhederne.}
 
 \subsubsection*{\textbf{Bilkontrol}}
 Bilkontrollen er den centrale enhed som samler input fra controllere, sender signal til de to bots om retning og hastighed og styrer spillet. 
@@ -24,7 +22,26 @@ Display-undermodulet til gameplay-modulet viser kampens status igennem spillerne
 \subsubsection*{\textbf{Controller behandling}}
 Controller behandlingsmodulet omsætter de ikke-processerede input fra controlleren (herved forstås input fra joystik og mikrofon) og omsætter dem til retning og hastighed for de to bots.  
 \subsubsection*{\textbf{Joystick behandling}}
-Joystick behandlingsmodulet omsætter det ikke-processerede input fra joystikket til retning og hastighed for de to bots. 
+Joystick behandlingsmodulet omsætter det ikke-processerede input fra joystikket til retning og hastighed for de to bots.
+
+\begin{figure*}
+	\centering
+   	\includegraphics[page=1,width=1\linewidth]{figs/Diagrammer/IBD_SumoBot_BilKontrol_Controller.pdf}
+	\caption{IBD for Controller}
+	\label{fig:IBD_Controller}
+\end{figure*}
+\begin{figure*}
+	\centering
+   	\includegraphics[page=2,width=1\linewidth]{figs/Diagrammer/IBD_SumoBot_BilKontrol_Controller.pdf}
+	\caption{IBD for Bilkontrol}
+	\label{fig:IBD_Bilkontrol}
+\end{figure*}
+\begin{figure*}
+	\centering
+   	\includegraphics[page=3,width=1\linewidth]{figs/Diagrammer/IBD_SumoBot_BilKontrol_Controller.pdf}
+	\caption{IBD for SumoBot}
+	\label{fig:IBD_SumoBot}
+\end{figure*}
 
 \subsection{Kontroller}
 \subsubsection*{\textbf{Controller}}\hfill\\
@@ -43,6 +60,3 @@ Lydmodul konvertere lyd til analoge signaler som microcontrolleren kan evaluere 
 mikrofon gør det muligt for systemet at modtage lyd fra omverdenen.
 \subsubsection*{\textbf{Analog filterbehandling}}\hfill\\
 Analog filterbehandling filtrerer uønsket frekvenser modtaget fra mikrokrofonen og forstærker eller formindsker signalet, således det er læsbart for en mikrocontroller.
-
-
-\subsection{Robot}
