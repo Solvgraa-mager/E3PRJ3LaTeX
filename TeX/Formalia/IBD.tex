@@ -1,0 +1,54 @@
+\section{Interne blokdiagrammer}
+\subsection{Interface beskrivelser}
+\noindent Der er udarbejdet en interface beskrivelse for de mere komplekse interfaces. For Figur \ref{fig:IBD_SumoBot} findes en dertilhørende interfacebeskrivelse i tabel \ref{tab:interface_table_sumobot}.
+
+% \begin{table}[]
+% \caption{Interfacebeskrivelse for SumoBot}
+% \label{tab:interface_table_sumobot}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{lll}
+% Navn & Type & Beskrivelse\\
+% in robotKommando & seriel  & En kommunikationsprotokol udarbejdet for transmission af kommandoer fra styringsenheden igennem centralcomputeren til de enkelte SumoBots. \\
+% out scoreStatus  & digital & En kommunikationsprotokol udarbejdet for transmission af status om spillet fra SumoBots til centralcomputer.\\
+% \end{tabular}%
+% }
+% \end{table}
+
+% \noindent For Figur \ref{fig:IBD_CentralComputer} findes en dertilhørende interfacebeskrivelse i tabel \ref{tab:interface_table_centralcomputer}.
+
+% \begin{table}[]
+% \caption{Interfacebeskrivelse for Central Computer}
+% \label{tab:interface_table_centralcomputer}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{llp{7cm}}
+% Navn & Type & Beskrivelse\\
+% in ctrlInLyd & analog  & \tbr Et lydsignal med frekvensindhold 100-20000 Hz \\
+% in behandletLyd  & digital & \tbr Et X-bit samplet kommando lydsignal indeholdende X kvantiserede niveauer til behandling i embedded controller. \\
+% in joyStick &  analog signal med 1024 digital signal fra switch  & Analog bus
+% out robotKommando & seriel  & \tbr En kommunikationsprotokol udarbejdet for transmission af kommandoer fra styringsenheden igennem centralcomputeren til de enkelte SumoBots.\\
+% in scoreStatus  & digital & En kommunikationsprotokol udarbejdet for transmission af status om spillet fra SumoBots til centralcomputer.\\
+% \end{tabular}%
+% }
+% \end{table}
+
+\begin{table*}[]
+    \centering
+    \caption{Interfacebeskrivelse for Styringsenhed}
+    \label{tab:interface_table_Styringsenhed}
+    \begin{tabular}{lp{5cm}p{7cm}}
+        Navn              & Type       & Beskrivelse\\                                                                                                                                 
+        in ctrlInLyd      & analog     & \tbr Et lydsignal med frekvensindhold 100-10000 Hz\\
+        in filterIn       & analog     & \tbr Lydsignal fra blokfløjte, muligvis overlejret med støj\\                                                                                             
+        out joyStickOut   &            & Bus med 5 signaler:\\
+                          & 1: analogX & spænding variende mellem 0 og VCC\\                                                                                                        
+                          & 2: analogY & spænding variende mellem 0 og VCC\\                                                                                                            
+                          & 3: digital & switch til at trykke på joystick controller\\                                                                                                                
+                          & 4:  VCC    & 5V                                         \\                                                                                                      
+                          & 5: GND     & 0V                                         \\
+        out Mikrofon      & analog     & Udgangsimpedans 2,2k Ohm \tbr\\
+                          &            & Udgangsspænding 6,3 mV/Pa/1 kHz \tbr\\
+        out ctrlOutJoy & analog & \tbr Samme som joyStickOut? Tilpasset i amplitude?\\
+        out ctrlOutLyd & \tbr analog/digital & \tbr Interface til central computer\\                                                                                               
+        \\
+    \end{tabular}%
+\end{table*}

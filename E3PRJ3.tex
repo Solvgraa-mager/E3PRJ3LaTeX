@@ -5,6 +5,11 @@ conference,
 %onecolumn%
 ]{IEEEtran}
 \usepackage{EEpreamble}
+\usepackage{usecases}
+\newcommand{\tbd}{\textbf{\textcolor{red}{(TBD)}}}
+\newcommand{\tbr}{\textbf{\textcolor{red}{(TBR)}}}
+\usepackage{pdfpages}
+\loadglsentries{TeX/Formalia/Ordliste}
 
 \begin{document}
 
@@ -22,41 +27,25 @@ Robo-Sumo-Battle
             Simon Fogh Thomsen & 201906472
       \end{tabular}
 }
-
-% \author{\IEEEauthorblockN{%
-% Villiam Holger Bo\IEEEauthorrefmark{1}, %
-% Adam Ryager Høj\IEEEauthorrefmark{2}, %
-% Rasmus Kahr\IEEEauthorrefmark{3}, %
-% David Vestergaard Kristensen\IEEEauthorrefmark{4}\\%
-% Frederik William Lassen\IEEEauthorrefmark{5}, %
-% Daniel Schultz\IEEEauthorrefmark{6}, %
-% Simon Fogh Thomsen\IEEEauthorrefmark{7}%
-% }
-% \IEEEauthorblockA{E3PRJ3 --- Gruppe 6,
-% Aarhus School of Engineering\\
-% Aarhus Universitet\\
-% StudieID: %
-% \IEEEauthorrefmark{1}201907166,
-% \IEEEauthorrefmark{2}201803767,
-% \IEEEauthorrefmark{3}201803491,
-% \IEEEauthorrefmark{4}201908226,\\
-% \IEEEauthorrefmark{5}201905905,
-% \IEEEauthorrefmark{6}201709325,
-% \IEEEauthorrefmark{7}201906472
-% }
-% }
+% Don't fight the engine over float placements. It's actually good at it. If you get ridiculous results it's pretty likely that your paragraphs and/or sections are too short. Try adding more text, or merging some paragraphs.
 
 \maketitle
 \tableofcontents
 
-\input{TeX/Formalia/ProjectGoals.tex}
+\printglossary[nonumberlist]
+\printglossary[type=\acronymtype,nonumberlist,title=Forkortelser]
+\input{TeX/Formalia/ProjectGoals}
 \figOC{Formalia/RigtBillede.png}{0.8}{Rigt billede der viser hvordan produktet er tiltænkt.}
-\input{TeX/Formalia/Beskrivelse.tex}
-\input{TeX/Formalia/Krav.tex}
+\input{TeX/Formalia/Beskrivelse}
+\input{TeX/Formalia/Krav}
 \input{TeX/Formalia/Accepttestspecifikation}
-\input{TeX/Diagrammer/Blokdiagrammer.tex}
-
-
-
+\input{TeX/Diagrammer/Blokdiagrammer}
+\input{TeX/Diagrammer/MainOgStyring}
+\input{TeX/Formalia/IBD}
+\input{TeX/Formalia/UseCase01}
+\input{TeX/Formalia/Analyse/Central Computer/Central_Computer_Analyse}
+\input{TeX/Formalia/SumoBotanalyse}
+\bibliographystyle{IEEEtran}
+\bibliography{biblo}
 \end{document}
 

@@ -1,0 +1,46 @@
+\section {Styringsenhed analyse}
+%% Analysis without numbers is just opinions.
+\subsection{Mikrofon}
+\begin{itemize}
+    \item Skal være i stand til at opfange frekvenser i det hørbare område\footnote{\SIrange{20}{20e3}{Hz}}. 
+    \item Må ikke afvige i måling hvis samme tone/frekvens spilles til den. 
+\end{itemize}
+
+Som mikrofon har vi tænkt os at benytte os af en "electret microphone", \url{https://bekent.dk/mce-4500.html?gclid=Cj0KCQjwuL_8BRCXARIsAGiC51A8KKsYBFYi-5kmvFSPHIzzuJ2TXDr6Rnnl_QvKquKd7tBmXM7CuLgaAiHaEALw_wcB}.
+Der er en risiko forbundet hertil, at den simpelthen ikke er præcis nok til konsistent at gengive frekvenser rimeligt, så der kan laves lydbehandling af den til en protokol til at styre robotterne. 
+En fordel er, at det er en simpel kondensator mikrofon, og vi i MSE har lært at designe forstærkere til kapacitive inputs.
+Dertil også, at vi selv kan modificere inputtet med de filtre af eget valg.
+
+\subsection{Analog filterbehandling}
+\begin{itemize}
+    \item Skal filtrere signalet fra netstøj og HF-støj før forstærkning. 
+\end{itemize}
+
+Her er et hav af muligheder for forskellige implementeringer. Som udgangspunkt vægter vi intet ripple i pasbåndet med ripple i stopbåndet til følge. Vi har vurderet, at det er mest risikabelt med ripple i pasbåndet. /tbr %(ikke enig i at vi vægtede noget)
+Præcis hvilken type filter og orden studeres nærmere i designfasen. Dog viser flere kilder at et MFB filter er velegnet i en ADC forbindelse \tbr
+
+\subsection{Spændingsforstærker}
+\begin{itemize}
+    \item Skal forstærkere spændingen op til et niveau hvor en ADC kan registrere dette og konvertere til kvanticerede bits.
+    \item Skal have en stabil strømforsyning.
+    \item Lav S/N ratio, \tbr skal defineres
+    \item 100gg forstærkning \tbr
+\end{itemize}\newline
+Generelt for de analoge kredsløb er der en risiko i, at strømforsyningen skal være meget stabil, da denne bruges som referencespænding til både signalet fra joysticket og mikrofonen. Altså betyder en afvigelse eller transient i strømforsyningen en afvigelse i kommandoen til robotterne, og man kan ikke vide sig sikker på om man er dårlig til spillet eller om strømforsyningen der sender transienter ud i kommandoprotokollen. 
+
+
+\subsection{ADC}
+\begin{itemize}
+    \item \tbr Opløsning?
+\end{itemize}
+\tbr Afhængig af om interfacet fra mikrofonen til central computer skal være analog eller digital, skal det analoge signal fra mikrofonen digitaliseres. 
+Der er en stor risiko i at designe ADC'erne selv, da der så skal tages hensyn til synkronisering af clocks m.m. 
+
+Derfor har vi fundet et ADC board til vores Raspberry Pi Zero: \url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}\newline
+Fra ADC'en er der serielt interface, således disse data kan sendes til en device, hvor der kan laves digital signalbehandling på dataen. 
+
+\subsection{Central Computer IF}
+\begin{itemize}
+    \item blabla
+\end{itemize}
+data fra adc herind .. device applikation fra matlab eller bibliotek i Arduino???

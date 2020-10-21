@@ -1,0 +1,60 @@
+%Sometimes it is a good idea to put domain objects in \texttt{}
+%The template and the descriptions are based on the book Applying UML and Patterns: 
+%An Introduction to Object-Oriented Analysis and Design and Iterative Development
+%(3rd Edition) by Craig Larman.
+
+%%% USE CASE 1
+\subsubsection{Use Case 1}
+
+\begin{usecase}
+  \caption{Fully dressed beskrivelse af use case 1: "Styr \gls{sumobot} med joystick".}
+  \addtitle{Use Case 1}{"Styr \gls{sumobot} med joystick"}
+  %Level: "user-goal" or "subfunction"
+  \addfield{Mål:}{At en \gls{sumobot} bevæger sig på spillebanen baseret på joystickinput.}
+  %Level: "user-goal" or "subfunction"
+  \addfield{Initiering:}{Spiller bruger joysticket som styringsenhed}
+
+  %Primary Actor: Calls on the system to deliver its services.
+  \addfield{Primær Aktør:}{Bruger}
+  \additemizedfield{Sekundær Aktør:}{
+    \item \gls{sumobot}
+    \item Styringsenhed
+    \item Central computer
+  }
+
+  \addfield{Antal samtidig forekomster:}{2}
+
+  %Preconditions: What must be true on start and worth telling the reader?
+  \addfield{Prækondition:}{\gls{rbs}-spillet er initieret \tbr}
+  %when multiple
+  %\additemizedfield{Preconditions:}{} 
+
+  %Postconditions: What must be true on successful completion and worth telling the reader
+  \additemizedfield{Postkonditioner:}{
+    \item \gls{sumobot} har bevæget sig på baggrund af styringsinput fra joysticket.
+    \item Afventer nyt input.
+  }
+  %when multiple
+  %\additemizedfield{Preconditions:}{}
+
+  %Main Success Scenario: A typical, unconditional happy path scenario of success.
+  \addscenario{Hovedscenarie:}{
+    \item Brugeren tilgår joystick-styringsenhed for spiller 1
+    \item Brugeren bevæger joysticket
+    \item Styringsenheden behandler bevægelsen
+    \item[] [Ext01: Bruger styrer hastighed]
+    \item[] [Ext02: Bruger styrer retning]
+    \item Styringsenhed overfører data til central computer
+    \item Central computer behandler styringsdata
+    \item Central computer overfører styringsdata til \gls{sumobot}
+    \item \gls{sumobot} udfører bevægelse.
+  }
+  \addscenario{Udvidelser / Undtagelser:}{
+    \item[Ext01:] Bruger styrer hastighed
+    \item[1.] Bruger tilter joystick på $y$-aksen.
+    \item[2.] Use case fortsætter fra punkt 3\newline
+    \item[Ext02:] Bruger styrer retning:
+    \item[1.] Bruger tilter joystick på $x$-aksen.
+    \item[2.] Use case fortsætter fra punkt 3
+  }
+\end{usecase}\label{tab:UseCase:1}

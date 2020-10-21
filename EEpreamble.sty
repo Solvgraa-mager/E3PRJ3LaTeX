@@ -27,6 +27,10 @@
 \usepackage{booktabs}
 \usepackage{blindtext}
 
+% Ordliste og forkortelser
+\usepackage[acronym,toc]{glossaries}
+\makeglossaries
+
 \usepackage[footnote,smaller]{acronym}
 
 %%% Subfigures %%%%
@@ -197,7 +201,8 @@ betterproportions
 
 
 \newcommand\figbase[3]{
-	\begin{figure}[!ht]
+% 	\begin{figure}[!ht]
+	\begin{figure}	
 		\centering
   	 		#1
 		\caption{#3}

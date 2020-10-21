@@ -36,7 +36,7 @@
 \centering
 \caption{Krav til controlleren}\label{tab:Controller Krav}
 \begin{tabular}{c p{7cm}}
-\# & Udførsel af test \\ \midrule
+\# & \textbf{Udførsel af test} \\ \midrule
 1 & Joystikket flyttes fremad og det konstateres hvorvidt SumoBot bevæger sig fremad. Det samme udføres for bagud, venstre og højre  \\\midrule
 2 & Der udarbejdes særskilt testsoftware som på en PC kan gengive det dominerende frekvensindhold i spektret 300Hz - 3000Hz. Herefter testes om frekvenserne 300Hz, 400Hz, 500Hz, 1200Hz, 1800Hz, 2500Hz, 2800Hz, 2900Hz, 3000Hz genkendes. Frekvenserne dannes som sinusbølger og afspilles ved 75dB +/- 5 dB, 20 cm. fra controllerens mikrofon. \\\midrule
 3 & Der udarbejdes særskilt testsoftware som på en PC kan gengive det dominerende frekvensindhold i spektret 300Hz - 3000Hz. Dette testsoftware kan også indikere om amplituden er høj nok til at spillet bør reagere på det. Der testes med lyd som afspiller 20 cm fra controllerens mikrofon på hhv. 30 dB, 35 dB, 40 dB, 45 dB, 50 dB, 55 dB, 60 dB. For værdier >50 dB forventes indikation fra softwaren om at der ingen tilstrækkeligt høje lyde er.\\\bottomrule
@@ -49,11 +49,11 @@
 \centering
 \caption{Krav til Spillebanen}\label{tab:ASE Krav}
 \begin{tabular}{c p{7cm}}
-\# & Udførsel af test \\ \midrule
+\# & \textbf{Udførsel af test} \\ \midrule
 1 & Da spillebanen er rund laves der et stykke snor på 75 cm. Den ene ende af snoren placeres i centrum af spillebanen, mens den anden ende føres langs kanten af spillebanen. Der noteres om snorens ende på noget tidspunkt er kortere end spillebanens kant. \\\midrule
-2 & Der findes et vatterpas mellem 1.3 og 1.5 meter. Dette ligges i midten af spillebanen og drejes hele vejen rundt om centrum. Der noteres om spillepladen på noget tidspunkt er ude af vatter.  \\\midrule
+2 & Spille banen placeres på en overflade i vatter. Der findes et vatterpas mellem 1.3 og 1.5 meter. Dette placeres i midten af spillebanen og drejes hele vejen rundt om centrum. Der noteres om spillepladen på noget tidspunkt er ude af vatter.  \\\midrule
 
-3 &  \color{red} 4 personer stiller sig fordelt i hvert hjørne af spillebanen. Der løftes på samme tid. Der noteres om det er muligt at flytte konstruktionen \\\midrule
+3 &  Der findes en kalibreret vægt, med målenøjagtighed på +/- 200g. Alle spillets bestanddele placeres samlet på vægten. den viste vægt noteres\\\midrule
 
 \end{tabular}
 \end{table}
@@ -68,10 +68,11 @@
 1 & Der tegnes en 20 x 20 cm kvadratisk firkant på et stykke papir. Herefter placeres robotterne i firkanten, hvor der ses om de stikker ud over kanterne. Herefter måles højden af robotterne med en tommestok hvor der noteres om robotterne er højere end 20 cm. \\\midrule
 2 & Der laves en bane på gulvet med tape på 1.5 Meter. Herefter placeres de 2 robotter, fuld opladt, i hver sin ende af banen. Der udføres 4 tests hvor den ene robot med Maks hastighed køre den fulde banes længde inden den rammer den anden robot som holder stille i den anden ende af banen. For hver test vil den stillestående robot blive roteret 90 grader. Efter testen noteres der om der er kommet skader på nogle af bilerne. Og det hele gentages hvor robotterne bytter roller. \\\midrule
 3 & Der opmåles en 3 meters strækning med målebånd på gulvet. Robotten startes med fuld opladt batteri og køres ved Maks hastighed i 1 minut. Herefter placeres robotten med fronten væk fra banen i den ene ende af den 3 meter strækning opmålt, mens senderen placeres i den anden ende. Herefter noteres der om det er muligt for robotten at modtage en kommando om at køre fremad væk fra senderen. Dette gentages for den anden robot \\\midrule
-4 & Robotterne placeres, fuld opladt, vandret med fronten mod en lodret 90 graders flade, f.eks. gulv og væg. Herefter sættes robotterne til at køre med Maks hastighed fremad for 1 minut. Der noteres om robotternes motorer bliver varmere end at man kan holde en finger på dem i 3 sekunder efter 40 sekunder af testen er færdiggjort samt om de stopper før testen er færdig.  \\\midrule
+4 & Robotterne placeres, fuld opladt, vandret med fronten mod en lodret 90 graders flade, på minimum 30*30 cm. f.eks. gulv og væg. Herefter sættes robotterne til at køre med Maks hastighed fremad for 1 minut mens strømmen gennem motorene måles. SumoBot må ikke ændre placering under testen. Der noteres om strømmen overskrider hvad databladet angiver som max.
+\\\midrule
 5 & Robotten placeres, fuld opladt, på gulvet, hvor den vil med Maks hastighed køre fremad for 3 minutter. Dette gentages for den anden robot og der noteres om den stopper før de 3 minutter er gået. \\\midrule
-6 & Der opmåles 10.cm på en væg fra gulvet, og markeres med f.eks. tape. Herefter tages robotterne og anbringes med deres laveste punkt over den opmålte højde, og lader dem falde i frit fald ned på gulvet. Robotterne skal være fuld funktionelle efter testen.  \\\midrule
-7 & Robotten anbringes, fuld opladt, på gulvet, og kører herefter med Maks hastighed for 1 minut. Robotten anbringes herefter inden for 3 meter af senderen. Der optages en video med synlig FPS, af en spiller der anvender controlleren til at henholdsvis køre frem, tilbage, og til siderne med 4 sekunders mellemrum. Herefter anvendes FPS i videoen til at udregne reaktionstiden fra brugeren anvender kontrolleren til robotten reagerer på kommandoen. \\\midrule
+6 & Der opmåles 10.cm på en væg fra laminatgulvet, og markeres med f.eks. tape. Herefter tages robotterne og anbringes med deres laveste punkt over den opmålte højde, og lader dem falde i frit fald ned på laminatgulvet. Robotterne skal være fuld funktionelle efter testen.  \\\midrule
+7 & Robotten anbringes, fuld opladt, på gulvet, og kører herefter med Maks hastighed for 1 minut. Robotten anbringes herefter inden for 3 meter af senderen. Der optages en video på 30 FPS, af en spiller der anvender controlleren til at henholdsvis køre frem, tilbage, og til siderne med 4 sekunders mellemrum. Herefter anvendes FPS i videoen til at udregne reaktionstiden fra brugeren anvender kontrolleren til robotten reagerer på kommandoen. \\\midrule
 
 \end{tabular}
 \end{table}

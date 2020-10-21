@@ -1,0 +1,86 @@
+\section{SumoBot analyse}
+
+
+\subsubsection{Interfacebeskrivelse}
+
+\begin{table*}[]
+\centering
+    \caption{Interfacebeskrivelse for SumoBot}
+    \label{tab:interface_table_SumoBot}
+    \begin{tabular}{lp{5cm}p{7cm}}
+        \textbf{Navn}              & \textbf{Type}                & \textbf{Beskrivelse}                                                                                                            \\
+        in/out robotKom      & SumoBotKom                          & txt                                                                                             \\
+        in/out robotKom       & SumoBotKom                         & txt.& 
+                 \\
+        in påkørsel           & Force                               & txt                                                                                             \\
+        out PåkørtSignal      & digital                            & txt.&                                                                                              \\
+        in MC powerin        & DC                                   & 5V leveret af PSU 
+                 \\
+        in/out robotKom      & SumoBotKom                          & txt                                                                                              \\
+        påkærselRegistrerin  & Digital                             & txt                                                                                              \\
+        out motorCmdOutLeft  & Seriel                               & txt 
+                 \\
+        out motorCmdOutRight & Seriel                              & txt.&                                                                                          \\
+        in motorCommandinLeft      & Seriel                        & txt                                                                                              \\
+        in motorCommandInRight   & Seriel                          & txt 
+                 \\
+        out motorCtrOut[2]      & PWM                             & txt.&                                                                                          \\
+        in motorCtrIn[2]         & PWM                               & txt 
+                \\
+        out motorTorqueOut    & torque                               & txt 
+                \\
+        in motorPowerIn        & DC                             & txt.& 
+                \\
+        in batteryPower        & DC                               & txt 
+                \\
+        out motorPowerOut      & DC                           & txt.& 
+                \\
+        in powerIn             & DC                               & txt 
+                \\
+        out powerOut           & DC                              & txt.& 
+                \\
+        out PSUout             & DC                               & txt 
+                \\
+        out MC powerOut        & DC                               & 5V forsyning 
+                \\
+    \end{tabular}%
+\end{table*}
+
+\subsubsection{Analysetanker}
+
+\textbf{Motor:}
+- Da de fysiske mål (max) for vores sumoBot er 20x20x20 cm, skal vores motor være i stand til at kunne trække netop denne vægtbelastning.
+- Da motorene skal sidde vandret på langs ved siden af hinanden må motor + dæk ikke være længere end 8 cm pr. motorenhed.
+- Når vi skal vælge motor, skal vi også have i mente, at hver bil består af 2 motorer. Vi skal altså i alt bruge 4 stk. Det betyder at valget af motor også afhænger af tilgængeligheden af netop den motormodel.
+
+
+\textbf{Batteri:}
+- skal køre mellem 6 til 12 V.
+- Vores batteri skal forsyne andet end bare motoren. Der skal altså være en form for spændingsregulering til de enkelte delelementer.
+- Under PRJ1 anvendte vi et batteri på 9,6V, som efterfølgende blev reguleret ned til 5v med en LM7805. Vores erfaring med den spændingsregulator var at den gav et stabilt spændingsoutput når indputtet var 7+ volt.
+- Da motor og styring kører på samme batteri skal fly-back dioder. stabilisator kondensatorer anvendes. 
+
+\textbf{Dæk:}
+- Dækkene må ikke have en større radius end 5 cm.
+
+\textbf{Motorstyring "pr. bil":}
+- 2x H-bro til styring af motorretning.
+- 2x Mosfet til PWM styring af hastighed.
+- Flyback dioder til beskyttelse af batteri.
+
+
+\textbf{Microcontroller:} - SPØRGSMÅL TIL CENTRAL PC HOLD
+- PSoC til styring af Hbro og attack sencor.
+- RPI til trådløs kommunikation.
+
+Attack sensor:
+- Knap med maks diameter på 1 cm.
+- Skal kunne registrere at den anden bil rammer den. "følsomhed"
+
+\textbf{Bilkarosseri:}
+- Alle dele skal påmonteres et karosseri, altså en platform der har plads til både batteri, motorer, attacksensor, MCU, PSU og dæk.
+Under 1. semesterprojekt, hvor vi også skulle bygge en bil, fik vi givet et chassis på forhånd med påmonteret hjul, aksler, motor osv. På den måde sparede vi tid, da det mekaniske allerede var udviklet, og vi kunne derfor fokusere på vores eget fagområde, det elektroniske aspekt.
+Denne gang står vi uden færdigbygget karosse, og vi ser to muligheder:
+1. Vi tegner en model i et 3D-værktøj og får det CNC-fræset af Rasmus Elm fra Protolab. Da ingen i gruppen har erfaring i at tegne i 3D-programmer, kan der være en stejl indlæringskurve, altså at processen er langsommelig, og vi ikke ønsker at bruge for meget tid på noget, der egentlig ikke er det vi bliver bedømt på.
+2. Vi søger i genbruger og andre butikker efter en allerede eksisterende bil, der overholder vores fysiske kriterier. Vi kan herefter afmontere div. dele så vi til slut har et bart karosseri med motor, aksler og hjul.
+Denne mulighed kan spare os for meget arbejde. Der er dog en hvis risiko hvis vi "satser" på dette valg, i og med at der er en sandsynlighed for at vi ikke kan finde noget køretøj, der tilfredsstiller vores ønsker og overholder de krav vi har fået stillet.

@@ -1,10 +1,8 @@
-
-
-
-
 \section{Kravspecifikation for produktet}
 
-\subsection{KRAV STILLET AF ASE}
+\input{TeX/Formalia/UseCases}
+
+\subsection{Krav stillet af ASE}
 \begin{enumerate}
     \item Systemet \textbf{SKAL} indeholde embedded software.
     \item Systemet \textbf{SKAL} indeholde aktoratere.
@@ -12,39 +10,39 @@
     \item Systemet \textbf{SKAL} indeholde et Linux system
     \item Systemet \textbf{SKAL} gøre brug af PSoC
     \item Systemet \textbf{SKAL} gøre brug af sensor(er)
-    \item Systemet \textbf{SKAL} indeholde et user interface
+    \item Systemet \textbf{SKAL} indeholde et user interfacehttps://www.overleaf.com/project/5f5b3953c3bfc5000133f114
     
 \end{enumerate}
 
 \subsection{Overordnede krav til Robo-Sumo-Battle}
 \begin{enumerate}
     \item systemet \textbf{SKAL} kunne understøtte minimum 2 spillere.
-    \item Systemet \textbf{SKAL} kunne registrer når en SumoBot overskrider spillebanens afgrænsning.
+    \item Systemet \textbf{SKAL} kunne registrer når en SumoBoter overskrider spillebanens afgrænsning.
     \item Systemet \textbf{BØR} kunne understøtte flere end 2 spillere.  
-    \item Systemet \textbf{BØR} understøtte flere spiltilstande.
+    \item Systemet \textbf{BØR} understøtte flere spiltilstande, end den allerede beskrevet under spilregler \ref{Spilregler}
 \end{enumerate}
 
 \subsection{Spillebane}
 \begin{enumerate}
     \item Spillebanen \textbf{SKAL} maximalt være Ø1.5 meter.
-    \item Spillebanen \textbf{SKAL} være i vater.
-    \item  \color{red} Spillebanen \textbf{BØR} være transportabel ved hjælp af 4 personer.
+    \item Spillebanen \textbf{SKAL} være et jævnt plan.
+    \item Spillebanen \textbf{BØR} veje mindre end 10 kg.
 \end{enumerate}
 
-\subsection{Robotterne}
+\subsection{SumoBot}
 \begin{enumerate}
-    \item Robotterne \textbf{SKAL} maksimalt være $20 \times 20 \times 20$cm.
-    \item Robotterne \textbf{skal} kunne kollidere med hinanden fra alle sider, ved max hastighed, uden at tage skade.
-    \item Robotterne \textbf{SKAL} kunne tilgås trådløst fra minimum tre meters afstand.
-    \item Robotterne \textbf {BØR} kunne køre kontinuert, ved max hastighed, vinkelret mod en lodret flade, uden at beskadige motorene - DETTE KAN VI OMFORMULERE.
-    \item Robotterne \textbf{BØR} have batterilevetid til kontinuere kørsel ved max hastighed, i minimum 3 minutter.
-    \item Robotterne \textbf{BØR} kunne holde til 10cm frit drop på gulv.
-    \item Robotterne \textbf{BØR} reagere respektivt på spillerens styringen, inden for 1 sekund.
+    \item SumoBot \textbf{SKAL} maksimalt være $20 \times 20 \times 20$cm.
+    \item SumoBot \textbf{SKAL} kunne kollidere med hinanden fra alle sider, ved max hastighed, uden at tage skade.
+    \item SumoBot \textbf{SKAL} kunne tilgås trådløst fra minimum tre meters afstand.
+    \item SumoBot \textbf {BØR} kunne køre kontinuert, ved max hastighed, vinkelret mod en lodret flade, uden at blive beskadiget.
+    \item SumoBot \textbf{BØR} have batterilevetid til kontinuere kørsel ved max hastighed, i minimum 3 minutter.
+    \item SumoBot \textbf{BØR} kunne holde til 10cm frit drop på laminatgulv.
+    \item SumoBot \textbf{BØR} reagere respektivt på spillerens styring, inden for 1 sekund.
 \end{enumerate}
 
 \subsection{Controller}
 \begin{enumerate}
-    \item Controlleren \textbf{SKAL} kunne konvertere force på joystik til data som kan omsættes til bevægelse af en SumoBot
+    \item Controlleren \textbf{SKAL} kunne konvertere force på joystik til data som kan omsættes til bevægelse af en SumoBoter
     \item Controlleren \textbf{BØR} kunne konvertere lyd fra 300-3000Hz til data som kan benyttes som en del af spillet
     \item Controlleren \textbf{BØR} Ikke påvirkes af lyd under 50 db
     
