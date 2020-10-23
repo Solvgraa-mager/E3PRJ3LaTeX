@@ -6,7 +6,7 @@
     \item Må ikke afvige i måling hvis samme tone/frekvens spilles til den. 
 \end{itemize}
 
-Som mikrofon har vi tænkt os at benytte os af en "electret microphone", \url{https://bekent.dk/mce-4500.html?gclid=Cj0KCQjwuL_8BRCXARIsAGiC51A8KKsYBFYi-5kmvFSPHIzzuJ2TXDr6Rnnl_QvKquKd7tBmXM7CuLgaAiHaEALw_wcB}.
+Som mikrofon har vi tænkt os at benytte os af en "electret microphone"\cite{CompleteECMGuide}\cite{MCE4500Datasheetb} \footnote{\url{https://bekent.dk/mce-4500.html?gclid=Cj0KCQjwuL_8BRCXARIsAGiC51A8KKsYBFYi-5kmvFSPHIzzuJ2TXDr6Rnnl_QvKquKd7tBmXM7CuLgaAiHaEALw_wcB}}.
 Der er en risiko forbundet hertil, at den simpelthen ikke er præcis nok til konsistent at gengive frekvenser rimeligt, så der kan laves lydbehandling af den til en protokol til at styre robotterne. 
 En fordel er, at det er en simpel kondensator mikrofon, og vi i MSE har lært at designe forstærkere til kapacitive inputs.
 Dertil også, at vi selv kan modificere inputtet med de filtre af eget valg.
@@ -17,15 +17,23 @@ Dertil også, at vi selv kan modificere inputtet med de filtre af eget valg.
 \end{itemize}
 
 Her er et hav af muligheder for forskellige implementeringer. Som udgangspunkt vægter vi intet ripple i pasbåndet med ripple i stopbåndet til følge. Vi har vurderet, at det er mest risikabelt med ripple i pasbåndet. /tbr %(ikke enig i at vi vægtede noget)
-Præcis hvilken type filter og orden studeres nærmere i designfasen. Dog viser flere kilder at et MFB filter er velegnet i en ADC forbindelse \tbr
+\fig{Analyse/FilterResponse_AOE_f-6-30}{1}{%
+\emph{Normalized frequency response graphs for the 2-, 4-, 6-, and 8-pole filters in Table 6.2. The Butterworth and Bessel filters are normalized to 3dB attenuation at unit frequency, whereas the Chebyshev filters are normalized to 0.5 dB and 2dB attenuations. As explained earlier, the top of the ripple band in the Chebyshev plots has been set to unity.} Figur lånt fra The Art of Electronics \cite[fig.~6.30]{Horowitz2015}}
 
+
+
+
+Præcis hvilken type filter og orden studeres nærmere i designfasen. Dog viser flere kilder at et MFB filter er velegnet i en ADC forbindelse \cite[s.~413]{Horowitz2015}
+En fordel ved at vælge et MFB-filter er den store dæmpning i stopbåndet, set i forhold til andre filtertyper\cite{ADCMFBTI}. Desuden findes en række applikationsnoter hvori MFB-filtre bruges i et ADC-konvertingsled. bruges\cite{OPA344Data}\tbr
+\fig{Analyse/MFB_bode_AOE_f-6-37}{1}{%
+\emph{The stopband attenuation of the MFB configuration is not much affected by rising op-amp output impedance (e.g., as seen in Figure 4.53), compared with that of the VCVS. However, you can mitigate the effect in the VCVS by using a second op- amp to create a buffered output from the signal at the op-amp’s noninverting input.} Figur lånt fra The Art of Electronics \cite[fig.~6.37]{Horowitz2015}}
 \subsection{Spændingsforstærker}
 \begin{itemize}
     \item Skal forstærkere spændingen op til et niveau hvor en ADC kan registrere dette og konvertere til kvanticerede bits.
     \item Skal have en stabil strømforsyning.
     \item Lav S/N ratio, \tbr skal defineres
     \item 100gg forstærkning \tbr
-\end{itemize}\newline
+\end{itemize}
 Generelt for de analoge kredsløb er der en risiko i, at strømforsyningen skal være meget stabil, da denne bruges som referencespænding til både signalet fra joysticket og mikrofonen. Altså betyder en afvigelse eller transient i strømforsyningen en afvigelse i kommandoen til robotterne, og man kan ikke vide sig sikker på om man er dårlig til spillet eller om strømforsyningen der sender transienter ud i kommandoprotokollen. 
 
 
@@ -33,11 +41,21 @@ Generelt for de analoge kredsløb er der en risiko i, at strømforsyningen skal 
 \begin{itemize}
     \item \tbr Opløsning?
 \end{itemize}
-\tbr Afhængig af om interfacet fra mikrofonen til central computer skal være analog eller digital, skal det analoge signal fra mikrofonen digitaliseres. 
-Der er en stor risiko i at designe ADC'erne selv, da der så skal tages hensyn til synkronisering af clocks m.m. 
+\tbr Afhængig af om interfacet fra styringsenheden til central computer skal være analog eller digital, skal det analoge signal fra styringsenheden digitaliseres. 
+Der er en stor risiko i at designe ADC'erne selv, da der så skal tages hensyn til synkronisering af clocks m.m. Derfor vælges enten:
+\begin{itemize}
+    \item et ADC board til RPi med op til 6 inputs (hhv. 2x joystick til X retning, 2x joystick til Y retning samt 2x mikrofon)
+    \item en mindst 6 kanals ADC og så overføre dets output serielt til RPi på centralcomputeren, som skal 
+\end{itemize}
 
-Derfor har vi fundet et ADC board til vores Raspberry Pi Zero: \url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}\newline
-Fra ADC'en er der serielt interface, således disse data kan sendes til en device, hvor der kan laves digital signalbehandling på dataen. 
+jeg skriver bare lige det ind, som vi snakkede om i onsdags :))
+
+Det er planen at det 
+
+Dog findes der mange IC'er som kan varetage dette job, således det er relativt simpelt  at hvert analog output 
+
+Derfor har vi fundet et ADC board til vores Raspberry Pi Zero: \footnote{\url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}}. Fra ADC'en er der serielt interface, således disse data kan sendes til en device, hvor der kan laves digital signalbehandling på dataen. 
+ved nærmere 
 
 \subsection{Central Computer IF}
 \begin{itemize}
