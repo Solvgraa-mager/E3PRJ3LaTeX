@@ -48,7 +48,7 @@ Der er en stor risiko i at designe ADC'erne selv, da der så skal tages hensyn t
     \item en mindst 6 kanals ADC (reference mcp3008) og så overføre dets output serielt til RPi på centralcomputeren, som så skal eksekvere kommandoer til SumoBots'ne på baggrund af dette. 
 \end{itemize}
 
-Derfor har vi fundet et ADC board til vores Raspberry Pi Zero: \footnote{\url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}}. Fra ADC'en er der serielt interface, således disse data kan sendes til en device (central computer IF), hvor der kan laves digital signalbehandling på dataen.  
+Derfor har vi fundet et ADC board til vores Raspberry Pi Zero: \footnote{\url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}}. Fra ADC'en er der serielt interface, således disse data kan sendes til en device (central computer IF), hvor der kan laves digital signalbehandling på dataen. Dette lader sig gøre med, at man kan generere C kode ud fra Matlab. Ellers findes der også veldefinerede biblioteker til ovenstående ADC board. 
 
 \subsection{Central Computer IF}
 \begin{itemize}
