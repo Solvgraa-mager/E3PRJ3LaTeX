@@ -45,17 +45,10 @@ Generelt for de analoge kredsløb er der en risiko i, at strømforsyningen skal 
 Der er en stor risiko i at designe ADC'erne selv, da der så skal tages hensyn til synkronisering af clocks m.m. Derfor vælges enten:
 \begin{itemize}
     \item et ADC board til RPi med op til 6 inputs (hhv. 2x joystick til X retning, 2x joystick til Y retning samt 2x mikrofon)
-    \item en mindst 6 kanals ADC og så overføre dets output serielt til RPi på centralcomputeren, som skal 
+    \item en mindst 6 kanals ADC (reference mcp3008) og så overføre dets output serielt til RPi på centralcomputeren, som så skal eksekvere kommandoer til SumoBots'ne på baggrund af dette. 
 \end{itemize}
 
-jeg skriver bare lige det ind, som vi snakkede om i onsdags :))
-
-Det er planen at det 
-
-Dog findes der mange IC'er som kan varetage dette job, således det er relativt simpelt  at hvert analog output 
-
-Derfor har vi fundet et ADC board til vores Raspberry Pi Zero: \footnote{\url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}}. Fra ADC'en er der serielt interface, således disse data kan sendes til en device, hvor der kan laves digital signalbehandling på dataen. 
-ved nærmere 
+Derfor har vi fundet et ADC board til vores Raspberry Pi Zero: \footnote{\url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}}. Fra ADC'en er der serielt interface, således disse data kan sendes til en device (central computer IF), hvor der kan laves digital signalbehandling på dataen.  
 
 \subsection{Central Computer IF}
 \begin{itemize}

@@ -10,11 +10,12 @@
     \label{tab:interface_table_CentralComputer}
     \begin{tabular}{lp{5cm}p{7cm}}
         Navn              & Type       & Beskrivelse\\                                                                                                                                 
-        in ctrlInJoy      & \tbr Digital    & \tbr Seriel forbindelse med defineret retning og hastighed\\
-        in ctrlInLyd      & \tbr Digital    & \tbr Seriel forbindelse med defineret retning og hastighed\\       
+        in ctrlInJoy        & \tbr Digital    & \tbr Seriel forbindelse med defineret retning og hastighed\\
+        in ctrlInLyd        & \tbr Digital    & \tbr Seriel forbindelse med defineret retning og hastighed\\     
         out DisplayDataOut  & Digital Bus     & 6 parallelforbindelser der overføre displayinformation \tbr\\
-        out ledOut(\tbr til LCDOut) 
-        out ctrlOutJoy & analog & \tbr Samme som joyStickOut? Tilpasset i amplitude?\\
+        out ledOut \tbr (LCDOut)                & Light    & Spilinformation til brugerne.\\
+        inout robotKom        & WIFI              & Trådløs tovejskommunikation, til styring af SumoBot  og returnering af attacks\\
+        
         out ctrlOutLyd & \tbr analog/digital & \tbr Interface til central computer\\                                                                                               
         \\
     \end{tabular}%
