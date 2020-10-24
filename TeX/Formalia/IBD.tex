@@ -1,21 +1,47 @@
 \section{Interne blokdiagrammer}
-\subsection{Interface beskrivelser}
-\noindent Der er udarbejdet en interface beskrivelse for de mere komplekse interfaces. For Figur \ref{fig:IBD_SumoBot} findes en dertilhørende interfacebeskrivelse i tabel \ref{tab:interface_table_sumobot}.
+\begin{figure*}
+	\centering
+   	\includegraphics[page=1,width=1\linewidth]{figs/Diagrammer/IBD.pdf}
+	\caption{System IBD}
+	\label{fig:IBD_System}
+\end{figure*}
 
-\noindent For Figur \ref{fig:IBD_CentralComputer} findes en dertilhørende interfacebeskrivelse i tabel \ref{tab:interface_table_centralcomputer}.
+\begin{figure*}
+	\centering
+   	\includegraphics[page=3,width=1\linewidth]{figs/Diagrammer/IBD.pdf}
+	\caption{IBD for Central Computer, se \tabref{interface_table_CentralComputer} for interfacebeskrivelse}
+	\label{fig:IBD_CentralComputer}
+\end{figure*}
+\begin{figure*}
+	\centering
+   	\includegraphics[page=2,width=1\linewidth]{figs/Diagrammer/IBD.pdf}
+	\caption{IBD for Styringsenhed, se \tabref{interface_table_Styringsenhed} for interfacebeskrivelse}
+	\label{fig:IBD_Styringsenhed}
+\end{figure*}
+\begin{figure*}
+	\centering
+   	\includegraphics[page=4,width=1\linewidth]{figs/Diagrammer/IBD.pdf}
+	\caption{IBD for SumoBot, se \tabref{interface_table_SumoBot} for interfacebeskrivelse}
+	\label{fig:IBD_SumoBot}
+\end{figure*}
+
+\subsection{Interface beskrivelser}
+\noindent Der er udarbejdet en interface beskrivelse for de mere komplekse interfaces. For \figref{IBD_SumoBot} findes en dertilhørende interfacebeskrivelse i  \tabref{interface_table_SumoBot}.
+
+\noindent For \figref{IBD_CentralComputer} findes en dertilhørende interfacebeskrivelse i \tabref{interface_table_CentralComputer}.
 
 \begin{table*}[]
     \centering
     \caption{Interfacebeskrivelse for Central Computer}
     \label{tab:interface_table_CentralComputer}
-    \begin{tabular}{lp{5cm}p{7cm}}
+    \begin{tabular}{lp{5cm}p{7cm}}\toprule
         Navn              & Type       & Beskrivelse\\                                                                                                                                 
-        in ctrlInJoy        & \tbr Digital    & \tbr Seriel forbindelse med defineret retning og hastighed\\
-        in ctrlInLyd        & \tbr Digital    & \tbr Seriel forbindelse med defineret retning og hastighed\\     
-        out DisplayDataOut  & Digital Bus     & 6 parallelforbindelser der overføre displayinformation \tbr\\
-        out ledOut \tbr (LCDOut)                & Light    & Spilinformation til brugerne.\\
-        inout robotKom       & WIFI              & Trådløs tovejskommunikation, til styring af SumoBot  og returnering af attacks \tbr Fjern Sumobot IF og flowSpecigikation\\
-        \\
+        in ctrlInJoy        & Digital    & Seriel forbindelse med defineret retning og hastighed\\
+        in ctrlInLyd        & Digital    & Seriel forbindelse med defineret retning og hastighed\\     
+        out DisplayDataOut  & Digital Bus     & 6 parallelforbindelser der overføre displayinformation\\
+        out LCDOut                & Light    & Spilinformation til brugerne.\\
+        inout robotKom       & WIFI              & Trådløs tovejskommunikation, til styring af SumoBot  og returnering af attacks\\
+        \bottomrule
     \end{tabular}%
 \end{table*}
 
@@ -23,7 +49,7 @@
     \centering
     \caption{Interfacebeskrivelse for Styringsenhed}
     \label{tab:interface_table_Styringsenhed}
-    \begin{tabular}{lp{5cm}p{7cm}}
+    \begin{tabular}{lp{5cm}p{7cm}}\toprule
         Navn              & Type       & Beskrivelse\\                                                                                                                                 
         in ctrlInLyd      & analog     & \tbr Et lydsignal med frekvensindhold 100-10000 Hz\\
         in filterIn       & analog     & \tbr Lydsignal fra blokfløjte, muligvis overlejret med støj\\                                                                                             
@@ -38,5 +64,6 @@
         out ctrlOutJoy & analog & \tbr Samme som joyStickOut? Tilpasset i amplitude?\\
         out ctrlOutLyd & \tbr analog/digital & \tbr Interface til central computer\\                                                                                               
         \\
+                \bottomrule
     \end{tabular}%
 \end{table*}

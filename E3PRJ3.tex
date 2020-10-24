@@ -1,8 +1,8 @@
 \documentclass[%
 danish,
 a4paper,
-onecolumn,
-draftcls
+% onecolumn,
+% draftcls
 ]{IEEEtran}
 \usepackage{EEpreamble}
 \usepackage{usecases}
@@ -26,27 +26,30 @@ Robo-Sumo-Battle
             Daniel Schultz & 201709325\\
             Simon Fogh Thomsen & 201906472
       \end{tabular}
+      \thanks{Vejleder: John Rohde}
 }
 % Don't fight the engine over float placements. It's actually good at it. If you get ridiculous results it's pretty likely that your paragraphs and/or sections are too short. Try adding more text, or merging some paragraphs.
 
 \maketitle
 \tableofcontents
-
+\listoftables
+\clearpage
 \printglossary[nonumberlist]
 \printglossary[type=\acronymtype,nonumberlist,title=Forkortelser]
+\clearpage
 \input{TeX/Formalia/ProjectGoals}
-\figOC{Formalia/RigtBillede.png}{0.8}{Rigt billede der viser hvordan produktet er tiltænkt.}
 \input{TeX/Formalia/Beskrivelse}
 \input{TeX/Formalia/Krav}
+\clearpage
 \input{TeX/Formalia/Accepttestspecifikation}
 \input{TeX/Diagrammer/Blokdiagrammer}
 \input{TeX/Diagrammer/MainOgStyring}
 \input{TeX/Formalia/IBD}
-%\input{TeX/Formalia/UseCase01}  - de driller- jeg fixer.
 \input{TeX/Formalia/Analyse/Central Computer/Central_Computer_Analyse}
 \input{TeX/Formalia/Analyse/Styringsenhed}
 \input{TeX/Formalia/SumoBotanalyse}
+
+\input{TeX/Formalia/VærktøjerBrugt}
 \bibliographystyle{IEEEtran}
 \bibliography{biblo}
 \end{document}
-

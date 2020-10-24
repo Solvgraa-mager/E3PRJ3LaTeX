@@ -5,28 +5,35 @@
     \item Skal være i stand til at opfange frekvenser i det hørbare område\footnote{\SIrange{20}{20e3}{Hz}}. 
     \item Må ikke afvige i måling hvis samme tone/frekvens spilles til den. 
 \end{itemize}
+Som mikrofon er en \emph{electret mikrofon}\cite{CompleteECMGuide}\footnote{\url{https://bekent.dk/mce-4500.html?gclid=Cj0KCQjwuL_8BRCXARIsAGiC51A8KKsYBFYi-5kmvFSPHIzzuJ2TXDr6Rnnl_QvKquKd7tBmXM7CuLgaAiHaEALw_wcB}} velegnet, da dette er en meget \emph{simpel} omnidirektionel mikrofon der arbejder i frekvensområdet \SI{20}{Hz} til \SI{16}{kHz}, med en følsomhed på 6.3 \si{mV\per\pascal}. Derudover er den lille i størrelse: \texttt{Ø: \SI{6}{mm}}, \texttt{h: \SI{2.7}{mm}}, hvilket gør at den let kan monteres i et produktdesign\cite{MCE4500Datasheet}.
 
-Som mikrofon har vi tænkt os at benytte os af en "electret microphone"\cite{CompleteECMGuide}\cite{MCE4500Datasheetb} \footnote{\url{https://bekent.dk/mce-4500.html?gclid=Cj0KCQjwuL_8BRCXARIsAGiC51A8KKsYBFYi-5kmvFSPHIzzuJ2TXDr6Rnnl_QvKquKd7tBmXM7CuLgaAiHaEALw_wcB}}.
-Der er en risiko forbundet hertil, at den simpelthen ikke er præcis nok til konsistent at gengive frekvenser rimeligt, så der kan laves lydbehandling af den til en protokol til at styre robotterne. 
-En fordel er, at det er en simpel kondensator mikrofon, og vi i MSE har lært at designe forstærkere til kapacitive inputs.
-Dertil også, at vi selv kan modificere inputtet med de filtre af eget valg.
+
+Der er en risiko forbundet hertil, at den simpelthen ikke er præcis nok til konsistent at gengive frekvenser rimeligt, hvorved digital-lydbehandling er umulig.
+Tidligere forsøg\tbr har givet indblik i forstærkerdesign af kapacitive inputs.
+Da en electret mikrofon er en kondensatormikrofon kan dette drages til fordel.
+Dertil kommer også, at inputtet kan modificeres med filtre af eget valg.
+
+Hvis ovenstående mikrofon viser sig at være utilstrækkelig må andre mikrofontyper overvejes\tbr.
+
+\subsubsection{Analyse af lydgivere}
+\tbd En studerende fra DIEM\footnote{Dansk Institut for Elektronisk Musik - Det Jyske musikkonservertiorium} har leveret at optage en række lydfiler, der kan bruges til at afklare hvilke frekvensområder der er interessante.
+
 
 \subsection{Analog filterbehandling}
 \begin{itemize}
     \item Skal filtrere signalet fra netstøj og HF-støj før forstærkning. 
 \end{itemize}
 
-Her er et hav af muligheder for forskellige implementeringer. Som udgangspunkt vægter vi intet ripple i pasbåndet med ripple i stopbåndet til følge. Vi har vurderet, at det er mest risikabelt med ripple i pasbåndet. /tbr %(ikke enig i at vi vægtede noget)
+Her er et hav af muligheder for forskellige implementeringer, hvor nogle af de mulige er vist i \figref{Analyse/FilterResponse_AOE_f-6-30}. Som udgangspunkt vægtes et filter unden \emph{ripple} i pasbåndet, da dette kunne lede til problemer senere i signalkæden. Denne vægtning medføre at \emph{ripples} i stopbåndet vil accepteres.\tbr
 \fig{Analyse/FilterResponse_AOE_f-6-30}{1}{%
-\emph{Normalized frequency response graphs for the 2-, 4-, 6-, and 8-pole filters in Table 6.2. The Butterworth and Bessel filters are normalized to 3dB attenuation at unit frequency, whereas the Chebyshev filters are normalized to 0.5 dB and 2dB attenuations. As explained earlier, the top of the ripple band in the Chebyshev plots has been set to unity.} Figur lånt fra The Art of Electronics \cite[fig.~6.30]{Horowitz2015}}
+\emph{Normalized frequency response graphs for the 2-, 4-, 6-, and 8-pole filters in Table 6.2. The Butterworth and Bessel filters are normalized to 3dB attenuation at unit frequency, whereas the Chebyshev filters are normalized to 0.5 dB and 2dB attenuations. As explained earlier, the top of the ripple band in the Chebyshev plots has been set to unity.\tbd} Figur lånt fra The Art of Electronics \cite[fig.~6.30]{Horowitz2015}}
 
 
+Præcis hvilken type filter og orden studeres nærmere i designfasen---det er dog essentielt at et filter med et rent pasbånd bliver designet.Flere kilder viser at et filter af \acrlong{mfb}-typen er velegnet i en ADC forbindelse \cite[s.~413]{Horowitz2015}
+En fordel ved at vælge et MFB-filter er den store dæmpning i stopbåndet, dette er set i forhold til filtertyper\cite{ADCMFBTI} vist tidligere---en sammenligning af et MFB-filter og VCVS\tbr er vist i \figref{Analyse/MFB_bode_AOE_f-6-37}. Desuden findes en række applikationsnoter hvori MFB-filtre bruges i et ADC-konvertingsled\cite{OPA344Data}\tbr
 
-
-Præcis hvilken type filter og orden studeres nærmere i designfasen. Dog viser flere kilder at et MFB filter er velegnet i en ADC forbindelse \cite[s.~413]{Horowitz2015}
-En fordel ved at vælge et MFB-filter er den store dæmpning i stopbåndet, set i forhold til andre filtertyper\cite{ADCMFBTI}. Desuden findes en række applikationsnoter hvori MFB-filtre bruges i et ADC-konvertingsled. bruges\cite{OPA344Data}\tbr
 \fig{Analyse/MFB_bode_AOE_f-6-37}{1}{%
-\emph{The stopband attenuation of the MFB configuration is not much affected by rising op-amp output impedance (e.g., as seen in Figure 4.53), compared with that of the VCVS. However, you can mitigate the effect in the VCVS by using a second op- amp to create a buffered output from the signal at the op-amp’s noninverting input.} Figur lånt fra The Art of Electronics \cite[fig.~6.37]{Horowitz2015}}
+\emph{The stopband attenuation of the MFB configuration is not much affected by rising op-amp output impedance (e.g., as seen in Figure 4.53), compared with that of the VCVS. \textbf{However, you can mitigate the effect in the VCVS by using a second op- amp to create a buffered output from the signal at the op-amp’s noninverting input.\tbd}} Figur lånt fra The Art of Electronics \cite[fig.~6.37]{Horowitz2015}}
 \subsection{Spændingsforstærker}
 \begin{itemize}
     \item Skal forstærkere spændingen op til et niveau hvor en ADC kan registrere dette og konvertere til kvanticerede bits.
@@ -34,24 +41,27 @@ En fordel ved at vælge et MFB-filter er den store dæmpning i stopbåndet, set 
     \item Lav S/N ratio, \tbr skal defineres
     \item 100gg forstærkning \tbr
 \end{itemize}
-Generelt for de analoge kredsløb er der en risiko i, at strømforsyningen skal være meget stabil, da denne bruges som referencespænding til både signalet fra joysticket og mikrofonen. Altså betyder en afvigelse eller transient i strømforsyningen en afvigelse i kommandoen til robotterne, og man kan ikke vide sig sikker på om man er dårlig til spillet eller om strømforsyningen der sender transienter ud i kommandoprotokollen. 
+\subsection{Spændingsforsyning}
+Generelt for de analoge kredsløb er der en risiko i, at strømforsyningen skal være meget stabil, da denne bruges som referencespænding til både signalet fra joysticket og mikrofonen. Altså betyder en afvigelse eller transient i strømforsyningen en afvigelse i kommandoen til robotterne, og man kan ikke vide sig sikker på om man er dårlig til spillet eller om strømforsyningen der sender transienter ud i kommandoprotokollen. Der skal derfor der udarbejdes en stabil strømforsyning til styringsenheden, hvorfra det er muligt at udtrække en referencespænding samt forsyningspænding til filterkredsløbet. Erfaring viser at \emph{LM78xx}-serien fungere godt til dette formål og bør derfor undersøges nærmere\tbr. 
 
 
-\subsection{ADC}
+\subsection{ADC og Central Computer IF}
 \begin{itemize}
-    \item \tbr Opløsning?
+    \item \tbr Opløsning over 2x grænsefrekvens for lydsignal\tbr for at opfylde Nyquist betingelsen. 
 \end{itemize}
-\tbr Afhængig af om interfacet fra styringsenheden til central computer skal være analog eller digital, skal det analoge signal fra styringsenheden digitaliseres. 
-Der er en stor risiko i at designe ADC'erne selv, da der så skal tages hensyn til synkronisering af clocks m.m. Derfor vælges enten:
+\tbr Det analoge signal fra styringsenheden skal digitaliseres. Herefter skal dataen fra de forskellige ADC'er samles i et interface til Central Computer. Der er mange muligheder i dette interface, hvorfor vi har gjort os en del overvejelser. Den primære tanke er hhv. enten at implementere:
+
 \begin{itemize}
     \item et ADC board til RPi med op til 6 inputs (hhv. 2x joystick til X retning, 2x joystick til Y retning samt 2x mikrofon)
-    \item en mindst 6 kanals ADC (reference mcp3008) og så overføre dets output serielt til RPi på centralcomputeren, som så skal eksekvere kommandoer til SumoBots'ne på baggrund af dette. 
+    \item en mindst 6 kanals ADC (\tbr reference mcp3008) og så overføre dets output serielt til RPi på centralcomputeren, som så skal lave signalbehandling på dette for at give kommandoer til SumoBots'ne på baggrund af dette. 
 \end{itemize}
 
-Derfor har vi fundet et ADC board til vores Raspberry Pi Zero: \footnote{\url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}}. Fra ADC'en er der serielt interface, således disse data kan sendes til en device (central computer IF), hvor der kan laves digital signalbehandling på dataen. Dette lader sig gøre med, at man kan generere C kode ud fra Matlab. Ellers findes der også veldefinerede biblioteker til ovenstående ADC board. 
+Der findes et ADC board til Raspberry Pi Zero: \footnote{\url{https://www.abelectronics.co.uk/p/69/adc-pi-raspberry-pi-analogue-to-digital-converter}}. Fra ADC'en er der serielt interface, således disse data kan sendes til en device (central computer IF), hvor der kan laves digital signalbehandling på dataen. Til ovenstående ADC board findes der veldefinerede biblioteker til at lave device drivers. 
 
-\subsection{Central Computer IF}
-\begin{itemize}
-    \item blabla
-\end{itemize}
-data fra adc herind .. device applikation fra matlab eller bibliotek i Arduino???
+Der er dog den hale med dette ADC board, at samplingraten er alt for lav til audio (200 bps). Den ville nok kunne afdække inputs fra joysticket, men ikke fra mikrofonen. 
+Det samme gør sig gældende med fx. en Arduino Mega2560, som har 16 analoge inputs og mulighed for seriel kommunikation til RPi'en i Central Computer. \tbr Hvis samplingraten viser sig duelig ved test af Mega2560, kan man bruge arduinosproget til let opsætning og læsning af de analoge inputs samt lave fast fourier transform af lydsignalet fra mikrofonen ved hjælp af fft() funktionen heri for at opdele kommandoer i forskellige frekvensspektre. Praktisk set kan det vise sig bøvlet med endnu en microcontroller som bindeled mellem udgangen på styringsenheden og  RPi på Central Computer.
+
+En anden mulighed er at bruge Matlab til den digitale lydbehandling.
+Dette lader sig gøre med, at man kan generere C kode ud fra MATLAB, og derved lave en device driver på RPI'en på central computer\cite{MATLabDocCCode}. Inputtet til denne device skal så komme fra ovennævnte MCP3008\cite{MCP3008Data}. Således er der kun én IC som bindeled mellem udgangen på styringsenheden og RPi på Central Computer.
+
+Det kunne virke som om vi kommer til kort med serielle interfaces fra ADC til RPI. Dog har vi tænkt os at implementere en multiplexer i styringsenheden, således at der kun skal bruges 2 serielle interfaces ad gangen, hvilket en RPi Zero har to af (2 SPI interfaces mod 1 I2C interface, hvorfor der som udgangspunkt vælges SPI interface). Hvis det viser sig for besværligt kan man købe en seriel kommunikaiton "hat"/board til RPi for at udvide mængden af I2C interfaces.\tbr

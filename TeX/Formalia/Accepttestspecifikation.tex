@@ -1,10 +1,10 @@
 \section{Accepttestspecifikation}
-
+\tbr
 \subsection{Krav stillet af ASE}
-Se \tabref{ASE Krav}.
+Specifikation for test ses i \tabref{ASEKrav}.
 \begin{table}[]
 \centering
-\caption{Krav stillet af ASE}\label{tab:ASE Krav}
+\caption{Accepttest for: Krav stillet af ASE}\label{tab:ASEKrav}
 \begin{tabular}{c p{7cm}}\toprule
 \# & \textbf{Udførsel af test} \\ \midrule
 1 & Det konstateres hvorvidt systemet indeholder software indlejret på systemer som ikke er en PC (eksempelvis software på en mikrocontroller)\\\midrule
@@ -17,10 +17,10 @@ Se \tabref{ASE Krav}.
 \end{table}
 
 \subsection{Overordnede krav til til Robo-Sumo-Battle}
-
+Specifikation for test ses i \tabref{OverordnedeKrav}.
 \begin{table}[]
 \centering
-\caption{Overordnede krav}\label{tab:Overordnede krav}
+\caption{Accepttest for: Overordnede krav}\label{tab:OverordnedeKrav}
 \begin{tabular}{c p{7cm}}
 \# & \textbf{Udførsel af test} \\ \toprule
 1 & Det konstateres hvorvidt systemet understøtter minimum 2 spillere. Ved det forstås at der er minimum 2 controllerenheder som styrer hver sin SumoBot, såvel som at pointsystemet kan tælle point for minimum 2 spillere \\\midrule
@@ -31,10 +31,10 @@ Se \tabref{ASE Krav}.
 \end{table}
 
 \subsection{Krav til controllerne}
-
+Specifikation for test ses i \tabref{ControllerKrav}.
 \begin{table}[]
 \centering
-\caption{Krav til controlleren}\label{tab:Controller Krav}
+\caption{Accepttest for: Krav til controlleren}\label{tab:ControllerKrav}
 \begin{tabular}{c p{7cm}}
 \# & \textbf{Udførsel af test} \\ \midrule
 1 & Joystikket flyttes fremad og det konstateres hvorvidt SumoBot bevæger sig fremad. Det samme udføres for bagud, venstre og højre  \\\midrule
@@ -44,27 +44,26 @@ Se \tabref{ASE Krav}.
 \end{table}
 
 \subsection{Krav til spillebane}
-
+Specifikation for test ses i \tabref{Spilbanekrav}.
 \begin{table}[]
 \centering
-\caption{Krav til Spillebanen}\label{tab:ASE Krav}
+\caption{Accepttest for: Krav til Spillebanen}\label{tab:Spilbanekrav}
 \begin{tabular}{c p{7cm}}
 \# & \textbf{Udførsel af test} \\ \midrule
 1 & Da spillebanen er rund laves der et stykke snor på 75 cm. Den ene ende af snoren placeres i centrum af spillebanen, mens den anden ende føres langs kanten af spillebanen. Der noteres om snorens ende på noget tidspunkt er kortere end spillebanens kant. \\\midrule
 2 & Spille banen placeres på en overflade i vatter. Der findes et vatterpas mellem 1.3 og 1.5 meter. Dette placeres i midten af spillebanen og drejes hele vejen rundt om centrum. Der noteres om spillepladen på noget tidspunkt er ude af vatter.  \\\midrule
 
 3 &  Der findes en kalibreret vægt, med målenøjagtighed på +/- 200g. Alle spillets bestanddele placeres samlet på vægten. den viste vægt noteres\\\midrule
-
 \end{tabular}
 \end{table}
 
 \subsection{Krav til robotterne}
-
+Specifikation for test ses i \tabref{Robotkrav}.
 \begin{table}[]
 \centering
-\caption{Krav til Robotterne}\label{tab:ASE Krav}
+\caption{Accepttest for: Krav til Robotterne}\label{tab:Robotkrav}
 \begin{tabular}{c p{7cm}}
-\# & Udførsel af test \\ \midrule
+\# & \textbf{Udførsel af test} \\ \midrule
 1 & Der tegnes en 20 x 20 cm kvadratisk firkant på et stykke papir. Herefter placeres robotterne i firkanten, hvor der ses om de stikker ud over kanterne. Herefter måles højden af robotterne med en tommestok hvor der noteres om robotterne er højere end 20 cm. \\\midrule
 2 & Der laves en bane på gulvet med tape på 1.5 Meter. Herefter placeres de 2 robotter, fuld opladt, i hver sin ende af banen. Der udføres 4 tests hvor den ene robot med Maks hastighed køre den fulde banes længde inden den rammer den anden robot som holder stille i den anden ende af banen. For hver test vil den stillestående robot blive roteret 90 grader. Efter testen noteres der om der er kommet skader på nogle af bilerne. Og det hele gentages hvor robotterne bytter roller. \\\midrule
 3 & Der opmåles en 3 meters strækning med målebånd på gulvet. Robotten startes med fuld opladt batteri og køres ved Maks hastighed i 1 minut. Herefter placeres robotten med fronten væk fra banen i den ene ende af den 3 meter strækning opmålt, mens senderen placeres i den anden ende. Herefter noteres der om det er muligt for robotten at modtage en kommando om at køre fremad væk fra senderen. Dette gentages for den anden robot \\\midrule
@@ -73,6 +72,5 @@ Se \tabref{ASE Krav}.
 5 & Robotten placeres, fuld opladt, på gulvet, hvor den vil med Maks hastighed køre fremad for 3 minutter. Dette gentages for den anden robot og der noteres om den stopper før de 3 minutter er gået. \\\midrule
 6 & Der opmåles 10.cm på en væg fra laminatgulvet, og markeres med f.eks. tape. Herefter tages robotterne og anbringes med deres laveste punkt over den opmålte højde, og lader dem falde i frit fald ned på laminatgulvet. Robotterne skal være fuld funktionelle efter testen.  \\\midrule
 7 & Robotten anbringes, fuld opladt, på gulvet, og kører herefter med Maks hastighed for 1 minut. Robotten anbringes herefter inden for 3 meter af senderen. Der optages en video på 30 FPS, af en spiller der anvender controlleren til at henholdsvis køre frem, tilbage, og til siderne med 4 sekunders mellemrum. Herefter anvendes FPS i videoen til at udregne reaktionstiden fra brugeren anvender kontrolleren til robotten reagerer på kommandoen. \\\midrule
-
 \end{tabular}
 \end{table}
