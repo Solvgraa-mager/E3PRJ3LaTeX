@@ -26,14 +26,14 @@ Hvis ovenstående mikrofon viser sig at være utilstrækkelig må andre mikrofon
 
 Her er et hav af muligheder for forskellige implementeringer, hvor nogle af de mulige er vist i \figref{Analyse/FilterResponse_AOE_f-6-30}. Som udgangspunkt vægtes et filter unden \emph{ripple} i pasbåndet, da dette kunne lede til problemer senere i signalkæden. Denne vægtning medføre at \emph{ripples} i stopbåndet vil accepteres.\tbr
 \fig{Analyse/FilterResponse_AOE_f-6-30}{1}{%
-\emph{Normalized frequency response graphs for the 2-, 4-, 6-, and 8-pole filters in Table 6.2. The Butterworth and Bessel filters are normalized to 3dB attenuation at unit frequency, whereas the Chebyshev filters are normalized to 0.5 dB and 2dB attenuations. As explained earlier, the top of the ripple band in the Chebyshev plots has been set to unity.\tbd} Figur lånt fra The Art of Electronics \cite[fig.~6.30]{Horowitz2015}}
+    \emph{Normalized frequency response graphs for the 2-, 4-, 6-, and 8-pole filters in Table 6.2. The Butterworth and Bessel filters are normalized to 3dB attenuation at unit frequency, whereas the Chebyshev filters are normalized to 0.5 dB and 2dB attenuations. As explained earlier, the top of the ripple band in the Chebyshev plots has been set to unity.\tbd} Figur lånt fra The Art of Electronics \cite[fig.~6.30]{Horowitz2015}}
 
 
 Præcis hvilken type filter og orden studeres nærmere i designfasen---det er dog essentielt at et filter med et rent pasbånd bliver designet.Flere kilder viser at et filter af \acrlong{mfb}-typen er velegnet i en ADC forbindelse \cite[s.~413]{Horowitz2015}
 En fordel ved at vælge et MFB-filter er den store dæmpning i stopbåndet, dette er set i forhold til filtertyper\cite{ADCMFBTI} vist tidligere---en sammenligning af et MFB-filter og VCVS\tbr er vist i \figref{Analyse/MFB_bode_AOE_f-6-37}. Desuden findes en række applikationsnoter hvori MFB-filtre bruges i et ADC-konvertingsled\cite{OPA344Data}\tbr
 
 \fig{Analyse/MFB_bode_AOE_f-6-37}{1}{%
-\emph{The stopband attenuation of the MFB configuration is not much affected by rising op-amp output impedance (e.g., as seen in Figure 4.53), compared with that of the VCVS. \textbf{However, you can mitigate the effect in the VCVS by using a second op- amp to create a buffered output from the signal at the op-amp’s noninverting input.\tbd}} Figur lånt fra The Art of Electronics \cite[fig.~6.37]{Horowitz2015}}
+    \emph{The stopband attenuation of the MFB configuration is not much affected by rising op-amp output impedance (e.g., as seen in Figure 4.53), compared with that of the VCVS. \textbf{However, you can mitigate the effect in the VCVS by using a second op- amp to create a buffered output from the signal at the op-amp’s noninverting input.\tbd}} Figur lånt fra The Art of Electronics \cite[fig.~6.37]{Horowitz2015}}
 \subsection{Spændingsforstærker}
 \begin{itemize}
     \item Skal forstærkere spændingen op til et niveau hvor en ADC kan registrere dette og konvertere til kvanticerede bits.

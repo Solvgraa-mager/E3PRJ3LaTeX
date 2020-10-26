@@ -4,45 +4,36 @@
 \subsubsection{Interfacebeskrivelse}
 
 \begin{table*}[]
-\centering
-    \caption{Interfacebeskrivelse for SumoBot}
-    \label{tab:interface_table_SumoBot}
-    \begin{tabular}{lp{5cm}p{7cm}}\toprule
-        \textbf{Navn}              & \textbf{Type}                & \textbf{Beskrivelse}                                                                                                            \\
-        in/out robotKom      & SumoBotKom                          & txt                                                                                             \\
-        in/out robotKom       & SumoBotKom                         & txt.& 
-                 \\
-        in påkørsel           & Force                               & txt                                                                                             \\
-        out PåkørtSignal      & digital                            & txt.&                                                                                              \\
-        in MC powerin        & DC                                   & 5V leveret af PSU 
-                 \\
-        in/out robotKom      & SumoBotKom                          & txt                                                                                              \\
-        påkærselRegistrerin  & Digital                             & txt                                                                                              \\
-        out motorCmdOutLeft  & Seriel                               & txt 
-                 \\
-        out motorCmdOutRight & Seriel                              & txt.&                                                                                          \\
-        in motorCommandinLeft      & Seriel                        & txt                                                                                              \\
-        in motorCommandInRight   & Seriel                          & txt 
-                 \\
-        in powerIn               & DC                              & txt 
-                 \\
-        out motorCtrOut[2]      & PWM                             & txt.&                                                                                          \\
-        in motorCtrIn[2]         & PWM                               & txt 
-                \\
-        out motorTorqueOut    & torque                               & txt.& 
-                \\
-        in ChargePowerIn       & DC                               & txt 
-                \\
-        out powerOut           & DC                              & txt.& 
-                 \\
-        in PowerIn             & DC                               & txt 
-                \\
-        out PowerOut             & DC                               & txt 
-                \\
-        out MC powerOut        & DC                               & 5V forsyning 
-                \\
+        \centering
+        \caption{Interfacebeskrivelse for SumoBot}
+        \label{tab:interface_table_SumoBot}
+        \begin{tabular}{lp{5cm}p{7cm}}\toprule 
+                \textbf{Navn}          & \textbf{Type} & \textbf{Beskrivelse}                      \\
+                in/out SumoBotKom      & SumoBotKom    & WiFi\tbr signal fra Central Computer.     \\
+                in/out SumoBotCMD      & SumoBotCMD    & Signal til Microkontroller.               \\
+                
+                in pakoersel            & Force         & Fysisk påvirkning fra omverdenen.        \\
+                out pakoerselSignal     & digital       & Logisk I/O signal.                       \\
+                
+                pakoerselRegistrerin    & Digital       & Logisk I/O signal.                       \\
+                out motorCmdOutLeft    & Seriel        & Signal til motorstyring om venstre motor. \\
+                out motorCmdOutRight   & Seriel        & Signal til motorstyring om højre motor.   \\
+                
+                in motorCommandinLeft  & Seriel        & Signal til motorstyring om venstre motor. \\
+                in motorCommandInRight & Seriel        & Signal til motorstyring om højre motor.   \\
+                out motorCtrOut[2]     & PWM           & PWM signal til motor.                     \\
+                
+                in motorCtrIn[2]       & PWM           & PWM signal til motor.                     \\
+                out motorTorqueOut     & torque        & Energi fra motor til hjul.                \\
+                
+                in ChargePowerIn       & DC            & DC strøm fra oplader til batteri.         \\
+                in powerBat            & DC            & 12V\tbr fra batteri.                      \\
+                in MCPower             & DC            & 5V Forsyning.                             \\
+                out PowerOut           & DC            & 5V forsyning.                             \\
+                
+                
                 \bottomrule
-    \end{tabular}%
+        \end{tabular}%
 \end{table*}
 
 
@@ -214,6 +205,6 @@ Under 1. semesterprojekt, hvor vi også skulle bygge en bil, fik vi givet et cha
 Denne gang står vi uden færdigbygget karosse, og vi ser to muligheder:
 \begin{enumerate}
     \item Vi tegner en model i et 3D-værktøj og får det CNC-fræset af Rasmus Elm fra Protolab\footnote{https://ase.au.dk/om-ingenioerhoejskolen/laboratorier-og-vaerksteder/katrinebjerg/protolab-shannon/}. Da ingen i gruppen har erfaring i at tegne i 3D-programmer, kan der være en stejl indlæringskurve, altså at processen er langsommelig, og vi ikke ønsker at bruge for meget tid på noget, der egentlig ikke er det vi bliver bedømt på. % Jeg har erfaring, dog ikke i Solidworks - Adam
-\item Vi søger i genbruger og andre butikker efter en allerede eksisterende bil, der overholder vores fysiske kriterier. Vi kan herefter afmontere div. dele, hvorved et bart karosseri med motor, aksler og hjul er klar til berarbejdelse.
+\item Søgen i genbruger og eller andre butikker efter en allerede eksisterende bil, der overholder de fysiske kriterier for dimensioner. Der kan herefter afmonteres diverse dele, hvorved et bart karosseri med motor, aksler og hjul er klar til berarbejdelse.
 \end{enumerate}
 Sidstnævnte mulighed kan spare os for meget arbejde. Der er dog en hvis risiko hvis vi "satser" på dette valg, i og med at der er en sandsynlighed for at vi ikke kan finde noget køretøj, der tilfredsstiller vores ønsker og overholder de krav vi har fået stillet.
