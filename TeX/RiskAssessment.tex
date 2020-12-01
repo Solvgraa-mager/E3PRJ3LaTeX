@@ -1,0 +1,38 @@
+\chapter{Risk Assessment}
+
+Arbejdet med risikoanalyse er dels foregået på et overordnet plan hvor potentielle risici for projektet som helhed er identificeret, såvel som et mere blokspecifikt plan, hvor risici for specifikke blokke er identificeret. Disse er naturligvis identificeret med henblik på at minimere disse.
+
+Den egentlige risikoanalyse som ses i \ref{Table:Risk_Assessment} er udarbejdet i forlængelse af struktur-afsnittet hvor de første tanker om analyseafsnittet har været påbegyndt, således at risici er blevet identificeret tidsligt for at kunne forebygge dem tidligst muligt, men ikke tidligere end der eksisterede et overblik over projektet. Det sagt, er identificering af yderligere potentielle risici naturligvist et fortløbende arbejde, ligesom risikominimeringen vil strække sig hele vejen igennem projektet. 
+
+
+\begin{landscape}
+\begin{table}[]
+\caption{Risk Assessment}
+\label{Table:Risk_Assessment}
+\centering
+\small
+% \begin{tabular}{p{0.1\textwidth}|p{0.3\textwidth}|p{0.05\textwidth}|p{0.05\textwidth}|p{0.05\textwidth}|p{0.3\textwidth}}
+\begin{tabular}{
+p{0.1\linewidth} % Blok
+p{0.25\linewidth} % Desc
+p{0.08\linewidth} % Prob.
+p{0.09\linewidth} % Cons.
+p{0.05\linewidth} % Impact 
+p{0.3\linewidth} % Plan
+}
+\textbf{Blok}& \textbf{Description}& \textbf{Probability} & \textbf{Consequence} & \textbf{Impact} & \textbf{Risk Mitigation Plan}                                                                                                                                                        \\\midrule
+Processor        & Vi stiller krav til   processorkraft som ikke kan køre på et embedded system (2xDFT med lille   tidsinterval imellem, wifi, spilstyring mv.) & 2           & 3           & 6      & Krav til processorkraften   overvejes nøje når der vælges processor. Hvis de simultane DFT analyser er en   udfordring overvejes om dette skal foregå på sin egen processor. \\\cmidrule(lr){1-6}
+SumoBot IF       & Det lykkedes ikke at overføre   data mellem SumoBot og Central Computer vha. Wifi                                                            & 3           & 5           & 15     & Vi kontakter vejleder og eller   undervisere, der har kendskab til socketprogrammering                                                                                       \\\cmidrule(lr){1-6}
+SumoBot IF       & Wifi er for ustabilt til kravet   om konstant overføring af information                                                                      & 1           & 5           & 5      & Vi kontakter vejleder og eller   undervisere, der har kendskab til WiFi                                                                                                      \\\cmidrule(lr){1-6}
+Display          & Viser ikke den ønsket   information.                                                                                                         & 2           & 2           & 4      & Spilinformation omlægges til at   vises gennem LED'er                                                                                                                        \\\cmidrule(lr){1-6}
+Styrings-enhed IF & Mikrofonens output er for   udefinerbart til at kunne styre en SumoBot med                                                                   & 3           & 4           & 12     & Mikrofonens output analyseres i   blokken "styringsenhed" hvor der er flere resourcer til at omdanne   til et brugbart input                                                 \\\cmidrule(lr){1-6}
+Overordnet       & De individuelle delblokke kan   ikke forbindes til et samlet system                                                                          & 3           & 3           & 9      & Delgrupperne i projektgruppen   har løbende kommunikation og tilpasser delblokkende med hinanden.                                                                            \\\cmidrule(lr){1-6}
+Overordnet       & Omfanget af SumoBot er for stort   til at kunne nås på den afsatte tid                                                                       & 3           & 3           & 9      & Løbende evaluering og tilretning   af ønsket til endeligt produkt                                                                                                            \\\cmidrule(lr){1-6}
+ADC              & Det er ikke muligt at sende data   pga for mange bitfejl                                                                                     & 1           & 5           & 13     & Vi bruger den frivillige øvelse   i MSE på at få indsigt i ADC'er                                                                                                            \\\cmidrule(lr){1-6}
+Mikrofon         & Blokfløjtens frekvensspekter er   for snæver til at kunne generere veldefinerede outputs                                                     & 3           & 2           & 6      & Der undersøges andre lydkilder                                                                                                                                               \\\cmidrule(lr){1-6}
+PSU              & PSU støjer og transienter   forstyrrer styringsenhed protokollen                                                                             & 3           & 5           & 7      & Vejledere og undervisere med   kendskab til PSU'er kontaktes. Alternativt bruges batteri eller købes/lånes   velfungerende PSU'er                                            \\\cmidrule(lr){1-6}
+Overordnet       & Omfanget af spillets realisering   kræver håndværksmæssige kompetencer som vi ikke besidder                                                  & 2           & 5           & 10     & Der søges hjælp på værkstedet i   Shannon eller hos bekendte                                                                                                                 \\\cmidrule(lr){1-6}
+Mikrofon         & Støj fra fysiske omstændigheder   (menneskesnak, musik) gør analyse af mikrofon inputtet umuligt                                             & 3           & 5           & 15     & Der søges om rådgivning i   AUDIOlab. Der afsættes tid til at lave akustisk regulering til mikrofon   inputtet.            \\\bottomrule                                                 
+\end{tabular}
+\end{table}
+\end{landscape}

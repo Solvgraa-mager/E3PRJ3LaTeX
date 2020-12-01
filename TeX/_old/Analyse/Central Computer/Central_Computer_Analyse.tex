@@ -1,0 +1,95 @@
+\section{Central Computer Analyse}
+
+\subsection{Processor}
+\textcolor{red}{Vi har nok behov for at tilføje en processor til BDD'et}
+Til styringsenheden er behov for en processor, som opfylder følgende krav: 
+\begin{itemize}
+\item Skal kunne opbevare information om spillets status (liv, tid mv.) 
+\item Skal kunne drive et Linux platform
+\item Skal kunne agere access point for vores trådløse forbindelse 
+\item Skal kunne behandle input fra styringsenhederne
+\end{itemize}
+
+Til denne del af systemet vil derfor blive brugt en Raspberry Pi Zero W, med en Linux distribution kaldet "Golden Ase" udviklet af Aarhus Universitet. Distributionen er en version af Linux distributionen Poky (V. 3.1.2 / Dunfell) og som er bygget på Linux Kernelen 5.4.51. Denne distribution gør det let at kommunikere gennem SSH med RPien og er veldokumenteret, uden behov for ekstra skærm. Golden Ase-distributionen er i øvrigt født med en websocket server. 
+RPIen er dog ikke født med ADC, hvorfor inputtet til denne må være digitalt allerede fra styringsenheden. 
+
+\subsection{Styringsenhed IF}
+\textcolor{red}{Mangler afklaring}
+
+\subsection{SumoBot IF}
+Til at kommunikere med SumoBot skal der kortlægges både en passende teknologi og de første linjer for en protokol. 
+
+\subsubsection{Teknologi}
+Det er fastlagt gennem kravspecifikationen at vi skal bruge trådløs kommunikation, der som minimum skal kunne kommunikere på afstande >2-3 meter. Rasperry Pi er født med hardware som kan varetage kommunikation over både Bluetooth og WiFi. 
+Både Wifi, Bluetooth og RF-kommunikation er blevet overvejet og RF-kommunikation er hurtigt blevet fravalgt grundet behovet for ekstra moduler tilkoblet vores RPi. Wifi er blevet valgt fremfor Bluetooth da det er en teknologi som gruppens medlemmer på forhånd er fortrolige med. Trådløs kommunikation er ikke et vigtigt læringsmål og ej heller et område som vi tidligere har beskæftiget os betydeligt med, hvorfor vi vil benytte os af frameworks i videst mulig udstrækning. 
+
+\textbf{Forbindelse}\newline
+Forbindelsen mellem Central Computer og SumoBot vil lavpraktisk basere sig på at Central Computer laver et access point (AP) ved opstart. Begge SumoBots vil ved opstart koble sig på dette access point og således have en direkte forbindelse til Central Computeren. 
+
+\textbf{Kommunikationen}\newline
+Kommunikationen vil foregå vha. websockets, hvor Central Computer vil agere server og SumoBot's vil agere clients - dette fordi det primært er Central Computer som skal give besked til SumoBot i form af kommandoer omkring hastighed og retning. Der vil dog også skulle kommunikeres fra SumoBot til Central Computer omkring angreb og hvorvidt en SumoBot har forladt banen. 
+
+\textbf{Websocket}\newline
+Websocket en en realtime, fulyduplex kommunikations protokol, der gør det muligt at sende og modtage data mellem en server og klient samtidigt. Klienten behøver kun at anmode om forbindelse til searveren en enkelt gang, for at der kan overføres en konstant strøm af data fra og til searveren. Altså dette gør det muligt for begge sumobot og centralcomputeren at være i konstant kommunikations udveksling. Til forskel for HTTP protokollen, hvor en klient skal oprette forbindelse til searveren hver gang ny data skal læses eller sende, Aka web-browseren skal refreshes. Sker dette real time med websocket. Robo-Sumo-Battle er et real time brætspil, Derfor benyttes websocket.
+
+\subsubsection{Protokol}
+Protokollen som beskriver retning og hastighed vil være en ganske simpel streng sammensat af retning og hastighed og vil blive defineret. 
+
+\subsubsection{Trådløs Modul}
+RPI Zero W er født med en bcm43438-chip som er fuldt understøttet af Linux og som vil blive benyttet til at lave access pointet. 
+
+\subsection{Display}
+Til at formidle antallet af resterende liv hos de to modstandere benyttes der et display. Som display er der undsøgt henholdsvis LCD, 7segment og LED, hvori hver løsning tildeles fordele og ulemper. Sidst konkluderes der hvorfor \textbf{LCD 16X2. HD44780 driver} er blevet valgt.
+\newline
+mangler ref:\\
+https://www.circuitbasics.com/raspberry-pi-lcd-set-up-and-programming-in-c-with-wiringpi/\\
+
+
+Fordele: 
+\begin{itemize}
+\item Der findes mange c-biblioteker til brugen af et LCD display. 
+\item Der er mulighed for at vise små grafikker som ultimativt giver større nice-faktor
+\item Skærmen kan vise 32 karaktere ad gangen.
+\item Det er muligt at øge overføringshastigheden af data til skærmen, fra 4 bit til 8 bit ved at benytte yderligere 4 GPIO pins.
+\end{itemize}
+
+Ulemper: 
+\begin{itemize}
+\item LCD displayet benytter 6 GPIO's fra microprocessoren.
+\end{itemize}
+
+\textbf{7-segment}
+Fordele: 
+\begin{itemize}
+\item Vi har erfaring med brug af 7-segmentsdisplay
+\item Der er et relativt småt strømforbrug ved brug af 7-segmentsdisplay 
+\end{itemize}
+% Kender I denne ? 74HC595 Shift Register - tilgængelig via ASE Lager.
+% Sammen med n antal resistor arrays kan en enkelt opsætning laves.
+% "Driving a Single Digit 7 Segment LED Display requires 8 I/O pins. Using a 74HC595 shift register only requires 3."
+Ulemper: 
+\begin{itemize}
+\item Der er en lille nice-faktor ved brug af 7-segmentsdisplay. 
+\item 7-segmentsdisplayet skal bruge 10 forbindelser (5 ved brug af std. driver)
+\item Der skal benyttes ihvertfald 2 x 7-segments displays hos hver modstander = 4 stk. total, hvilket kræver mange forbindelser. 
+\end{itemize}
+
+\textbf{LED} \newline
+Fordele: 
+\begin{itemize}
+\item Det er enormt simpelt at tænde og slukke LED's forbundet til GPIO's
+\item Det er nemt at se på afstand hvor mange resterende liv hver modstander har
+\end{itemize}
+
+Ulemper: 
+\begin{itemize}
+\item Det er svært at demonstrere resterende tid på en intuitiv måde
+\item Brugen af GPIO's bliver høj
+\item Igen er nice-faktoren ekstrem lav ved brug af LED'er
+\end{itemize}
+
+\subsubsection{Konklusion}
+I denne del af systemet vægtes nice-faktoren højt, da displayet kommer til at få stor opmærksomhed fra både spillere og tilskuere. Det vægtes også højt at brugen af GPIO's er begrænset. Derfor besluttes at benytte LCD displayet af typen \textit{'LCD 16X2. HD44780 driver'}. Der er en mindre risiko forbundet med brugen af LCD-displayet da vi ikke tidligere har brugt dette, men til gengæld er der meget information at hente på nettet omkring brugen af dette specifikke display. 
+
+\subsubsection{Point-Modul}
+\textcolor{red}{Simon: Dette modul virker ikke til at være et hardware modul. Nogle indsigelser mod at fjerne det?} 

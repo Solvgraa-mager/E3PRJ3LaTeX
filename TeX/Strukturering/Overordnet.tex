@@ -1,0 +1,68 @@
+\section{Robo-Sumo-Battle Strukturering}\label{sec:CC:Strukturering}
+
+For Robo-Sumo-Battle er der udviklet struktur som illustreres ved \figref{Diagrammer/BDD's/OverordnetBDD.png}, og \figref{Strukturering/Robo-Sumo-Battle/IBD_Robo_sumo_battle.pdf}. 
+Delblokkene og interfaces imellem disse, som skitseret i IBDet \figref{Strukturering/Robo-Sumo-Battle/IBD_Robo_sumo_battle.pdf} er yderligere beskrevet i blokbeskrivelsen som findes i 
+\tabref{blok_table_Robo-Sumo-Battle_blokbeskrivelse}
+
+\fig{Diagrammer/BDD's/OverordnetBDD.png}{0.75}{Robo-Sumo-Battle BDD}
+\fig{Strukturering/Robo-Sumo-Battle/IBD_Robo_sumo_battle.pdf}{1}{Robo-Sumo-Battle IBD}
+
+
+
+% \begin{SignalDescription}{Robo-Sumo-Battle}{Robo-Sumo-Battle_signalbeskrivelse}
+%     \signalbeskrivelse{spillersAntast}{Kraft}{Spillerens fysiske manipulering af joystikket til styring af en SumoBot}
+%     \signalbeskrivelse{spillersLyd}{Lyd}{Spillerens fysiske lydinput. Herunder lyd fra fløjte, stemme, mv.}
+%     \signalbeskrivelse{Display}{Lys}{Displayets løbende information omkring spilstatus (resterende liv, resterende spilletid mv.)}
+%     \signalbeskrivelse{motorDrive}{Torque}{Motorkraften som fysisk får SumoBot til at bevæge sig på banen}
+%     \signalbeskrivelse{Styringsprotokol}{SPI}{Digitalt samplet signal af det valgte styringsinput (lyd eller joystick) fra styringsenheden}
+%     \signalbeskrivelse{SumoKom}{Wifi}{Tovejskommunikation med SumoBot's hvor der sendes information omkring retning og hastighed og modtage information om et evt. angreb}
+%     \signalbeskrivelse{RobotAngreb}{Force}{Et fysisk angreb fra en SumoBot til en anden}
+% \end{SignalDescription}
+
+
+
+\begin{BlokDescription}{Robo-Sumo-Battle}{Robo-Sumo-Battle_blokbeskrivelse}
+%\Blokbeskrivelse{Bloknavn}{Funktion}
+%\Portbeskrivelse{Portnavn}{Type}{Beskrivelse}
+%%%%%%%%%%%%%%
+\Blokbeskrivelse{Styringsenhed}{Omdanner fysisk lyd og joystick påvirkning til data Central Computeren kan læse.}
+\Portbeskrivelse{In SpilleresAntast}{Kraft}{Spillerens fysiske manipulering af joysticket}{
+\item 
+\item 
+}
+\Portbeskrivelse{In SpillersLyd}{Lyd}{Spillerens fysiske lyd fra stemme eller fløjte}{
+\item 
+\item 
+}
+\Portbeskrivelse{Out Styringsprotokol}{SPI}{Digitalt samplet signal af det valgte styringsinput (lyd el-ler joystick) til Central Computer}{
+\item 
+\item 
+}
+%%%%%%%%%%%%
+
+\Blokbeskrivelse{Central Computer}{Vidergiver information fra Styringsenhed til Sumobot, trådløst. Informere spillerene om spillets status. Liv, nedtælling etc.}
+\Portbeskrivelse{In Styringsprotokol}{SPI}{Digitalt samplet signal af det valgte styringsinput (lyd el-ler joystick) fra styringsenheden}{
+\item 
+\item 
+}
+\Portbeskrivelse{Out Display}{Lys}{Displayets løbende information til spillerne omkring spilstatus (re-sterende liv, resterende spilletid mv.)}{
+\item 
+\item 
+}
+\Portbeskrivelse{Inout SumoKom}{Wifi}{Tovejskommunikation  med  SumoBot’s  hvor  der  sendesinformation omkring retning og hastighed og modtage in-formation om et evt. angreb}{
+\item 
+\item 
+}
+%%%%%%%%%%%%
+
+\Blokbeskrivelse{SumoBot}{Omdanner styringsinfotmation fra Central Computeren, til bevægelse. Informere Centralcomputer om liv er mistet}
+\Portbeskrivelse{Inout SumoKom}{Wifi}{Tovejskommunikation  med  Central  Computer  hvor  dermodtages information omkring retning og hastighed ogsendes information om et evt. angreb}{
+\item 
+\item 
+}
+\Portbeskrivelse{Inout RobotAngreb}{Force}{}{
+\item 
+\item 
+}
+\end{BlokDescription}
+

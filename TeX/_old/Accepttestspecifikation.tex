@@ -1,0 +1,165 @@
+%%%%%%%%%%%%%%%%%
+% 2020/10/24
+% Jeg har tilladt mig at "rydde" op i koden her, ved at tage udgangspunkt i UseCase.sty - Der er lavet et nyt environment \begin{acceptkravspec}{Navn}{label}
+% Her i kan \krav{Kravtest} skrives. - Se Grp6_tabels for mere info.
+%%%%%%%%%%%%%%%%%
+
+\section{Accepttestspecifikation}
+\tbr
+\subsection{Krav stillet af ASE}
+Specifikation for test ses i \tabref{ASEKrav}.
+
+\begin{acceptkravspec}{Krav stillet af ASE}{ASEKrav}
+      \acceptkrav{Det konstateres hvorvidt systemet indeholder software indlejret på systemer som ikke er en PC (eksempelvis software på en mikrocontroller)}
+      \acceptkrav{Det konstateres hvorvidt en systemet gør brug af en aktuator hvorved der forstås et element som påvirker de fysiske omgivelser, som eksempelvis en DC- eller stepper-motor}
+      \acceptkrav{Det konstateres hvorvidt systemets fysisk adskilte dele (eksempelvis SumoBot og Bil-kontrol) kommunikerer}
+      \acceptkrav{Det konstateres hvorvidt minimum et af de indlejrede systemer bruger Linux som styresystem}
+      \acceptkrav{Det konstateres hvorvidt minimum et PSoC komponent bruges som en del af systemet}
+\end{acceptkravspec}
+
+\subsection{Overordnede krav til til Robo-Sumo-Battle}
+Specifikation for test ses i \tabref{OverordnedeKrav}.
+\begin{acceptkravspec}{Overordnede krav}{OverordnedeKrav}
+      \acceptkrav{Det konstateres hvorvidt systemet understøtter minimum 2 spillere. Ved det forstås at der er minimum 2 controllerenheder som styrer hver sin SumoBot, såvel som at pointsystemet kan tælle point for minimum 2 spillere.}
+      \acceptkrav{Gameplay-modulet implementeres således at det visuelt kan identificeres når en SumoBot overskrider spilbanens kant. Herefter styres alle SumoBots som er en del af systemet, ud over spilkantens afgrænsning (4 vilkårlige steder, så langt fra hinanden som muligt), og det bekræftes at systemet har opfattes deres overskridelse af spillebanens kant på baggrund af den visuelle idenficiering.}
+      \acceptkrav{Ved understøttelse af mere end to spillere slækkes accepttesten til at indbefatte at mere end én spiller, på hver af 2 hold, kan deltage aktivt i styringen af det respektive holds SumoBot. Det konstateres hvorvidt dette er muligt som en naturlig del af spillet.}
+      \acceptkrav{En spiltilstand defineres som en måde at spille på, med hvert sit særlige mål. Det konstateres om der er beskrevet mere end én måde at spille på og der gennemføres et spil af hver spiltilstand.}
+\end{acceptkravspec}
+
+\subsection{Krav til controllerne}
+Specifikation for test ses i \tabref{ControllerKrav}.
+\begin{acceptkravspec}{Krav til styringsenheden}{ControllerKrav}
+      \acceptkrav{Joystikket flyttes fremad og det konstateres hvorvidt SumoBot bevæger sig fremad. Det samme udføres for bagud, venstre og højre}
+      \acceptkrav{Der udarbejdes særskilt testsoftware som på en PC kan gengive det dominerende frekvensindhold i spektret 300Hz - 3000Hz. Herefter testes om frekvenserne 300Hz, 400Hz, 500Hz, 1200Hz, 1800Hz, 2500Hz, 2800Hz, 2900Hz, 3000Hz genkendes. Frekvenserne dannes som sinusbølger og afspilles ved 75dB +/- 5 dB, 20 cm. fra controllerens mikrofon.}
+      \acceptkrav{Der udarbejdes særskilt testsoftware som på en PC kan gengive det dominerende frekvensindhold i spektret 300Hz - 3000Hz. Dette testsoftware kan også indikere om amplituden er høj nok til at spillet bør reagere på det. Der testes med lyd som afspiller 20 cm fra controllerens mikrofon på hhv. 30 dB, 35 dB, 40 dB, 45 dB, 50 dB, 55 dB, 60 dB. For værdier >50 dB forventes indikation fra softwaren om at der ingen tilstrækkeligt høje lyde er.}
+\end{acceptkravspec}
+
+\subsection{Krav til spillebane}
+Specifikation for test ses i \tabref{Spilbanekrav}.
+\begin{acceptkravspec}{Krav til Spillebanen}{Spilbanekrav}
+      \acceptkrav{Da spillebanen er rund laves der et stykke snor på 75 cm. Den ene ende af snoren placeres i centrum af spillebanen, mens den anden ende føres langs kanten af spillebanen. Der noteres om snorens ende på noget tidspunkt er kortere end spillebanens kant.}
+      \acceptkrav{Spille banen placeres på en overflade i vatter. Der findes et vatterpas mellem 1.3 og 1.5 meter. Dette placeres i midten af spillebanen og drejes hele vejen rundt om centrum. Der noteres om spillepladen på noget tidspunkt er ude af vatter.}
+      \acceptkrav{Der findes en kalibreret vægt, med målenøjagtighed på +/- 200g. Alle spillets bestanddele placeres samlet på vægten. den viste vægt noteres}
+\end{acceptkravspec}
+
+\subsection{Krav til robotterne}
+Specifikation for test ses i \tabref{Robotkrav}.
+\begin{acceptkravspec}{Krav til Robotterne}{Robotkrav}
+      \acceptkrav{Der tegnes en 20 x 20 cm kvadratisk firkant på et stykke papir. Herefter placeres robotterne i firkanten, hvor der ses om de stikker ud over kanterne. Herefter måles højden af robotterne med en tommestok hvor der noteres om robotterne er højere end 20 cm.}
+      \acceptkrav{Der laves en bane på gulvet med tape på 1.5 Meter. Herefter placeres de 2 robotter, fuld opladt, i hver sin ende af banen. Der udføres 4 tests hvor den ene robot med Maks hastighed køre den fulde banes længde inden den rammer den anden robot som holder stille i den anden ende af banen. For hver test vil den stillestående robot blive roteret 90 grader. Efter testen noteres der om der er kommet skader på nogle af bilerne. Og det hele gentages hvor robotterne bytter roller.}
+      \acceptkrav{Robotten vejes, og vægten noteres hvorvidt vægtkravet på maks 2,5 kg, overholdes.}
+      \acceptkrav{Der opmåles en 3 meters strækning med målebånd på gulvet. Robotten startes med fuld opladt batteri og køres ved Maks hastighed i 1 minut. Herefter placeres robotten med fronten væk fra banen i den ene ende af den 3 meter strækning opmålt, mens senderen placeres i den anden ende. Herefter noteres der om det er muligt for robotten at modtage en kommando om at køre fremad væk fra senderen. Dette gentages for den anden robot.}
+      \acceptkrav{Robotterne placeres, fuld opladt, vandret med fronten mod en lodret 90 graders flade, på minimum 30*30 cm. f.eks. gulv og væg. Herefter sættes robotterne til at køre med Maks hastighed fremad for 1 minut mens strømmen gennem motorene måles. SumoBot må ikke ændre placering under testen. Der noteres om strømmen overskrider hvad databladet angiver som max.}
+      \acceptkrav{Robotten placeres, fuld opladt, på gulvet, hvor den vil med Maks hastighed køre fremad for 3 minutter. Dette gentages for den anden robot og der noteres om den stopper før de 3 minutter er gået.}
+      \acceptkrav{Der opmåles 10.cm på en væg fra laminatgulvet, og markeres med f.eks. tape. Herefter tages robotterne og anbringes med deres laveste punkt over den opmålte højde, og lader dem falde i frit fald ned på laminatgulvet. Robotterne skal være fuld funktionelle efter testen.}
+      \acceptkrav{Robotten anbringes, fuld opladt, på gulvet, og kører herefter med Maks hastighed for 1 minut. Robotten anbringes herefter inden for 3 meter af senderen. Der optages en video på 30 FPS, af en spiller der anvender controlleren til at henholdsvis køre frem, tilbage, og til siderne med 4 sekunders mellemrum. Herefter anvendes FPS i videoen til at udregne reaktionstiden fra brugeren anvender kontrolleren til robotten reagerer på kommandoen.}
+\end{acceptkravspec}
+
+
+
+
+
+
+
+% \section{Accepttestspecifikation}
+% \tbr
+% \subsection{Krav stillet af ASE}
+% Specifikation for test ses i \tabref{ASEKrav}.
+% \begin{table}[]
+%     \centering
+%     \caption{Accepttest for: Krav stillet af ASE}\label{tab:ASEKrav}
+%     \begin{tabular}{c p{7cm}}\toprule
+%         \# & \textbf{Udførsel af test}                                                                                                                                                   \\
+%         \midrule
+%         1  & Det konstateres hvorvidt systemet indeholder software indlejret på systemer som ikke er en PC (eksempelvis software på en mikrocontroller)                                  \\
+%         \midrule
+%         2  & Det konstateres hvorvidt en systemet gør brug af en aktuator, hvorved der forstås et element som påvirker de fysiske omgivelser, som eksempelvis en DC- eller stepper-motor \\
+%         \midrule
+%         3  & Det konstateres hvorvidt systemets fysisk adskilte dele (eksempelvis SumoBot og Bil-kontrol) kommunikerer                                                                   \\
+%         \midrule
+%         4  & Det konstateres hvorvidt minimum et af de indlejrede systemer bruger Linux som styresystem                                                                                  \\
+%         \midrule
+%         5  & Det konstateres hvorvidt minimum et PSoC komponent bruges som en del af systemet                                                                                            \\
+%         \midrule
+%         6  & Det konstateres hvorvidt systemet optager og benytter data fra komponenter som reagerer på fysisk påvirkning                                                                \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% \subsection{Overordnede krav til til Robo-Sumo-Battle}
+% Specifikation for test ses i \tabref{OverordnedeKrav}.
+% \begin{table}[]
+%     \centering
+%     \caption{Accepttest for: Overordnede krav}\label{tab:OverordnedeKrav}
+%     \begin{tabular}{c p{7cm}}\toprule
+%         \# & \textbf{Udførsel af test}                                                                                                                                                                                                                                                                                                                                                                           \\
+%         \midrule
+%         1  & Det konstateres hvorvidt systemet understøtter minimum 2 spillere. Ved det forstås at der er minimum 2 controllerenheder som styrer hver sin SumoBot, såvel som at pointsystemet kan tælle point for minimum 2 spillere                                                                                                                                                                             \\
+%         \midrule
+%         2  & Gameplay-modulet implementeres således at det visuelt kan identificeres når en SumoBot overskrider spilbanens kant. Herefter styres alle SumoBots som er en del af systemet, ud over spilkantens afgrænsning (4 vilkårlige steder, så langt fra hinanden som muligt), og det bekræftes at systemet har opfattes deres overskridelse af spillebanens kant på baggrund af den visuelle idenficiering. \\
+%         \midrule
+%         3  & Ved understøttelse af mere end to spillere slækkes accepttesten til at indbefatte at mere end én spiller, på hver af 2 hold, kan deltage aktivt i styringen af det respektive holds SumoBot. Det konstateres hvorvidt dette er muligt som en naturlig del af spillet                                                                                                                                \\
+%         \midrule
+%         4  & En spiltilstand defineres som en måde at spille på, med hvert sit særlige mål. Det konstateres om der er beskrevet mere end én måde at spille på og der gennemføres et spil af hver spiltilstand.                                                                                                                                                                                                   \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% \subsection{Krav til controllerne}
+% Specifikation for test ses i \tabref{ControllerKrav}.
+% \begin{table}[]
+%     \centering
+%     \caption{Accepttest for: Krav til controlleren}\label{tab:ControllerKrav}
+%     \begin{tabular}{c p{7cm}}\toprule
+%         \# & \textbf{Udførsel af test}                                                                                                                                                                                                                                                                                                                                                                                                                               \\
+%         \midrule
+%         1  & Joystikket flyttes fremad og det konstateres hvorvidt SumoBot bevæger sig fremad. Det samme udføres for bagud, venstre og højre                                                                                                                                                                                                                                                                                                                         \\
+%         \midrule
+%         2  & Der udarbejdes særskilt testsoftware som på en PC kan gengive det dominerende frekvensindhold i spektret 300Hz - 3000Hz. Herefter testes om frekvenserne 300Hz, 400Hz, 500Hz, 1200Hz, 1800Hz, 2500Hz, 2800Hz, 2900Hz, 3000Hz genkendes. Frekvenserne dannes som sinusbølger og afspilles ved 75dB +/- 5 dB, 20 cm. fra controllerens mikrofon.                                                                                                          \\
+%         \midrule
+%         3  & Der udarbejdes særskilt testsoftware som på en PC kan gengive det dominerende frekvensindhold i spektret 300Hz - 3000Hz. Dette testsoftware kan også indikere om amplituden er høj nok til at spillet bør reagere på det. Der testes med lyd som afspiller 20 cm fra controllerens mikrofon på hhv. 30 dB, 35 dB, 40 dB, 45 dB, 50 dB, 55 dB, 60 dB. For værdier >50 dB forventes indikation fra softwaren om at der ingen tilstrækkeligt høje lyde er. \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% \subsection{Krav til spillebane}
+% Specifikation for test ses i \tabref{Spilbanekrav}.
+% \begin{table}[]
+%     \centering
+%     \caption{Accepttest for: Krav til Spillebanen}\label{tab:Spilbanekrav}
+%     \begin{tabular}{c p{7cm}}\toprule
+%         \# & \textbf{Udførsel af test}                                                                                                                                                                                                                                   \\
+%         \midrule
+%         1  & Da spillebanen er rund laves der et stykke snor på 75 cm. Den ene ende af snoren placeres i centrum af spillebanen, mens den anden ende føres langs kanten af spillebanen. Der noteres om snorens ende på noget tidspunkt er kortere end spillebanens kant. \\
+%         \midrule
+%         2  & Spille banen placeres på en overflade i vatter. Der findes et vatterpas mellem 1.3 og 1.5 meter. Dette placeres i midten af spillebanen og drejes hele vejen rundt om centrum. Der noteres om spillepladen på noget tidspunkt er ude af vatter.             \\
+%         \midrule
+%         3  & Der findes en kalibreret vægt, med målenøjagtighed på +/- 200g. Alle spillets bestanddele placeres samlet på vægten. den viste vægt noteres                                                                                                                 \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% \subsection{Krav til robotterne}
+% Specifikation for test ses i \tabref{Robotkrav}.
+% \begin{table}[]
+%     \centering
+%     \caption{Accepttest for: Krav til Robotterne}\label{tab:Robotkrav}
+%     \begin{tabular}{c p{7cm}}\toprule
+%         \# & \textbf{Udførsel af test}                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \\
+%         \midrule
+%         1  & Der tebgnes en 20 x 20 cm kvadratisk firkant på et stykke papir. Herefter placeres robotterne i firkanten, hvor der ses om de stikker ud over kanterne. Herefter måles højden af robotterne med en tommestok hvor der noteres om robotterne er højere end 20 cm.                                                                                                                                                                                                                            \\
+%         \midrule
+%         2  & Der laves en bane på gulvet med tape på 1.5 Meter. Herefter placeres de 2 robotter, fuld opladt, i hver sin ende af banen. Der udføres 4 tests hvor den ene robot med Maks hastighed køre den fulde banes længde inden den rammer den anden robot som holder stille i den anden ende af banen. For hver test vil den stillestående robot blive roteret 90 grader. Efter testen noteres der om der er kommet skader på nogle af bilerne. Og det hele gentages hvor robotterne bytter roller. \\
+%         \midrule
+%         3  & Der opmåles en 3 meters strækning med målebånd på gulvet. Robotten startes med fuld opladt batteri og køres ved Maks hastighed i 1 minut. Herefter placeres robotten med fronten væk fra banen i den ene ende af den 3 meter strækning opmålt, mens senderen placeres i den anden ende. Herefter noteres der om det er muligt for robotten at modtage en kommando om at køre fremad væk fra senderen. Dette gentages for den anden robot                                                    \\
+%         \midrule
+%         4  & Robotterne placeres, fuld opladt, vandret med fronten mod en lodret 90 graders flade, på minimum 30*30 cm. f.eks. gulv og væg. Herefter sættes robotterne til at køre med Maks hastighed fremad for 1 minut mens strømmen gennem motorene måles. SumoBot må ikke ændre placering under testen. Der noteres om strømmen overskrider hvad databladet angiver som max.                                                                                                                         \\
+%         \midrule
+%         5  & Robotten placeres, fuld opladt, på gulvet, hvor den vil med Maks hastighed køre fremad for 3 minutter. Dette gentages for den anden robot og der noteres om den stopper før de 3 minutter er gået.                                                                                                                                                                                                                                                                                          \\
+%         \midrule
+%         6  & Der opmåles 10.cm på en væg fra laminatgulvet, og markeres med f.eks. tape. Herefter tages robotterne og anbringes med deres laveste punkt over den opmålte højde, og lader dem falde i frit fald ned på laminatgulvet. Robotterne skal være fuld funktionelle efter testen.                                                                                                                                                                                                                \\
+%         \midrule
+%         7  & Robotten anbringes, fuld opladt, på gulvet, og kører herefter med Maks hastighed for 1 minut. Robotten anbringes herefter inden for 3 meter af senderen. Der optages en video på 30 FPS, af en spiller der anvender controlleren til at henholdsvis køre frem, tilbage, og til siderne med 4 sekunders mellemrum. Herefter anvendes FPS i videoen til at udregne reaktionstiden fra brugeren anvender kontrolleren til robotten reagerer på kommandoen.                                     \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}

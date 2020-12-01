@@ -1,0 +1,183 @@
+\section{Sumobot Analyse}\label{sec:Sumobot:analyse}
+
+I dette analyseafsnit vil der blive beskrevet ansvaret for de enkelte delblokke for SumoBot. Foruden en beskrivelse af blokkene, vil forbindelserne mellem dem såvel blive udpenslet. Afsluttende vil der blive stillet en række krav for selve blokkene, der bliver grundlag for valg af komponenter senere i projektet.
+
+SumoBots funktionalitet er overordnet skitseret i \figref{Strukturering/SumoBot/systemSekvensDiagram_SumoBot.png}
+
+\fig{Strukturering/SumoBot/systemSekvensDiagram_SumoBot.png}{0.8}{SumoBot System Sekvensdiagram}
+
+\subsection{Attack Sensor}
+\fig{Analyse/SumoBot/ibd_sumobot_attacksensor.png}{0.60}{Attack Sensor IBD}
+
+\begin{PartBlokDescription}{Attack Sensor}{}
+\Blokbeskrivelse{Attack Sensor}{Registrere påkørsel mellem SumoBots. Kollisionsstatus sendes til Microcontroller.}
+\Portbeskrivelse{pakoersel}{Force}{Fysisk påvirkning fra omverdenen}{
+\item  \SIrange{0}{3.3}{\volt}  signal
+}
+
+\Portbeskrivelse{pakoertSignal}{Digital}{Logisk I/O signal}{
+\item Spændingsområde: \SIrange{0}{3.3}{\volt}
+}
+\BlokSpacer{0cm}
+\end{PartBlokDescription}
+
+Attack Sencor er den del af SumoBotten der registrerer at den er blevet påkørt af en anden SumoBot.
+2 switches monteres på bagsiden af hver SumoBot og registrere kollision.
+
+\textbf{Krav}
+\begin{itemize}
+\item Skal kunne holde til påkørsel fra alle tænklige retninger.
+\item Skal kunne håndtere 5V med mellem 0 og 20 mA.
+\item Skal kunne holde til minimum 1000 tryk.
+\end{itemize}
+
+
+\subsection{PSU}
+\fig{Analyse/SumoBot/ibd_sumobot_psu.png}{0.40}{PSU IBD}
+
+\begin{PartBlokDescription}{PSU}{}
+\Blokbeskrivelse{PSU}{Forsyner de enkelte blokke med korrekt spændingsniveau. Kilden kommer fra batteri.}
+\Portbeskrivelse{MCPower}{DC}{Forsyning til Microcontroller}{
+\item Spændingsforsyning 5V
+}
+\Portbeskrivelse{PowerBat}{DC}{Batteri forsyning}{
+\item Spændingsniveau: 9V
+}
+\BlokSpacer{0cm}
+\end{PartBlokDescription}
+
+Delblokken PSU er strømforsyningen, der skal levere et stabilt 5V DC signal til de interne komponenter. Det er vigtigt at den kan levere et stabilt signal så komponenterne ikke slukker eller genstarter pga. for høj eller lav spænding.
+Derefter skal den også kunne videresende Batteri forsyningen til Motorstyringen.
+Nedenstående krav er specificeret ved 25 grader celsius. 
+\\
+\textbf{Krav}
+\begin{itemize}
+\item Skal kunne levere en stabil 5V DC forsyning  med maks afvigelse på  4.85 < 5.00 < 5.15 V.
+\item Skal kunne lervare minimum 500 mA.
+\item Skal kunne køre stabilt med et 7 til 12V DC input.
+\item Skal kunne videresende Batteri forsyningen.
+\item Må ikke fylde mere end 4x4x4 cm
+\item Må maks have en output noice voltage på 120 mikroVolt
+\end{itemize}
+
+\subsection{Microcontroller}
+
+\fig{Analyse/SumoBot/ibd_sumobot_microcontroller.png}{0.45}{Microcontroller IBD}
+
+\begin{PartBlokDescription}{Microcontroller]}{}
+\Blokbeskrivelse{Microcontroller}{Styrer motorstyringen ud fra indput fra Central Computer. Ligeledes har MicroControlleren forbindelse med Attack Sensoren og sender dataen videre til Central Computeren.}
+\Portbeskrivelse{robotKom}{ SumoBotKom}{WIFI kommunikation fra og til Central Computeren}{
+\item trådløs kommunikation mellem Central Computeren og MicroControlleren
+}
+\Portbeskrivelse{pakoerselRegistrering}{Digital}{Logisk I/O signal fra Attack Sensor}{
+\item Spændingsområde: \SIrange{0}{3.3}{\volt}
+}
+\Portbeskrivelse{motorCmdOutLeft}{Signal}{Signal til motorstyring om venstre motor bestående af 2 logiske signaler og 1 PWM signal}{
+\item logisk signal [2] med Spændingsområde: \SIrange{0}{3.3}{\volt}
+\item PWM signal med Spændingsområde: \SIrange{0}{3.3}{\volt}
+}
+\Portbeskrivelse{motorCmdOutRight}{Signal}{Signal til motorstyring om højre motor bestående af 2 logiske signaler og 1 PWM signal}{
+\item logisk signal [2] med Spændingsområde: \SIrange{0}{3.3}{\volt}
+\item PWM signal med Spændingsområde: \SIrange{0}{3.3}{\volt}
+}
+\BlokSpacer{0.2cm}
+\end{PartBlokDescription}
+
+Microkontrolleren er den del af SumoBotten der styrer motorstyringen ud fra indput fra Central Computeren over WIFI. Det er også denne der er forbundet med Attack Sensoren. Af den grund skal mircocontrolleren være hurtig nok til at bearbejde dataen og modtage/sende det videre, samt styre motorstyring og registrere attack sensoren.
+\\
+\textbf{Krav}
+\begin{itemize}
+\item Skal kunne kommunikere  over WIFI.
+\item Skal have minimum 10 In/Out ben.
+\item Skal kunne køre 5V DC.
+\item Skal kunne levere 3.3V DC på output benene.
+\item Må Maks være 12x4x4 cm.
+\end{itemize}
+
+
+\subsection{Batteri}
+\fig{Analyse/SumoBot/ibd_sumobot_batteri.png}{0.40}{Batteri IBD}
+
+\begin{PartBlokDescription}{Batteri]}{}
+\Blokbeskrivelse{Batteri}{Forsyner PSU samt motorerne gennem motorstyringen.}
+\Portbeskrivelse{chargePowerIn}{DC}{Til batteri fra oplader}{
+\item Spændingsniveau: 9V
+}
+\Portbeskrivelse{PowerBat}{DC}{Fra batteri}{
+\item Spændingsniveau: 9V
+}
+\BlokSpacer{0.4cm}
+\end{PartBlokDescription}
+
+I og med at Sumobot er trådløs, er det essentielt at have et batteri monteret, hvilket er det blokken \textit{batteri} står for. Men da robotten har en fysisk begrænsning, må batteriet ikke være for stort. Derudover skal batteriet levere et hvis spændingsniveau, som kan forsyne de forskellige delmoduler.
+\\
+\textbf{Krav}
+\begin{itemize}
+\item Må maks være 10x10x5 cm. \tbr
+\item Skal kunne lervere 3A.
+\item skal have minimum 7000 mAh. \tbr
+\item Skal være et lithium batteri.
+\item 9 V spænding\tbr
+\end{itemize}
+
+
+\subsection{Motor}
+\fig{Analyse/SumoBot/ibd_sumobot_motor.png}{0.48}{Motor IBD}
+
+\begin{PartBlokDescription}{Motor]}{}
+\Blokbeskrivelse{Motor}{Skaber fremdrift/bevægelse til Sumobot. Bliver kontrolleret gennem motorstyringen.}
+\Portbeskrivelse{motorCtrlIn[2]}{PWM}{PWM fra motorstyring til motor}{
+\item PWM signal med Spændingsområde: \SIrange{0}{9}{\volt}
+}
+\Portbeskrivelse{motorTorqueOut}{torque}{Energi fra motor til hjul}{
+\item Moment/energi fra motor til hjul \tbr
+}
+\BlokSpacer{0cm}
+\end{PartBlokDescription}
+
+Blokken \textit{motor} repræsenterer selve motoren. Dens opgave er at flytte SumoBot rundt på spillepladen.
+I valg af motor sætter de fysiske dementioner (20x20x20) af SumoBot atter en begrænsning. Et andet aspekt der er værd at tage i betragtning er momentet i valget af motor.
+Et andet aspekt i valg af motor motor, er at hver bil består af 2 motorer. Der skal altså i alt bruges 4 styk til projektet. \tbd
+\\
+\textbf{Krav}
+\begin{itemize}
+\item Skal være en DC motor.
+\item Må Maks være 8x6x6 cm.
+\item Skal kunne afgive en moment på 1 NM fra 0 RPM.\tbr
+\end{itemize}
+
+
+\tbr
+\subsection{Motorstyring}
+\fig{Analyse/SumoBot/ibd_sumobot_motorstyring.png}{0.36}{Attack Sensor IBD}
+
+\begin{PartBlokDescription}{Motorstyring}{}
+\Blokbeskrivelse{Motorstyring}{Styrer retning og hastighed af de 2 motorer ud fra kommandoer givet af Microcontrolleren.}
+\Portbeskrivelse{motorCommandInRight}{Signal}{Signal til motorstyring om venstre motor bestående af 2 logiske signaler og 1 PWM signal}{
+\item logisk signal [2] med Spændingsområde: \SIrange{0}{3.3}{\volt}
+\item PWM signal med Spændingsområde: \SIrange{0}{3.3}{\volt}
+}
+\Portbeskrivelse{motorCommandInLeft}{Signal}{Signal til motorstyring om højre motor bestående af 2 logiske signaler og 1 PWM signal}{
+\item logisk signal [2] med Spændingsområde: \SIrange{0}{3.3}{\volt}
+\item PWM signal med Spændingsområde: \SIrange{0}{3.3}{\volt}
+}
+\Portbeskrivelse{motorCtrlOut[2]}{PWM}{PWM signal til motor}{
+\item PWM signal med Spændingsområde: \SIrange{0}{9}{\volt} 
+}
+
+\end{PartBlokDescription}
+
+Motorstyringen tager sig af styring af de 2 fastmonterede motorer på SumoBotten. Der skal være mulighed for at køre de 2 motorer begge retninger med forskellige hastigheder uafhængige af hinanden. Den skal ligeledes kunne holde til det "load" motorene påtrykkes.
+\\
+\textbf{Krav}
+\begin{itemize}
+\item Skal kunne anvende 5V logik.
+\item Skal kunne anvende 3.3V på input/PWM indgangene.
+\item skal kunne styre retning og hastighed på 2 motorer uafhængigt af hinanden.
+\item Skal kunne styre hastighed ved hjælp af PWM.
+\item Skal kunne håndtere minimum 2A load kontinuerligt ved minimum 12V DC.
+\item Skal kunne klare 12V DC indgang / udgang. 
+\item Må ikke være større end 5x5x5 cm
+\end{itemize}
+
+

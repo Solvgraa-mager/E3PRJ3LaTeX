@@ -1,0 +1,30 @@
+\section{Central Computer Design}\label{sec:CC:design}
+
+\subsection{Overordnet}
+
+\fig{Design/Central Computer/Overordnet_State_Machine.png}{0.6}{Statemachine over Central Computer}
+
+\fig{Design/Central Computer/applikationsmodel/UC1_SD.png}{1}{Sekvensdiagram over UC1+2}
+\fig{Design/Central Computer/applikationsmodel/ClassDiagram.png}{1}{Klassediagram}
+
+\fig{Design/Central Computer/applikationsmodel/domaenemodel.png}{1}{Domænemodel}
+
+\subsection{Initialisering}
+Init sekvensen handler meget om hvordan de fysiske enheder taler sammen, derfor er den med aktører. 
+
+\fig{Design/Central Computer/SekvensDiagrammer/Init.png}{1}{Sekvensdiagram over initialisering}
+\begin{functionDescription}
+    {startCountDown(int count)}
+    {func:startCountDown}
+    {Funktionen varetager nedtællingen efter begge spillere har meldt klar}
+    {count: Antallet af sekunder som tælles ned}
+    {Ingen}
+\end{functionDescription}
+
+\
+
+% \begin{functionDescription}
+%     {}
+%     {}
+%     {}
+% \end{functionDescription}

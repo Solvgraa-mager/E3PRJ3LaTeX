@@ -1,0 +1,93 @@
+\section{Central Computer Analyse}\label{sec:CC:analyse}
+
+Analyseafsnittet vil for de to blokke i central computer yderligere udpensle krav til selve blokkene, såvel som forbindelserne imellem dem. Da denne del af systemet er software præget, vil der især blive lagt vægt på hvilke krav der stilles til de teknologier som skal understøtte specifikke funktionaliteter. 
+
+Den centrale computers opgave er at fungere som det digitale bindeled mellem styringenhederne og SumoBots, således at den fra styringsenhederne modtager information som processeseres til retning og hastighed, som ultimativt kan blive videreformidlet til de to SumoBot's. Samtidig holder Central Computer styr på spillets status, dvs. antal liv, resterende spilletid mv. 
+
+Central Computers funktionalitet er overordnet skitseret i \figref{Strukturering/Central Computer/SystemSekvensdiagram.png}
+
+\fig{Strukturering/Central Computer/SystemSekvensdiagram.png}{0.55}{Central Computer System Sekvensdiagram}
+
+%%% \begin{PartBlokDescription}{Styringsenhed: Mikrofon}{Styringsenhed:Mikrofon}  <- der kan du se hvordan jeg har sat label + titel op - hvis det giver mening :^)
+% De eneste ændringer ift. BlokDescription er :      
+%BlokDescription -> PartBlokDescription 
+%Der er tilføjet [: Underblok] til både titel og label.
+\subsection{Embedded Controller}
+
+\fig{Analyse/CC/EmbeddedControllerIBDUdklip.png}{0.25}{Embedded Controller I/O}
+
+\begin{PartBlokDescription}{Central Computer: Embedded Controller}{Central Computer Embedded Controller}
+\Blokbeskrivelse{Embedded controller}{Bearbejder og videregiver data fra Styringsenhed til Sumobot, trådløst. sender løbende information  omkring  spilstatus (re-sterende liv, resterende spilletid mv.) til Display blokken}
+\Portbeskrivelse{In Styringsprotokol}{SPI}{Digitalt samplet signal af detvalgte styringsinput (lyd eller  joystick)  fra  styringsen-hede}{
+\item 
+\item 
+}
+\Portbeskrivelse{Out displayData}{SPI}{Løbende information omkring spilstatus (re-sterende liv, resterende spilletid mv.)}{
+\item 
+\item 
+}
+\Portbeskrivelse{Inout SumoKom}{Wifi}{Tovejskommunikation  med  SumoBot’s  hvor  der  sendes information omkring retning og hastighed og modtage in-formation om et evt. angreb}{
+\item 
+\item 
+}
+\end{PartBlokDescription}
+
+Embedded Controller ud- og indgange ses i  \figref{Analyse/CC/EmbeddedControllerIBDUdklip.png} 
+
+
+Da afsnittet omfatter til den ene blok Embedded Controller, er dette afsnit yderligere inddelt ift. dens opgaver og interfaces. Kravene for de forskellige underafsnit skal ses som en samlet mængde krav til valg af Embedded Controller.
+
+\subsubsection{Interface mod styringsenheden}
+Interfacet til Styringsenheden modtager signalet Styringsprotokol som overføres jf. SPI-protokollen. Signalet er ikke proccesseret på dette tidspunkt og vil blot være en bitstrøm af samplede amplituder fra styringsenhedens lyd- eller controllerinput. Disse skal senere proccesseres til at blive en retning og en hastighed for en SumoBot. Controllerinputtet analyseres udelukkende ift. amplitude mens lydinputtet analyseres ift. amplituder indenfor specifikke frekvensspektre, som ultimativt vil give en retning og en hastighed. 
+
+\textbf{Krav}
+\begin{itemize}
+\item Skal have indgange til minimum 2 SPI-forbindelser. En til hver Styringsenhed. 
+\item SPI-indgangen skal kunne modtage data i en hastighed som stemmer overens med samplingsfrekvensen på >10kHz og bitopløsningen på 10 bit fastsat i afsnittet \ref{sec:Styringsenhed:analyse} \tbr. Det vil sige med denne sammenhæng: 
+\[ F_s \cdot \text{bitopløsning} < \text{hastighed} \left[\si[per-mode=fraction]{\kilo\bit\per\second}\right] \]
+\[ \text{hastighed} > 100.000 \left[\si[per-mode=fraction]{\bit\per\second}\right] \]
+\end{itemize}
+
+\subsubsection{Controllerbehandling}
+\textbf{Lydbehandling}
+Lyden som opfanges af mikrofonerne og sendes digitaliseret til Central Computer fra Styringsenhederne. Disse skal herefter proccesseres først vha. frekvensanalyse (diskret Fourier-transformation, herefter DFT). Den algoritme som danner baggrund for \gls{DFT} kræver meget processorkraft, som, særligt når behandlingen skal foretage så mange på hinanden følgende gange med kort tidsinterval. \gls{DFT} kommer ikke til at stå alene, da der efterfølgende vil være endnu en algoritme som omregner frekvensspektret til en retning og hastighed. 
+
+\textbf{Krav}
+\begin{itemize}
+\item Processoren skal kunne arbejde med en høj clock-hastighed og gerne ved mange bits, således at det, samtidig med de resterende ting som foregår på processoren, er muligt at have to DFT som med kort tidsinterval foregår samtidig.  
+\end{itemize}
+
+\textbf{Joystikbehandling}
+Behandlingen af inputtet fra joystikket er meget mere simpelt, da styringen igennem dette baserer sig på amplituden på signalet, som modtages fra styringsenheden digitaliseret og som blot vha. en simpel algorime omregnes til retning og hastighed. 
+
+\subsubsection{Spilstyring}
+Spilstyringen kan se som en state-machine som styrer resterende tid og liv for de to SumoBots. Spilstyringen skal programmeres i et sprog som egner sig hertil, hvortil der stilles krav om at det er overskueligt og gerne med et højt abstraktionsniveau, således at det er let at programmere og senere udbygge hvis der på et tidspunkt ønskes flere spiltilstande. Det skal igennem sproget være let at manipulere GPIO's, således at der spillets status let kan formidles til displayet. 
+
+\subsubsection{Interface mod SumoBots (Trådløs kommunikation)}
+Interfacet med SumoBots er en trådløs forbindelse som hostes af Central Computer og som SumoBots under opstart kobler sig på.
+Informationen som formidles til SumoBots bliver efter en simpel protokol som sendes med korte tidsintervaller ($\approx$ 50ms). 
+
+\textbf{Krav}
+\begin{itemize}
+\item Embedded Controller skal kunne lave et wifi-access point
+\item Wifi-forbindelsen skal række min. 4 meter 
+\item Wifi-forbindelsen skal være stabil
+\end{itemize}
+
+\subsection{Display}
+
+\fig{Analyse/CC/DisplayIBDUdklip.png}{0.25}{Display I/O}
+
+\begin{PartBlokDescription}{Central Computer: Display}{Central Computer Display}
+\Blokbeskrivelse{Display}{Viser løbende information  omkring  spilstatus  (resterende liv, resterende spilletid mv.) til spillerne}
+\Portbeskrivelse{Out Display}{Lys}{Displayets løbende information til spillerne omkring spilstatus (resterende liv, resterende spilletid mv.)}{
+\item 
+\item 
+}
+\Portbeskrivelse{In displayData}{SPI}{Løbende   information   om-kring spilstatus (re-sterendeliv, resterende spilletid mv.)}{
+\item 
+\item 
+}
+\end{PartBlokDescription}
+
+Displayet viser løbende information omkring spilstatus (resterende liv, resterende spilletid mv.) til spillerne, se \figref{Analyse/CC/DisplayIBDUdklip.png} 

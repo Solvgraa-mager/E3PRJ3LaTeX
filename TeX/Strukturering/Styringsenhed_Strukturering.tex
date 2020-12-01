@@ -1,0 +1,54 @@
+\section{Styringsenhed Strukturering}\label{sec:Styringsenhed:Strukturering}
+
+For Styringsenheden er der udviklet struktur som illustreres ved \figref{Strukturering/Styringsenhed/XXXXBDDXXXX}, og \figref{Strukturering/Styringsenhed/IBD_styringsenhed}. 
+Delblokkene og interfaces imellem disse, som skitseret i IBDet \figref{Strukturering/Styringsenhed/IBD_styringsenhed} er yderligere beskrevet i blokbeskrivelsen som findes i 
+\tabref{blok_table_Robo-Sumo-Battle_blokbeskrivelse}
+
+\fig{Strukturering/Styringsenhed/IBD_styringsenhed_rev2}{1}{IBD for Styringsenhed}
+
+\begin{BlokDescription}{Styringsenhed [1/2]}{Styringsenhed_1}
+%\Blokbeskrivelse{Bloknavn}{Funktion}
+%\Portbeskrivelse{Portnavn}{Type}{Beskrivelse}
+\Blokbeskrivelse{Analog signalbehandling}{Forstærker mikrofon inputtet i en grad at ADC kan konvertere de forskellige værdier. \newline Gain: 250gg}
+\Portbeskrivelse{Lydsignal}{Analog}{Ufiltreret og forstærket signal indeholdende lydinformation.}{
+\item Indgangsimpedans: Høj
+}
+\Portbeskrivelse{Behandlet lydsignal}{Analog}{Filtreret og forstærket signal indeholdende lydinformation.}{
+\item Signalfrekvensområde: \SIrange{300}{3e3}{\Hz}
+\item Udgangsimpedans: Lav
+}
+\BlokSpacer{0cm}
+%%%%%%%%%%%%
+\Blokbeskrivelse{Mikrofon}{Konvertering fra akustisk til elektrisk signal}
+\Portbeskrivelse{Mikrofon}{Analog}{Elektret mikrofon.}{
+\item Udgangsimpedans: 2.2\kohm 
+\item Sensitivitet: \SI{8(2)}{\milli\volt\per\pascal}
+\item SNR: 40dBV
+}
+\Portbeskrivelse{SpillersLyd}{Akustisk}{Fra mundharmonika.}{
+\item Dynamisk område: 70dB SPL
+\item Signalfrekvensområde: \SIrange{250}{1550}{\Hz}
+}
+\Blokbeskrivelse{Signal\newline konditionering}{Buffer stage der skal sikre maksimal spændingsoverførsel.}
+\Portbeskrivelse{Behandlet lydsignal}{Analog}{}{
+\item Indgangsimpedans: 10x udgangsimpedans for Analog Signalbehandling blokken.
+}
+
+\Blokbeskrivelse{ADC}{Analog til digital konvertering.}
+\Portbeskrivelse{ADCinLyd}{Analog}{}{
+\item Fuld skala input spændingsområde: \SIrange{0}{5}{\volt}
+\item Sample rate: 10 kHz.
+\item Bitopløsning: 8 bit
+\item SNR: 40 dBV
+\item Indgangsimpedans: Høj
+}
+
+\Blokbeskrivelse{Digital Signal Processing}{Processering af samples fra ADC}
+\Portbeskrivelse{DSPin}{Digital}{Array med outputsamples fra ADC}{
+\item Type: uint8 (8 bit samples)
+\item Antal samples: \tbr
+}
+\Portbeskrivelse{Styringsprotokol}{SPI}{Retning for SumoBot}{
+\item Diskrimineret signalindhold med en frekvensopløsning på 70 Hz til 4 retninger (ligeud, højre, venstre og bagud) for SumoBot.
+}
+\end{BlokDescription}

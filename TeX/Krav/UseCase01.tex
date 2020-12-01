@@ -1,0 +1,58 @@
+%Sometimes it is a good idea to put domain objects in \texttt{}
+%The template and the descriptions are based on the book Applying UML and Patterns: 
+%An Introduction to Object-Oriented Analysis and Design and Iterative Development
+%(3rd Edition) by Craig Larman.
+
+%%% USE CASE 1
+\subsubsection{Use Case 1}
+
+Spil \Glspl{rsb} med joystick. Beskrevet i \tabref{usecase:1}.
+
+\begin{usecase}{Fully dressed beskrivelse af Use Case 1: "Spil \gls{rsb} med joystick".}{1}
+  \addtitle{Use Case 1}{"Spil \gls{rsb} med joystick"}
+  %Level: "user-goal" or "subfunction"
+  \addfield{Mål:}{At to spillere, styrer sine respektive \gls{sumobot}, indtil en spiller har vundet}
+  %Level: "user-goal" or "subfunction"
+  \addfield{Initiering:}{Spillere trykker start på deres respektive start knapper.}
+
+  %Primary Actor: Calls on the system to deliver its services.
+  \addfield{Primær Aktør:}{2X Spillere}
+  \addfield{Sekundær Aktør:}{Ingen}
+
+  \addfield{Antal samtidig forekomster:}{Ingen}
+
+  %Preconditions: What must be true on start and worth telling the reader?
+  \addfield{Prækondition:}{Begge \gls{sumobot} har fuld liv og står på deres respektive startfelter.}
+  %when multiple
+  %\additemizedfield{Preconditions:}{} 
+
+  %Postconditions: What must be true on successful completion and worth telling the reader
+  \additemizedfield{Postkonditioner:}{
+    \item En spiller har vundet \gls{rsb} viser vinderen.
+    \item \gls{rsb} klar til nyt spil.
+  }
+  %when multiple
+  %\additemizedfield{Preconditions:}{}
+
+  %Main Success Scenario: A typical, unconditional happy path scenario of success.
+  \addscenario{Hovedscenarie:}{
+    \item Spillere tilgår deres respektive joystick og trykker start.
+    \item \gls{rsb} viser nedtælling til start.
+    \item Spillere styrer deres respektive \gls{sumobot}s retning og hastighed trådløst via joystick.
+    \item Den ene \gls{sumobot} aktivere den anden \gls{sumobot} \gls{AttackSensor}.
+    \item[][Udvidelse 1: En \gls{sumobot} forlader spille banen]
+    \item \gls{rsb} viser at den angrebet \gls{sumobot} har mistet et liv.
+    \item spillere placere deres \gls{sumobot} på dens respektive startfelt og trykker start.
+    \item \gls{rsb} viser nedtælling og starter ny runde.
+    \item Der spilles til en \gls{sumobot} har mistet alle liv. 
+    \item \gls{rsb} viser vinderen af spillet.
+    \item Spillere placere \gls{sumobot} på deres respektive startfelter.
+    
+  }
+  \addscenario{Udvidelser / Undtagelser:}{
+    \item [Udvidelse 1:] En \gls{sumobot} forlader spillebanen
+    \item[1.] \gls{sumobot} der har forladt spillebanen mister alle liv. 
+    \item[2.] Use case fortsætter fra punkt 9.
+    
+  }
+\end{usecase}\label{tab:UseCase:1}

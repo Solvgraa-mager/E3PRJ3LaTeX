@@ -1,0 +1,175 @@
+{
+\def\dirfigs{figs/Analyse/Styringsenhed/}
+\section{Styringsenhed}\label{sec:Styringsenhed:analyse}
+\subsection{Lydgiver}
+Der er blevet foretaget en analyse af forskellige lydinputs til systemet. Analysen består af en måleserie, hvor man med forskellige lydinputs skal afgøre, om det er muligt at lave signaldiskrimination i 4 frekvensbånd. Målingerne er foretaget ved følgende procedure:
+\begin{itemize}
+    \item Indspilning af 4 forskellige toner af 3 omgange.
+    \item Lydfilerne eksporteres som .wav fil og indlæses i Matlab.
+    \item Lydfilerne processeres i Matlab til at et frekvensspektrum der vurderes muligt til at diskriminere lydinputtet til 4 styringsoutputs er opnået. 
+    \item Det endelige resultat afspejler valget af lydinput samt specifikationerne for styringsenheden.
+\end{itemize}
+
+\subsection{Mandestemme}
+\fig{ToneAnalyse/Voice_FFT_Close_N_512}{.7}{Mandestemme, 4 toners frekvensspektrum}
+
+I Figur \ref{fig:ToneAnalyse/Voice_FFT_Close_N_512} ses et frekvensspektrum af en mandestemme, der for så vidt muligt har forsøgt at generere 4 forskellige toner. Her er påført hann-vindue for at minimere sidesløjfer og foretaget en 256 punkters FFT.
+
+Dette giver anledning til følgende vurdering:
+\begin{itemize}
+    \item Der sættes alt for høje krav til aktøren om at ramme bestemte toner, hvis der ikke indføres en talegenkendelsesstandard. Alene ud fra denne praktiske overvejelse forkastes stemmer som inputs. 
+\end{itemize}
+
+\subsection{Blokfløjte}
+\fig{ToneAnalyse/Recorder_FFT_N_128}{.7}{Blokfløjte, 64 bins frekvensspektrum}
+\fig{ToneAnalyse/Recorder_FFT_N_128}{.7}{Blokfløjte, 256 bins FFT - ubehandlet}
+
+\subsection{Mundharmonika}
+\subsubsection{Rå data}
+\fig{ToneAnalyse/NoHannFFT_Close_N_128}{.7}{64 bins FFT - ubehandlet}
+\fig{ToneAnalyse/NoHannFFT_Bar_N_128_Bins_64}{.7}{64 bins FFT  - ubehandlet}
+
+\fig{ToneAnalyse/NoHannFFT_Close_N_256}{.7}{128 bins FFT - ubehandlet}
+\fig{ToneAnalyse/NoHannFFT_Bar_N_256_Bins_128}{.7}{128 bins FFT - ubehandlet}
+
+
+\fig{ToneAnalyse/NoHannFFT_Close_N_512}{.7}{256 bins FFT - ubehandlet}
+\fig{ToneAnalyse/NoHannFFT_Bar_N_512_Bins_256}{.7}{256 bins FFT - ubehandlet}
+
+\subsubsection{Behandlet data}
+\fig{ToneAnalyse/FFT_Close_N_128}{.7}{64 bins FFT - behandlet med Hann-vindue}
+\fig{ToneAnalyse/FFT_Bar_N_128_Bins_64}{.7}{64 bins FFT - behandlet med Hann-vindue}
+
+\fig{ToneAnalyse/FFT_Close_N_256}{.7}{128 bins FFT - behandlet med Hann-vindue}
+\fig{ToneAnalyse/FFT_Bar_N_256_Bins_128}{.7}{128 bins FFT - behandlet med Hann-vindue}
+
+
+\fig{ToneAnalyse/FFT_Close_N_512}{.7}{256 bins FFT - behandlet med Hann-vindue}
+\fig{ToneAnalyse/FFT_Bar_N_512_Bins_256}{.7}{256 bins FFT - behandlet med Hann-vindue}
+
+
+
+
+% % \tbd En studerende fra DIEM\footnote{Dansk Institut for Elektronisk Musik - Det Jyske musikkonservertiorium} har leveret en række lydoptagelser af hhv. blokfløjte og mundharmonika, der kan bruges til at afklare hvilke frekvensområder der er interessante. % mangler endnu.
+% Det antages at frekvensområdet ligger i området \SIrange{300}{3000}{Hz}\cite{MimsEngNotebookFormulas}. At designe et velfungerende filter i dette frekvensområde burde være muligt uden de store armbevægelser.
+% %%% 
+
+\subsection{Mikrofon}
+\fig{styringsenhed_mikrofon}{0.4}{Udsnit af mikrofonblokken}
+\begin{PartBlokDescription}{Styringsenhed: Mikrofon}{Styringsenhed:Mikrofon}
+\Blokbeskrivelse{Mikrofon}{Konvertering fra akustisk til elektrisk signal}
+\Portbeskrivelse{Mikrofon}{Analog}{}{
+\item Udgangsimpedans: 2.2\kohm 
+\item Sensitivitet: \SI{8(2)}{\milli\volt\per\pascal}
+\item SNR: 40dBV
+}
+\Portbeskrivelse{SpillersLyd}{Akustisk}{}{
+\item Dynamisk område: 70dB SPL
+\item Signalfrekvensområde: 250 til 1.55 kHz
+}
+\end{PartBlokDescription}
+
+Der er blevet foretaget et valg om at benytte en elektretmikrofon \tbr (link til mikrofon) som allerede var til rådighed. 
+Mest kritisk for mikrofonen er SNR\cite{Lewis2012}. Hvis denne ikke viser sig tilstrækkelig høj til at kunne differentiere baggrundsstøj fra det reelle input vil der skulle laves akustisk regulering.
+
+Outputtet fra mikrofonen behandles og konditioneres, hvorfor kravene til Analog signalbehandling og Signalkonditionering blokkene defineres ud fra mikrofonens output.
+
+\subsection{Analog signalbehandling}
+\fig{styringsenhed_analogsignalbehandling}{0.4}{Udsnit af blokken til analog signalbehandling}
+\begin{PartBlokDescription}{Styringsenhed: Analog signalbehandling}{Styringsenhed:Analogsignalbehandling}
+\Blokbeskrivelse{Analog signalbehandling}{Forstærker mikrofon inputtet i en grad at ADC kan konvertere de forskellige værdier. \newline Gain: 250gg}
+\Portbeskrivelse{Lydsignal}{Analog}{Ufiltreret og forstærket signal indeholdende lydinformation.}{
+\item Indgangsimpedans: Høj
+}
+\Portbeskrivelse{Behandlet lydsignal}{Analog}{Filtreret og forstærket signal indeholdende lydinformation.}{
+\item Signalfrekvensområde: \SIrange{300}{3000}{\Hz}
+\item Udgangsimpedans: Lav
+}
+\end{PartBlokDescription}
+
+
+\input{TeX/Analyse/Styringsenhed_SignalBehandling}
+
+
+
+
+\subsection{Signalkonditionering}
+\fig{styringsenhed_signalkonditionering}{0.4}{Udsnit af blokken til signalkonditionering}
+DET HER ER FUCKING SIGNALKONDITIONERING
+
+\begin{PartBlokDescription}{Styringsenhed: Signal konditionering}{Styringsenhed:Signalkonditionering}
+\Blokbeskrivelse{Signal\newline kondition-ering}{Buffer stage der skal sikre maksimal spændings-overførsel.}
+\Portbeskrivelse{Behandlet lydsignal}{Analog}{}{
+\item Indgangsimpedans: 10x udgangsimpedans for Analog Signalbehandling blokken.
+}
+\end{PartBlokDescription}
+
+\subsection{ADC}
+\fig{styringsenhed_adc}{0.4}{Udsnit af ADC-blokken}
+
+\begin{PartBlokDescription}{Styringsenhed: ADC}{Styringsenhed:ADC}
+\Blokbeskrivelse{ADC}{Analog til digital konvertering.}
+\Portbeskrivelse{ADCinLyd}{Analog}{Delta Sigma ADC}{
+\item Fuld skala input spændingsområde: \SIrange{0}{5}{\volt}
+\item Indgangsimpedans: høj
+\item Sample rate: 10 kHz.
+\item Bitopløsning: 8 bit
+\item SNR: 40 dB
+}
+\end{PartBlokDescription}
+
+
+Pr. styringsenhed er der én ADC-blok som konverterer inputs fra hhv. joystickX, joystickY og mikrofon input til bitstrømme. Disse bitstrømme processeres i en microprocessor hvor der kører en realtids-FFT algoritme for at kunne generere en veldefineret styringsprotokol for SumoBotsne. 
+
+For at gøre dette muligt er der udarbejdet følgende krav til ADC modulet:
+\begin{itemize}
+    \item Samplingrate: 10 kHz
+    \item Bitopløsning: 8 bit
+    \item Fuld-skala input range: 5V
+    \item SNR: 40 dB
+    \item Høj indgangsimpedans
+\end{itemize}
+
+Fuld skala input range på ADC'ens indgang skal stemme overens med inputsignalets spændingsområde.
+Derfor fastsættes at fuld-skala input range = 5V.
+
+\tbr Hvis SNR på 40 dB vurderes tilstrækkeligt, kan denne værdi bruges som udgangspunkt til et mindstekrav for bitopløsningen,\cite{KesterMT-001Care}, som ADC'en skal outputte med:
+\[ 40 = 6.02 \cdot n+1.76 \]
+\[ n = 6.37 \to n = 8 \]
+
+Der skal altså anvendes en ADC med en effektiv bitopløsning på mindst 6.37. Der vælges derfor at anvende en ADC med 8 bit opløsning. 
+
+Til lydinputtet fra mikrofonforstærkeren bestemmes det, at der skal anvendes en Delta Sigma ADC. Dette er bestemt med følgende grundlag:
+\begin{itemize}
+    \item Forhåndsforsikring for, at ADC'en kan yde den tilstrækkelige bitopløsning som inputs til en FFT algoritme. 
+    \item Delta Sigma ADC opererer kontinuerligt(\tbr reference til Texas Instruments) (integrerer over tid) og er derfor bedst til realtids-applikationer.  
+\end{itemize}
+
+For at opfylde kravene til blokken ADC er der gjort overvejelser, som sammen med en vurdering ud fra kravene er opstillet i tabel \ref{tab:adc_vurdering}. Da PSoC 5LP opfylder alle krav, vælges denne. 
+
+\subsection{Digital signal processing}
+\fig{styringsenhed_dsp}{0.4}{Udsnit af ADC-blokken}
+For ikke selv at skulle designe ADC'er analogt tages udgangspunkt i en platform hvor der kan køres noget firmware med en FFT-algoritme til lydsignalet fra mikrofonen. Her er til PSoC 5LP udarbejdet et bibliotek til FFT\tbr, som der i første omgang tages udgangspunkt i. Denne kan lave en 128 punkters FFT hvilket vurderes tilstrækkeligt i denne applikation med en konservativ signalbåndbredde. Derved kan signalprocesseringen også foregå i selvsamme blok. 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

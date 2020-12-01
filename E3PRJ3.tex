@@ -3,54 +3,74 @@ danish,
 a4paper,
 % onecolumn,
 % draftcls
-]{IEEEtran}
+]{report}
 \usepackage{EEpreamble}
 \usepackage{usecases}
 \usepackage{Grp6_tables}
-\newcommand{\tbd}{\textbf{\textcolor{red}{(TBD)}}}
-\newcommand{\tbr}{\textbf{\textcolor{red}{(TBR)}}}
+
+\newcounter{tbr}
+\setcounter{tbr}{0}
+\newcommand{\tbd}{\textbf{\textcolor{roed}{(TBD)}}}
+\newcommand{\tbr}{\textbf{\textcolor{roed}{(TBR)}}}
 \usepackage{pdfpages}
-\loadglsentries{TeX/Formalia/Ordliste}
+\loadglsentries{TeX/Ordliste}
 
 \begin{document}
 
-\title{
-Robo-Sumo-Battle 
-}
-\author{
-      \begin{tabular}{ll}
-            Villiam Holger Bo & 201907166\\
-            Adam Ryager Høj & 201803767\\
-            Rasmus Kahr & 201803491\\
-            David Vestergaard Kristensen & 201908226\\
-            Frederik William Lassen & 201905905\\
-            Daniel Schultz & 201709325\\
-            Simon Fogh Thomsen & 201906472
-      \end{tabular}
-      \thanks{Vejleder: John Rohde}
-}
 % Don't fight the engine over float placements. It's actually good at it. If you get ridiculous results it's pretty likely that your paragraphs and/or sections are too short. Try adding more text, or merging some paragraphs.
 
-\maketitle
+\input{TeX/titlepage}
 \tableofcontents
 \listoftables
+\listoffigures
 \clearpage
+
+%% Ordliste
 \printglossary[nonumberlist]
 \printglossary[type=\acronymtype,nonumberlist,title=Forkortelser]
 \clearpage
-\input{TeX/Formalia/ProjectGoals}
-\input{TeX/Formalia/Beskrivelse}
-\input{TeX/Formalia/Krav}
-\clearpage
-\input{TeX/Formalia/Accepttestspecifikation}
-\input{TeX/Diagrammer/Blokdiagrammer}
-\input{TeX/Diagrammer/MainOgStyring}
-\input{TeX/Formalia/IBD}
-\input{TeX/Formalia/Analyse/Central Computer/Central_Computer_Analyse}
-\input{TeX/Formalia/Analyse/Styringsenhed}
-\input{TeX/Formalia/SumoBotanalyse}
 
-\input{TeX/Formalia/VærktøjerBrugt}
+%% Indledning
+\mainpagestyle
+\input{TeX/Indledning}
+
+%% Krav
+\input{TeX/Krav}
+
+%% Metode / Proces
+\input{TeX/Metode}
+% \input{TeX/Formalia/VærktøjerBrugt}
+\input{TeX/RiskAssessment}
+
+%% Strukturering / Arkitektur !
+\input{TeX/Strukturering}
+% \input{TeX/Formalia/ProjectGoals}
+% \input{TeX/Formalia/Beskrivelse}
+% \input{TeX/Formalia/Krav}
+% \clearpage
+% \input{TeX/Formalia/Accepttestspecifikation}
+% \input{TeX/Diagrammer/Blokdiagrammer}
+% \input{TeX/Diagrammer/MainOgStyring}
+% \input{TeX/Formalia/IBD}
+
+%% Analyse !
+\input{TeX/Analyse}
+% \input{TeX/Formalia/Analyse/Central Computer/Central_Computer_Analyse}
+% \input{TeX/Formalia/Analyse/Styringsenhed}
+% \input{TeX/Formalia/SumoBotanalyse}
+
+%% Design !
+\input{TeX/Design}
+
+%% Implementering !
+\input{TeX/Implementering}
+
+%% Litteraturliste
 \bibliographystyle{IEEEtran}
 \bibliography{biblo}
+\clearpage
+
+%%% Bilag
+\input{TeX/Bilag/Appendiks}
+
 \end{document}

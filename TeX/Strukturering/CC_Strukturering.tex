@@ -1,0 +1,46 @@
+\section{Central Computer Strukturering}\label{sec:CC:Strukturering}
+
+For Central Computeren er der udviklet struktur som illustreres ved \figref{Strukturering/Central Computer/CentralComputerBDD.png}, og \figref{Strukturering/Central Computer/IBD_CC.pdf}. 
+Delblokkene og interfaces imellem disse, som skitseret i IBDet \figref{Strukturering/Central Computer/IBD_CC.pdf} er yderligere beskrevet i blokbeskrivelsen som findes i 
+\tabref{blok_table_Robo-Sumo-Battle_blokbeskrivelse}
+
+\fig{Strukturering/Central Computer/CentralComputerBDD.png}{0.5}{Central Computer BDD}
+\fig{Strukturering/Central Computer/IBD_CC.pdf}{1}{Central\_Computer IBD}
+
+
+% \begin{SignalDescription}{Central Computer}{Central_Computer_signalbeskrivelse}
+%     \signalbeskrivelse{Display}{Lys}{Displayets løbende information til spillerne, omkring spilstatus (resterende liv, resterende spilletid mv.)}
+%     \signalbeskrivelse{Styringsprotokol}{SPI}{Digitalt samplet signal af det valgte styringsinput (lyd eller joystick) fra styringsenheden}
+%     \signalbeskrivelse{SumoKom}{Wifi}{Tovejskommunikation med SumoBot's hvor der sendes information omkring retning og hastighed og modtage information om et evt. angreb}
+%     \signalbeskrivelse{displayDataOut}{SPI}{Løbende information omkring spilstatus (re-sterende liv, resterende spilletid mv.)}
+% \end{SignalDescription}
+
+
+
+\begin{BlokDescription}{Central Computer}{Central_Computer_blokbeskrivelse}
+%%%%%%%%%%%%%%
+\Blokbeskrivelse{Embedded controller}{Bearbejder og videregiver data fra Styringsenhed til Sumobot, trådløst. sender løbende information  omkring  spilstatus (re-sterende liv, resterende spilletid mv.) til Display blokken}
+\Portbeskrivelse{In Styringsprotokol}{SPI}{Digitalt samplet signal af detvalgte styringsinput (lyd eller  joystick)  fra  styringsen-hede}{
+\item 
+\item 
+}
+\Portbeskrivelse{Out displayData}{SPI}{Løbende information omkring spilstatus (re-sterende liv, resterende spilletid mv.)}{
+\item 
+\item 
+}
+\Portbeskrivelse{Inout SumoKom}{Wifi}{Tovejskommunikation  med  SumoBot’s  hvor  der  sendes information omkring retning og hastighed og modtage in-formation om et evt. angreb}{
+\item 
+\item 
+}
+%%%%%%%%%%%%
+\Blokbeskrivelse{Display}{Viser løbende information  omkring  spilstatus  (re-sterende liv, resterende spilletid mv.) til spillerne}
+\Portbeskrivelse{Out Display}{Lys}{Displayets løbende information til spillerne omkring spilstatus (resterende liv, resterende spilletid mv.)}{
+\item 
+\item 
+}
+\Portbeskrivelse{In displayData}{SPI}{Løbende   information   om-kring spilstatus (re-sterendeliv, resterende spilletid mv.)}{
+\item 
+\item 
+}
+\BlokSpacer{1.4cm}
+\end{BlokDescription}
