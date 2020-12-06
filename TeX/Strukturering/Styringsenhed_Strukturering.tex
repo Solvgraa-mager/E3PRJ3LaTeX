@@ -1,8 +1,8 @@
-\section{Styringsenhed Strukturering}\label{sec:Styringsenhed:Strukturering}
+\section{Styringsenhed}\label{sec:Styringsenhed:Strukturering}
 
-For Styringsenheden er der udviklet struktur som illustreres ved \figref{Strukturering/Styringsenhed/XXXXBDDXXXX}, og \figref{Strukturering/Styringsenhed/IBD_styringsenhed}. 
-Delblokkene og interfaces imellem disse, som skitseret i IBDet \figref{Strukturering/Styringsenhed/IBD_styringsenhed} er yderligere beskrevet i blokbeskrivelsen som findes i 
-\tabref{blok_table_Robo-Sumo-Battle_blokbeskrivelse}
+For Styringsenheden er der udviklet struktur som illustreres ved \figref{Strukturering/Styringsenhed/XXXXBDDXXXX}, og \figref{Strukturering/Styringsenhed/IBD_styringsenhed_rev2}. 
+Delblokkene og interfaces imellem disse, som skitseret i IBDet \figref{Strukturering/Styringsenhed/IBD_styringsenhed_rev2} er yderligere beskrevet i blokbeskrivelsen som findes i 
+\tabref{blok_table_Robo-Sumo-Battle_blokbeskrivelse}.
 
 \fig{Strukturering/Styringsenhed/IBD_styringsenhed_rev2}{1}{IBD for Styringsenhed}
 
@@ -46,9 +46,51 @@ Delblokkene og interfaces imellem disse, som skitseret i IBDet \figref{Strukture
 \Blokbeskrivelse{Digital Signal Processing}{Processering af samples fra ADC}
 \Portbeskrivelse{DSPin}{Digital}{Array med outputsamples fra ADC}{
 \item Type: uint8 (8 bit samples)
-\item Antal samples: \tbr
+\item Antal samples: 512
 }
-\Portbeskrivelse{Styringsprotokol}{SPI}{Retning for SumoBot}{
-\item Diskrimineret signalindhold med en frekvensopløsning på 70 Hz til 4 retninger (ligeud, højre, venstre og bagud) for SumoBot.
+\Portbeskrivelse{Styringsprotokol}{SPI}{Retning og hastighed for SumoBot}{
+\item Se \nameref{protokolbeskrivelse}
 }
 \end{BlokDescription}
+
+\subsubsection{Protokolbeskrivelse for styringsprotokol}\label{protokolbeskrivelse}
+I dette afsnit klarlægges protokollen for styrings af SumoBotsne. Protokollen i \tabref{protokol:d7d0} hele byten hvorved styringskommandoen ligger i. I \tabref{protokol:truthtable} ses en sandhedstabel for hvorledes encodningen er tiltænkt for databits D6-D4 (hastighed) samt D2-D0 (retning).
+Disse tabeller er understøttet af \figref{Strukturering/Styringsenhed/StyringsenhedCirkelUdkast} som illustrerer hvordan en databyte fortolkes af en SumoBot. 
+
+\begin{table}[!h]
+\centering\small 
+\caption{Byte med styringsprotokol}
+\label{tab:protokol:d7d0}
+\begin{tabular}{@{}llllllll@{}}
+D7 & D6 & D5 & D4 & D3 & D2 & D1 & D0 \\\midrule
+\makecell[ll]{Frem = 1 \\Tilbage = 0} & X  & X  & X  & \makecell[ll]{Højre = 1 \\Venstre = 0}& X  & X  & x \\\bottomrule
+\end{tabular}%
+\end{table}
+
+\begin{table}[!h]
+\centering\small 
+\caption{Sandhedstabel for hastighed [D6-D4] og retning [D2-D0]}
+\label{tab:protokol:truthtable}
+\begin{tabular}{@{}llll@{}}\toprule
+D6 & D5 & D4 & PWM    \\\midrule
+1  & 1  & 1  & 100\%  \\
+1  & 1  & 0  & 87,5\% \\
+1  & 0  & 1  & 75\%   \\
+1  & 0  & 0  & 62,5\% \\
+0  & 1  & 1  & 50\%   \\
+0  & 1  & 0  & 37,5\% \\
+0  & 0  & 1  & 25\%   \\
+0  & 0  & 0  & 0\%   \\\midrule
+D2 & D1 & D0 & Retning \\\midrule
+1  & 1  & 1  & \ang{90}      \\
+1  & 1  & 0  & \ang{67.5}    \\
+1  & 0  & 1  & \ang{45}      \\
+1  & 0  & 0  & \ang{22.5}    \\
+0  & 1  & 1  & \ang{-90}     \\
+0  & 1  & 0  & \ang{-67.5}   \\
+0  & 0  & 1  & \ang{-45}     \\
+0  & 0  & 0  & \ang{-22.5}   \\\bottomrule
+\end{tabular}%
+\end{table}
+
+\fig{Strukturering/Styringsenhed/StyringsenhedCirkelUdkast}{.4}{Konceptillustration der viser styringsprotokollen for SumoBot-enhederne}

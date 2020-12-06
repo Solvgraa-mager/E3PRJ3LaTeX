@@ -1,9 +1,9 @@
-\section{Kravliste}
+\section{Kravliste} \label{Kravliste}
 
 \subsection{Krav stillet af ASE}
 \begin{enumerate}
     \item Systemet \textbf{SKAL} indeholde embedded software.
-    \item Systemet \textbf{SKAL} indeholde aktoratere.
+    \item Systemet \textbf{SKAL} indeholde aktuatorer.
     \item Systemet \textbf{SKAL} indeholde trådløs kommunikation.
     \item Systemet \textbf{SKAL} indeholde et Linux system
     \item Systemet \textbf{SKAL} gøre brug af PSoC
@@ -13,8 +13,9 @@
 
 \subsection{Overordnede krav til Robo-Sumo-Battle}
 \begin{enumerate}
-    \item systemet \textbf{SKAL} kunne understøtte minimum 2 spillere.
+    \item Systemet \textbf{SKAL} kunne understøtte minimum 2 spillere.
     \item Systemet \textbf{SKAL} kunne registrer når en SumoBoter overskrider spillebanens afgrænsning.
+    \item Systemet \textbf{SKAL} kunne infomere spilleren om spillets status (nedtælling til start, SumoBots restenende liv, resterende spilletid)
     \item Systemet \textbf{BØR} kunne understøtte flere end 2 spillere.  
     \item Systemet \textbf{BØR} understøtte flere spiltilstande, end den allerede beskrevet under spilregler \ref{Spilregler}
 \end{enumerate}
@@ -26,14 +27,14 @@
     \item Spillebanen \textbf{BØR} veje mindre end 10 kg.
 \end{enumerate}
 
-\subsection{SumoBot}
+\subsection{SumoBot}\label{sumobotkrav}
 \begin{enumerate}
     \item SumoBot \textbf{SKAL} maksimalt være $20 \times 20 \times 20$cm.
     \item SumoBot \textbf{SKAL} kunne kollidere med hinanden fra alle sider, ved max hastighed, uden at tage skade.
     \item SumoBot \textbf{SKAL} kunne tilgås trådløst fra minimum tre meters afstand.
     \item SumoBot \textbf{SKAL} veje under 2.5 kg med alt monteret.
     \item SumoBot \textbf {BØR} kunne køre kontinuert, ved max hastighed, vinkelret mod en lodret flade, uden at blive beskadiget.
-    \item SumoBot \textbf{BØR} have batterilevetid til kontinuere kørsel ved max hastighed, i minimum 3 minutter.
+    \item SumoBot \textbf{BØR} have batterilevetid til kontinueret kørsel ved max hastighed, i minimum 3 minutter.
     \item SumoBot \textbf{BØR} kunne holde til 10cm frit drop på laminatgulv.
     \item SumoBot \textbf{BØR} reagere respektivt på spillerens styring, inden for 1 sekund.
 \end{enumerate}

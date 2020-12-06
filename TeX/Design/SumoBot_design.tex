@@ -1,5 +1,144 @@
-\section{SumoBot Design}\label{sec:SumoBot:design}
+\section{SumoBot}\label{sec:SumoBot:design}
 
 \subsection{Overordnet}
 
+Dette afsnit omhandler designet af SumoBotten. Da UC1 og UC2 kun har styringsformen til forskel, skal SumoBotterne udføre samme funktion i begge Use Cases.
+Der er i Analysen over SumoBotten blevet udarbejdet nogle specifikke krav, og ud fra disse krav vil der blive fastlagt hvilke komponenter der skal anvendes til konstruktionen af SumoBotterne. 
 
+\subsection{Valg af komponenter}
+
+Ud fra de krav stillet til delblokkene igennem analysen, er der på markedet søgt efter mulige kandidater, der vil kunne efterleve disse krav. Komponentkandidaterne er for overskuelighedens skyld opsat i tabeller. De enkelte komponenter vil for hvert krav blive be- eller afkræftet, for til sidst at få tildelt en "score". Afsluttende vil scoreren for hver komponent blive sammenlignet og på den måde finde den komponent der vil repræsentere systemet bedst muligt.
+
+\subsubsection{Attack Sensor}
+\textbf{Krav}
+\begin{enumerate}
+\item Skal kunne registrere vandret tryk fra sumobot.
+\item Skal kunne håndtere 5V med mellem 0 og 20 mA.
+\item Skal kunne holde til minimum 10000 tryk.
+\end{enumerate}
+\begin{center}
+\begin{tabular}{|p{2.5cm}||p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1cm}|}
+ \hline
+ \multicolumn{5}{|c|}{Attack Sensor} \\
+ \hline
+ Komponent & Krav 1 & Krav 2 & Krav 3 & Score\\
+ \hline
+ SKHCBJA010 & ja & ja & ja & 3/3\\
+ 631NH/2 & nej & ja & ja & 2/3\\
+ \hline
+\end{tabular}
+\end{center}
+\textbf{Valg}
+De to komponenter der har stået til overvejelse, har henholdsvis fået scoreren 3/3 og 2/3 jævnfør deres respektive datablade. På baggrund at dette, er det blevet konkluderet, at valget til projektet ligger på SKHCBJA010. Denne sensor kan håndtere kontakt fra alle sider, kan lede strømme på over 20 mA og ligeledes tolerer flere tusinde påvirkninger inden fejl. Selve implementering og montering kan findes i afsnit xx.
+
+\subsubsection{PSU}
+\textbf{Krav}
+\begin{enumerate}
+\item Skal kunne levere en stabil 5V DC forsyning  med maks afvigelse på  4.80 < 5.00 < 5.20 V ved 25 grader.
+\item Skal kunne lervare minimum 500 mA.
+\item Skal kunne køre stabilt med et 7 til 12V DC input.
+\item Skal kunne videresende Batteri forsyningen.
+\item Må ikke fylde mere end 4x4x4 cm
+\item Må maks have en output noice voltage på 120 mikroVolt
+\end{enumerate}
+\begin{center}
+\begin{tabular}{|p{2.5cm}||p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}| p{1.3cm}| p{1.3cm}| p{1cm}|}
+ \hline
+ \multicolumn{8}{|c|}{PSU} \\
+ \hline
+ Komponent & Krav 1 & Krav 2 & Krav 3 & Krav 4 & Krav 5 & Krav 6 & Score \\
+ \hline
+ MC7805B & ja & nej & ja & ja & ja & ja & 5/6\\
+ LM7805 & ja & ja & ja & ja & ja & ja & 6/6\\
+ \hline
+\end{tabular}
+\end{center}
+\textbf{Valg}
+
+Ud fra ovenstående tabel kan der konkluderes at "pas" er den rette komponent at anvende i projektet, da denne opfylder alle vores komponentkrav.  
+
+
+\subsubsection{Mikrocontroller}
+\textbf{Krav}
+\begin{enumerate}
+\item Skal kunne kommunikere  over WIFI.
+\item Skal have minimum 10 In/Out ben.
+\item Skal kunne køre 5V DC.
+\item Skal kunne levere mellem 3.3V og 5V DC på output benene.
+\item Må Maks være 12x4x4 cm.
+\end{enumerate}
+\begin{center}
+\begin{tabular}{|p{3.5cm}||p{1.3cm}|p{1.3cm}|p{1.3cm}| p{1.3cm}| p{1.3cm}| p{1cm}|}
+ \hline
+ \multicolumn{7}{|c|}{Microcontroller} \\
+ \hline
+ Komponent & Krav 1 & Krav 2 & Krav 3 & Krav 4 & Krav 5 & Skore \\
+ \hline
+ Arduino mega 2560 & ja & nej & ja & ja & ja & 4/5\\
+ Raspberry Pie Zero & ja & ja & ja & ja & ja & 5/5\\
+ raspberry pie 4 & ja & ja & ja & ja & ja & 5/5\\
+ \hline
+\end{tabular}
+\end{center}
+\textbf{Valg}
+
+Som brugbar mikrocontroller til projektet, har ovenstående 3 controllere være til overvejelse. 
+Ud fra ovenstående tabel kan der konkluderes at "pas" er den rette komponent at anvende i projektet, da denne opfylder alle vores komponentkrav.  
+
+
+\subsubsection{Motor}
+\textbf{Krav}
+\begin{enumerate}
+\item Skal have et moment på minimum 0.526 kg-cm.
+\item Skal være en DC motor.
+\item Må maksimalt være være 8x4x4 cm med akse.
+\end{enumerate}
+\begin{center}
+\begin{tabular}{|p{2.6cm}||p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1cm}|}
+ \hline
+ \multicolumn{5}{|c|}{Motor} \\
+ \hline
+ Komponent & Krav 1 & Krav 2 & Krav 3 & Skore\\
+ \hline
+  238-9715 & nej & ja & ja & 2/3\\
+ F280 Planet gear & ja & ja & ja & 3/3\\
+ \hline
+\end{tabular}
+\end{center}
+\textbf{Valg}
+
+Ud fra ovenstående tabel kan der konkluderes at "pas" er den rette komponent at anvende i projektet, da denne opfylder alle vores komponentkrav. 
+
+\subsubsection{Motorstyring}
+\textbf{Krav}
+\begin{enumerate}
+\item Skal kunne anvende 5V logik.
+\item Skal kunne anvende 3.3V på input/PWM indgangene.
+\item skal kunne styre retning og hastighed på 2 motorer uafhængigt af hinanden.
+\item Skal kunne styre hastighed ved hjælp af PWM.
+\item Skal kunne håndtere minimum 2A load kontinuerligt ved minimum 12V DC.
+\item Skal kunne klare 12V DC indgang / udgang. 
+\item Må ikke være større end 5x5x5 cm
+\end{enumerate}
+\begin{center}
+\begin{tabular}{|p{2.1cm}||p{1.3cm}|p{1.3cm} |p{1.3cm} |p{1.3cm}|p{1.3cm}| p{1.3cm}| p{1.3cm}| p{1cm}|}
+ \hline
+ \multicolumn{9}{|c|}{Motorstyring} \\
+ \hline
+ Komponent & Krav 1 & Krav 2 & Krav 3 & Krav 4 & Krav 5  & Krav 6 & Krav 7 & Skore \\
+ \hline
+ L293D  & ja & ja & ja & ja & nej & ja & ja & 6/7\\
+ L298n & ja & ja & ja & ja & ja & ja & ja & 7/7\\
+ \hline
+\end{tabular}
+\end{center}
+\textbf{Valg}
+
+Ud fra ovenstående tabel kan der konkluderes at "pas" er den rette komponent at anvende i projektet, da denne opfylder alle vores komponentkrav.  
+
+\subsection{DOmænemodel for UC1 og UC2}
+
+\subsubsection{Sekvensdiagram}
+\subsubsection{Klassediagram}
+
+\subsection{Software}

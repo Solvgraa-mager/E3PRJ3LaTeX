@@ -1,16 +1,17 @@
 {
 \def\dirfigs{figs/Analyse/Styringsenhed/}
 \section{Styringsenhed}\label{sec:Styringsenhed:analyse}
-\subsection{Lydgiver}
-Der er blevet foretaget en analyse af forskellige lydinputs til systemet. Analysen består af en måleserie, hvor man med forskellige lydinputs skal afgøre, om det er muligt at lave signaldiskrimination i 4 frekvensbånd. Målingerne er foretaget ved følgende procedure:
+\subsection{Lydgiver}\label{subsubsec:Styringsenhed:analyse:Lydgiver}
+Der er blevet foretaget en analyse af forskellige lydinputs til systemet. Analysen består af en måleserie, hvor man med forskellige lydinputs skal afgøre, om det er muligt at isolere 4 frekvensbånd indenfor en rimelig frekvensopløsning og derved generere styrings-outputs ud fra disse. Målingerne er foretaget ved følgende procedure:
 \begin{itemize}
-    \item Indspilning af 4 forskellige toner af 3 omgange.
+    \item Indspilning af 4 forskellige toner af 3 omgange med samplefrekvens på 10 kHz.
+    \item Mikrofonen benyttet er den indbyggede i en Lenovo T440p, lydkilde ca. 0,5 meter fra mikrofonen, samt et åbnet vindue ned til en trafikeret vej til at agere baggrundsstøj.
     \item Lydfilerne eksporteres som .wav fil og indlæses i Matlab.
     \item Lydfilerne processeres i Matlab til at et frekvensspektrum der vurderes muligt til at diskriminere lydinputtet til 4 styringsoutputs er opnået. 
     \item Det endelige resultat afspejler valget af lydinput samt specifikationerne for styringsenheden.
 \end{itemize}
 
-\subsection{Mandestemme}
+\subsubsection{Mandestemme}
 \fig{ToneAnalyse/Voice_FFT_Close_N_512}{.7}{Mandestemme, 4 toners frekvensspektrum}
 
 I Figur \ref{fig:ToneAnalyse/Voice_FFT_Close_N_512} ses et frekvensspektrum af en mandestemme, der for så vidt muligt har forsøgt at generere 4 forskellige toner. Her er påført hann-vindue for at minimere sidesløjfer og foretaget en 256 punkters FFT.
@@ -19,40 +20,59 @@ Dette giver anledning til følgende vurdering:
 \begin{itemize}
     \item Der sættes alt for høje krav til aktøren om at ramme bestemte toner, hvis der ikke indføres en talegenkendelsesstandard. Alene ud fra denne praktiske overvejelse forkastes stemmer som inputs. 
 \end{itemize}
+\subsubsection{Blokfløjte}\label{subsubsec:Styringsenhed:analyse:Mundharmonika}
 
-\subsection{Blokfløjte}
-\fig{ToneAnalyse/Recorder_FFT_N_128}{.7}{Blokfløjte, 64 bins frekvensspektrum}
-\fig{ToneAnalyse/Recorder_FFT_N_128}{.7}{Blokfløjte, 256 bins FFT - ubehandlet}
+\fig{ToneAnalyse/Recorder_FFT_N_128}{.7}{Blokfløjte, 4 toners frekvensspektrum, 64 bins FFT}
+\fig{ToneAnalyse/Recorder_FFT_N_512}{.7}{Blokfløjte, 4 toners frekvensspektrum, 256 bins FFT}
 
-\subsection{Mundharmonika}
-\subsubsection{Rå data}
-\fig{ToneAnalyse/NoHannFFT_Close_N_128}{.7}{64 bins FFT - ubehandlet}
-\fig{ToneAnalyse/NoHannFFT_Bar_N_128_Bins_64}{.7}{64 bins FFT  - ubehandlet}
+I \figref{ToneAnalyse/Recorder_FFT_N_128} og \figref{ToneAnalyse/Recorder_FFT_N_512} ses frekvensspektrummet for en aktør som har spillet 4 forskellige toner (2 fingre på, 4 fingre på, 6 fingre på og 8 fingre på for at udnytte mest muligt af frekvensområdet). Her er ganget et hann-vindue på signalet for at minimere sidesløjfer og der er hhv. foretaget en 64 og 256 punkters FFT. Dette giver anledning til følgende konstateringer og vurdering:
+\begin{itemize}
+    \item Signalfrekvensområde ca. 550 Hz - 1150 Hz.
+    \item Frekvensområde for hvert tone ca. 100 Hz.
+    \item Her er 40 dB niveauforskel fra tone 4 til tone 3 (ca. 60 Hz) med frekvensopløsning $F_s/2/256 = 19,56 Hz$.
+    \item SNR på ca. 40 dB (fra top af noise floor til top af peaks)
+    \item Det ses, at tonerne rammes klart. Her har der dog for aktørens vedkommende været god tid til at ramme tonerne. I en realtids-applikation vurderes det for omfangsrigt for aktørens motorik at ramme tonerne.
+    \item Blokfløjten er amplitudeafhængig på en meget negativ måde. Man skal være meget påpasselig for ikke blot at ende i oversvingningerne.
+    \item Med tilført hann-vindue og 256 punkters FFT vurderes det muligt at diskriminere signalindholdet til 4 outputs, men på baggrund af de praktiske overvejelser, overvejes yderligere lydinputs. 
+\end{itemize}
 
-\fig{ToneAnalyse/NoHannFFT_Close_N_256}{.7}{128 bins FFT - ubehandlet}
-\fig{ToneAnalyse/NoHannFFT_Bar_N_256_Bins_128}{.7}{128 bins FFT - ubehandlet}
+\subsubsection{Mundharmonika}
+Samme procedure følges for en mundharmonika som lydinput. Som en modifikation for at imødekomme det praktiske problem i at ramme tonerne, er der ved hjælp af elastikker dannet 4 "firkanter" som man kan puste i. 
 
+\fig{ToneAnalyse/FFT_Close_N_128}{.7}{Mundharmonika, 4 toners frekvensspektrum, 64 bins FFT}
 
-\fig{ToneAnalyse/NoHannFFT_Close_N_512}{.7}{256 bins FFT - ubehandlet}
-\fig{ToneAnalyse/NoHannFFT_Bar_N_512_Bins_256}{.7}{256 bins FFT - ubehandlet}
+\fig{ToneAnalyse/FFT_Close_N_256}{.7}{Mundharmonika, 4 toners frekvensspektrum, 128 bins FFT}
 
-\subsubsection{Behandlet data}
-\fig{ToneAnalyse/FFT_Close_N_128}{.7}{64 bins FFT - behandlet med Hann-vindue}
-\fig{ToneAnalyse/FFT_Bar_N_128_Bins_64}{.7}{64 bins FFT - behandlet med Hann-vindue}
+\fig{ToneAnalyse/FFT_Close_N_512}{.7}{Mundharmonika, 4 toners frekvensspektrum, 256 bins FFT}
 
-\fig{ToneAnalyse/FFT_Close_N_256}{.7}{128 bins FFT - behandlet med Hann-vindue}
-\fig{ToneAnalyse/FFT_Bar_N_256_Bins_128}{.7}{128 bins FFT - behandlet med Hann-vindue}
+I \figref{ToneAnalyse/FFT_Close_N_128}, \figref{ToneAnalyse/FFT_Close_N_256} og \figref{ToneAnalyse/FFT_Close_N_512} ses lydsignalet fra de 4 toner genereret af mundharmonikaen. Der er ganget et hann-vindue på for at minimere sidesløjfer.
+%Der undersøges i \figref{ToneAnalyse/NoHannFFT_Close_N_512}, om hann-vinduet er nødvendigt. 
 
+%\fig{ToneAnalyse/NoHannFFT_Close_N_512}{.7}{Mundharmonika, 4 toners frekvensspektrum, 256 bins FFT - ubehandlet}
 
-\fig{ToneAnalyse/FFT_Close_N_512}{.7}{256 bins FFT - behandlet med Hann-vindue}
-\fig{ToneAnalyse/FFT_Bar_N_512_Bins_256}{.7}{256 bins FFT - behandlet med Hann-vindue}
+%Ud fra \figref{ToneAnalyse/NoHannFFT_Close_N_512} vurderes det nødvendigt at tilføje et hann-vindue til indgangssignalet. 
 
+Dette giver anledning til konstateringen og vurderingen:
+\begin{itemize}
+    \item Signalfrekvensområde ca. 200-1250 Hz.
+    \item Frekvensområde for hver tone mindst ca. 150 Hz (tone 1) og højest ca. 250 Hz (tone 3).
+    \item 40 dB niveauforskel fra den ene tone til den anden (mindst overgang fra tone 2 til tone 3, ca. 60 Hz. Og højest overgang fra tone 3 til tone 4, ca. 100 Hz) med frekvensopløsning $F_s/2/256 = 19,56 Hz$.
+    \item SNR på ca. 40 dB (fra top af noise floor til top af peaks)
+    \item Det ses, at tone 3 og tone 4 i \figref{ToneAnalyse/FFT_Close_N_512} rammes nemmere end de andre. Dog observeres også, at amplituden kun hæver niveau og ikke frekvens, hvilket var en faldgrube ved blokfløjten. 
+    \item Med "støtten" i form af elastikker på mundharmonikaen er det nemt at ramme tonerne rigtigt.
+\end{itemize}
 
+\subsubsection{Endelig beslutning af lydgiver}
+Selvom blokfløjtens frekvensspektrum i \figref{ToneAnalyse/Recorder_FFT_N_512} ser lovende ud, forkastes denne mulighed udelukkende af de ovenstående drøftede praktiske årsager. Hertil vurderes mundharmonikaen til at være et tilstrækkeligt alternativ. Her er større frekvensbånd for hver tone og større frekvensområde til overgangen mellem frekvensbåndene, hvilket gør det lettere at skelne tonerne fra hinanden og derved arbejde med for at generere styringsoutputs. 
 
-
-% % \tbd En studerende fra DIEM\footnote{Dansk Institut for Elektronisk Musik - Det Jyske musikkonservertiorium} har leveret en række lydoptagelser af hhv. blokfløjte og mundharmonika, der kan bruges til at afklare hvilke frekvensområder der er interessante. % mangler endnu.
-% Det antages at frekvensområdet ligger i området \SIrange{300}{3000}{Hz}\cite{MimsEngNotebookFormulas}. At designe et velfungerende filter i dette frekvensområde burde være muligt uden de store armbevægelser.
-% %%% 
+\subsubsection{Krav til styringsenhed ud fra lydgiver}
+Hermed kan følgende krav for de andre enheder i styringsenheden fastsættes:
+\begin{itemize}
+    \item Signalfrekvensområde: 200-1250 Hz.
+    \item Skal kunne isolere 4 toner med en overgang på højest 100 Hz i signalfrekvensområdet.
+    \item I sammenhæng med kravet stillet i \ref{sumobotkrav} skal ovenstående udføres på under et sekund (inklusiv eventuelle forsinkelser i de andre subsystemer).
+    \item Signal-støj-forhold på 40 dB gennemgående i signalkæden.
+\end{itemize}
 
 \subsection{Mikrofon}
 \fig{styringsenhed_mikrofon}{0.4}{Udsnit af mikrofonblokken}
@@ -69,10 +89,14 @@ Dette giver anledning til følgende vurdering:
 }
 \end{PartBlokDescription}
 
-Der er blevet foretaget et valg om at benytte en elektretmikrofon \tbr (link til mikrofon) som allerede var til rådighed. 
-Mest kritisk for mikrofonen er SNR\cite{Lewis2012}. Hvis denne ikke viser sig tilstrækkelig høj til at kunne differentiere baggrundsstøj fra det reelle input vil der skulle laves akustisk regulering.
+\subsubsection{SNR og dynamisk område}
+Ud fra kravene i Afsnit \ref{subsubsec:Styringsenhed:analyse:Lydgiver} vurderes, at en standard elektretmikrofon \tbr (link til mikrofon), som allerede var til rådighed, vil kunne opfylde kravet.
+Med et signal-støj-forhold opgivet til 58 dB vil dette ende i et akustisk dynamisk område på ca. 70dB\cite{Lewis2012}, hvilket vurderes tilstrækkeligt til at opfange inputs fra mundharmonikaen. 
 
-Outputtet fra mikrofonen behandles og konditioneres, hvorfor kravene til Analog signalbehandling og Signalkonditionering blokkene defineres ud fra mikrofonens output.
+Hvis baggrundsstøjen er i et større omfang end hidtil regnet med i afsnit \ref{subsubsec:Styringsenhed:analyse:Lydgiver}, så baggrundsstøjen ikke kan differentieres fra det reelle input, vil der i implementeringen skulle laves akustisk regulering.
+
+\subsubsection{Sensitivitet}
+Sensitiviten for den valgte mikrofon er opgivet til \SI{8(2)}{\milli\volt\per\pascal}, hvorfor der fra denne specifikation interfaces videre til en bestemmelse af forstærkerkredsløbets gain.
 
 \subsection{Analog signalbehandling}
 \fig{styringsenhed_analogsignalbehandling}{0.4}{Udsnit af blokken til analog signalbehandling}
@@ -82,20 +106,32 @@ Outputtet fra mikrofonen behandles og konditioneres, hvorfor kravene til Analog 
 \item Indgangsimpedans: Høj
 }
 \Portbeskrivelse{Behandlet lydsignal}{Analog}{Filtreret og forstærket signal indeholdende lydinformation.}{
-\item Signalfrekvensområde: \SIrange{300}{3000}{\Hz}
+\item Signalfrekvensområde: \SIrange{200}{1250}{\Hz}
 \item Udgangsimpedans: Lav
 }
 \end{PartBlokDescription}
 
 
-\input{TeX/Analyse/Styringsenhed_SignalBehandling}
+Denne blok skal filtrere frekvenser udenfor pasbåndet fra samt forstærke signalet fra mikrofonen op, så det kan registreres af en ADC.
 
+Det er nødvendigt at have et filter der uden problemer kan lukke frekvenser i området liggende fra \SIrange{250}{1500}{Hz} igennem, uden at det opstår bemærkelsesværdi forvrængning eller faseproblemer, derudover bør uønskede frekvenser bortfiltreres i en grad af de ikke opfanges af ADC'en.
 
+Med et pasbånd beliggende i området \SIrange{250}{1550}{Hz} og en dertilhørende forstærkning på \ca{300}, vil et passende frekevensrespons være et båndpasfilter der kan beskrives : 
+\begin{equation}
+    T(s) = T_{\textrm{HP}} \cdot T_{\textrm{LP}} \cdot T_{\textrm{Gain}} 
+\end{equation}
+hvor følgende gør sig gældende for de forskellige led
+\begin{equation}
+    \begin{split}
+        T_{\textrm{HP1}} &= \fdb = \SI{250}{Hz} \quad \SI{20}{\dB\per dec} \\
+        T_{\textrm{LP1}} &= \fdb = \SI{1550}{Hz} \quad  \SI{40}{\dB\per dec} \\
+        T_{\textrm{Gain}} &= \textrm{Gain} \approx  300
+    \end{split}
+\end{equation}
 
 
 \subsection{Signalkonditionering}
 \fig{styringsenhed_signalkonditionering}{0.4}{Udsnit af blokken til signalkonditionering}
-DET HER ER FUCKING SIGNALKONDITIONERING
 
 \begin{PartBlokDescription}{Styringsenhed: Signal konditionering}{Styringsenhed:Signalkonditionering}
 \Blokbeskrivelse{Signal\newline kondition-ering}{Buffer stage der skal sikre maksimal spændings-overførsel.}
@@ -109,47 +145,67 @@ DET HER ER FUCKING SIGNALKONDITIONERING
 
 \begin{PartBlokDescription}{Styringsenhed: ADC}{Styringsenhed:ADC}
 \Blokbeskrivelse{ADC}{Analog til digital konvertering.}
-\Portbeskrivelse{ADCinLyd}{Analog}{Delta Sigma ADC}{
+\Portbeskrivelse{ADCinLyd}{Analog}{}{
 \item Fuld skala input spændingsområde: \SIrange{0}{5}{\volt}
 \item Indgangsimpedans: høj
 \item Sample rate: 10 kHz.
 \item Bitopløsning: 8 bit
 \item SNR: 40 dB
 }
+\Portbeskrivelse{adcOutLyd}{Digital}{Array med værdier fra ADC med tilstrækkelig plads til at foretage en FFT ud fra Digital Signal Processerings-blokkens bestemte specifikationer}{
+\item Type: uint8
+}
 \end{PartBlokDescription}
 
-
-Pr. styringsenhed er der én ADC-blok som konverterer inputs fra hhv. joystickX, joystickY og mikrofon input til bitstrømme. Disse bitstrømme processeres i en microprocessor hvor der kører en realtids-FFT algoritme for at kunne generere en veldefineret styringsprotokol for SumoBotsne. 
-
-For at gøre dette muligt er der udarbejdet følgende krav til ADC modulet:
-\begin{itemize}
-    \item Samplingrate: 10 kHz
-    \item Bitopløsning: 8 bit
-    \item Fuld-skala input range: 5V
-    \item SNR: 40 dB
-    \item Høj indgangsimpedans
-\end{itemize}
-
-Fuld skala input range på ADC'ens indgang skal stemme overens med inputsignalets spændingsområde.
+\subsubsection{ADCinLyd}
+Fuld skala input range på ADC'ens indgang skal stemme overens med inputsignalets spændingsområde for at udnytte hele inputsignalet og derved sikre maksimal opløsning. 
 Derfor fastsættes at fuld-skala input range = 5V.
 
-\tbr Hvis SNR på 40 dB vurderes tilstrækkeligt, kan denne værdi bruges som udgangspunkt til et mindstekrav for bitopløsningen,\cite{KesterMT-001Care}, som ADC'en skal outputte med:
+Når signal-støj-forhold på 40 dB er vurderet som tilstrækkeligt, kan denne værdi bruges som udgangspunkt til et mindstekrav for bitopløsningen,\cite{KesterMT-001Care}, som ADC'en skal outputte med:
 \[ 40 = 6.02 \cdot n+1.76 \]
 \[ n = 6.37 \to n = 8 \]
 
 Der skal altså anvendes en ADC med en effektiv bitopløsning på mindst 6.37. Der vælges derfor at anvende en ADC med 8 bit opløsning. 
 
-Til lydinputtet fra mikrofonforstærkeren bestemmes det, at der skal anvendes en Delta Sigma ADC. Dette er bestemt med følgende grundlag:
-\begin{itemize}
-    \item Forhåndsforsikring for, at ADC'en kan yde den tilstrækkelige bitopløsning som inputs til en FFT algoritme. 
-    \item Delta Sigma ADC opererer kontinuerligt(\tbr reference til Texas Instruments) (integrerer over tid) og er derfor bedst til realtids-applikationer.  
-\end{itemize}
+\subsubsection{adcOutLyd}
+Denne specifikation er givet ud fra bitopløsningen på ADC'en samt specifikationerne for Digital Signal Processing. Se yderligere overvejelser herfor i afsnit \ref{Digital:Signal:Processing}. 
 
-For at opfylde kravene til blokken ADC er der gjort overvejelser, som sammen med en vurdering ud fra kravene er opstillet i tabel \ref{tab:adc_vurdering}. Da PSoC 5LP opfylder alle krav, vælges denne. 
-
-\subsection{Digital signal processing}
+\subsection{Digital Signal Processing}\label{Digital:Signal:Processing}
 \fig{styringsenhed_dsp}{0.4}{Udsnit af ADC-blokken}
-For ikke selv at skulle designe ADC'er analogt tages udgangspunkt i en platform hvor der kan køres noget firmware med en FFT-algoritme til lydsignalet fra mikrofonen. Her er til PSoC 5LP udarbejdet et bibliotek til FFT\tbr, som der i første omgang tages udgangspunkt i. Denne kan lave en 128 punkters FFT hvilket vurderes tilstrækkeligt i denne applikation med en konservativ signalbåndbredde. Derved kan signalprocesseringen også foregå i selvsamme blok. 
+For at skabe et styringssignal der kan sendes videre i systemet, er nødvendigt at processere den \emph{samplede} data med henblik på at identificere de 4 toner der er angivet i \nameref{subsec:Styringsenhed:analyse:Mundharmonika}. %\ref
+
+Der er  flere metoder der kan nå det samme resultat, hvor to af disse er vist i \tabref{Styringsenhed:analyse:DSPMetoder} hvor det ses at de to metoder givet vis kan det samme, de implementeres blot på to forskellige måder--- det gør dem dog ikke ens.
+
+\begin{table}[!h]
+	\small
+	\centering
+	\caption{DSP isoleringsmetoder}
+	\label{tab:Styringsenhed:analyse:DSPMetoder}
+	\begin{tabular}{lll}
+		                                           & \multicolumn{1}{c}{FFT} & \multicolumn{1}{c}{4 $\times$ Båndpasfilter} \\\midrule
+		Kan implementeres på embedded controller   & \checkmark              & \checkmark                              \\
+		Kan implementeres ud fra analyseresultater & \checkmark              & \checkmark                              \\
+		Total udnyttelse af data                   &                         & \checkmark                              \\
+		Mulighed for læseligt output                      & \checkmark              & \checkmark                              \\
+		Kendskab fra AU Kurser                     & \checkmark              & \checkmark                              \\
+		Litteratur                                 & \checkmark              & \checkmark                              \\\bottomrule
+	\end{tabular}
+\end{table}
+\subsubsection{FFT metode}
+FFT metoden vil med 512 input samples, som vist i \figref{ToneAnalyse/FFT_Close_N_512}, producere 256 \emph{FFT-bins}\cite{DigitalSignalProcessing} i et frekvensdomæne, hvor hver bin er med en opløsning der beskrives $\sfrac{\textrm{Samplerate}}{\textrm{Antal FFT bins}}$, dog skal kun 4 enkelte frekvensområder isoleres --- hvor der udfra \figref{ToneAnalyse/FFT_Close_N_512} ses at 2 til 3 bins pr. isoleret tone vil være tilstrækkeligt i tilfældet $N=512$, vil dette medføre et samlet \emph{spild} der kan beskrives \[\textrm{Binspild} = \textrm{Antal FFT bins} - (\textrm{Isolerede toner} \times  \textrm{Antal tonebins}).\]
+Dette spild kan vise sig at være problematisk i form at tidsudregninger, og dette bør derfor i designfasen optimeres til et punkt hvor dataspild er på et minimum. 
+
+Selve FFT-metoden vil kræve $X$ antal udregninger inklusiv spildet, hvor $X$ kan beskrives 
+\(\tfrac{\textrm{Antal Samples}}{2} \times  \log_2 (\textrm{Antal Samples})\), dette bør dog ikke vise sig som værende et problem da platformen hvorpå metoden skal afvikles, har tilstrækkelig regnekraft til at kunne udføre disse operationer uden problemer\cite{Bronshtein2015,PSoC5LPDatasheet}.
+
+%%%% 
+\subsubsection{$4 \times$ digital båndpasfilter}
+
+Det vil også være muligt at isolerere de fire toner ved at isolere dem med en række filtre. Her ville et antal båndpas filtre, hvor der i designfasen udarbejdes filtertyper der kan isolere de fire interessetoner.
+Dette er dog ikke en metode er vil gåes videre med, da arbejdet med FFT metoden vægtes højere, da lærings/udviklings-processen i denne er noget der ønskes udforsket fra gruppens side.
+
+Dog forkastets båndpasmetoden ikke, da denne bør kunne implementeres i stedet for FFT-metoden uden de store armbevægelser hvis sidstnænvte metode ikke viser sig tilstrækkelig eller volder problemer der er for tidskrævende at rette op.
+
 }
 
 

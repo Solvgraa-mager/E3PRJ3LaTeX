@@ -13,6 +13,7 @@ Central Computers funktionalitet er overordnet skitseret i \figref{Strukturering
 %BlokDescription -> PartBlokDescription 
 %Der er tilføjet [: Underblok] til både titel og label.
 \subsection{Embedded Controller}
+\label{sec:Embedded_Controller}
 
 \fig{Analyse/CC/EmbeddedControllerIBDUdklip.png}{0.25}{Embedded Controller I/O}
 
@@ -90,4 +91,12 @@ Informationen som formidles til SumoBots bliver efter en simpel protokol som sen
 }
 \end{PartBlokDescription}
 
-Displayet viser løbende information omkring spilstatus (resterende liv, resterende spilletid mv.) til spillerne, se \figref{Analyse/CC/DisplayIBDUdklip.png} 
+Displayet fungere som kommunikationsportalen mellem spillet og dets spillere. Igennem et spil vil der løbe en informationsstrøm fra systemet til brugerne, der dieregere dem gennem spillets forløb. I det ligger der Information vedrørende resterende liv af spillernes respektive SumoBots, resterende spilletid, nedtælling til spillestart mv. Med andre ord sørger display blokken for at udføre kravet "Systemet \textbf{SKAL} kunne infomere spilleren om spillets status (nedtælling til start, SumoBotsrestenende liv, resterende spilletid)" som findes under \ref{Kravliste}. Der er på baggrund af dette krav blevet listet en række funktionelle krav:
+
+\textbf{Krav}\label{Display_funktionelle_krav}
+\begin{itemize}
+\item Størelse på min 4x20 felter.
+\item Skal benytte I2C kommunikation.
+\item Fysisk størrelse på min 50*20mm, max 300*120mm
+
+\end{itemize}

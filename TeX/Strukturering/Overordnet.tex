@@ -56,11 +56,15 @@ Delblokkene og interfaces imellem disse, som skitseret i IBDet \figref{Strukture
 %%%%%%%%%%%%
 
 \Blokbeskrivelse{SumoBot}{Omdanner styringsinfotmation fra Central Computeren, til bevægelse. Informere Centralcomputer om liv er mistet}
-\Portbeskrivelse{Inout SumoKom}{Wifi}{Tovejskommunikation  med  Central  Computer  hvor  dermodtages information omkring retning og hastighed ogsendes information om et evt. angreb}{
+\Portbeskrivelse{Inout SumoKom}{Wifi}{Tovejskommunikation med Central Computer hvor der modtages information omkring retning og hastighed og sendes information om et evt. angreb}{
 \item 
 \item 
 }
-\Portbeskrivelse{Inout RobotAngreb}{Force}{}{
+\Portbeskrivelse{In RobotAngreb}{Force}{Fysisk påvirkning fra anden SumoBot, der registreres som et attack}{
+\item 
+\item 
+}
+\Portbeskrivelse{Out motorDrive}{torque}{Skaber fremdrift til SumoBotten}{
 \item 
 \item 
 }

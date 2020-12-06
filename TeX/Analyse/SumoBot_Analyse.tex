@@ -1,10 +1,63 @@
 \section{Sumobot Analyse}\label{sec:Sumobot:analyse}
 
-I dette analyseafsnit vil der blive beskrevet ansvaret for de enkelte delblokke for SumoBot. Foruden en beskrivelse af blokkene, vil forbindelserne mellem dem såvel blive udpenslet. Afsluttende vil der blive stillet en række krav for selve blokkene, der bliver grundlag for valg af komponenter senere i projektet.
+I dette analyseafsnit vil der indledningsvis blive lavet analyse for de essentielle elementer for SumoBot, der vil lægge grundlag for kravene af de enkelte delblokke. Foruden analysen, vil ansvaret for de enkelte delblokke blive fremstillet. Ydermere beskrivelsen af blokkene, vil forbindelserne mellem dem såvel blive udpenslet. Afsluttende vil der blive stillet en række krav for selve blokkene, der bliver grundlag for valg af komponenter senere i rapporten.
 
-SumoBots funktionalitet er overordnet skitseret i \figref{Strukturering/SumoBot/systemSekvensDiagram_SumoBot.png}
+
+\subsection{Sumobot Del Analyse}\label{subsubsec:SumoBot:Analyse}
+
+\subsubsection{Nødvendig trækkræft}
+Et kristisk område at lægge en del fokus, er elementet, der flytter objektet, SumoBot, hen over spillepladen. Som nævnt i kravspecifikationen, afsnit \ref{sumobotkrav}, vil SumoBot have en maksvægt på 2,5 kg og begrænsende dimensioner på maks 20cmx20cmx20cm. Der ligger altså et analyseområde i at bestemme et momentkrav der skal til at flytte objektet, der samtidig overholder størrelseskravet.
+
+Der er blevet foretaget en analyse af det nødvendige moment motorene skal generere på hjulakslerne før bilen ville kunne flytte sig over banen.
+For at dette kunne beregnes er følgende antagelser blevet anvendt:
+ \begin{itemize}
+   \item Tab i aksel og lejer samt i en eventuelt anvendt gearing osv. er en antaget at være en konstant på 0,9. Med andre ord antages der at effektoverførelsen mindskes med 10\%.
+   \item Gnidningsoverfladerne mellem hjul og underlag, antages at være mellem gummi og beton. 
+   \item Vægtfordelingen på SumoBotten er ligeligt fordelt. Denne vægt antages desuden af være fordelt på 2 hjul, hvilket betyder at eventuelle støttehjul ses bort fra da de kun anses for at holde balancen og ikke decideret bærer nogen vægt.
+\end{itemize}
+
+\subsubsection{Moment beregning}
+Ved udregning af det nødvendige moment, kan de forskellige faktorer der spiller ind, simplificeret, opdeles i 3 elementer, der summeret angiver det nødvendige moment der kræves, til at flytte det specifikke objekt i de specifikke omgivelser.
+De 3 elementer er henholdsvis:
+
+\begin{itemize}
+    \item Rullemodstanden
+    \item Hældningsmodstanden
+    \item Accelerationskraften
+\end{itemize}
+
+Der indskrives de nødvendige værdier fra overordnede krav til systemet samt de fysiske love og antagelser:
+
+\begin{flalign*}
+  \text{RulleModstand for beton og gummi} && Crr &= 0.015 &\\
+  \text{Vægt af SumoBot} && GVW &= 2.5 KG &\\
+  \text{Hældning af Banen} && Angle &= \deg{(0)} &\\
+  \text{Ønskede Acceleration} && a &= 1 \frac{\mathrm m}{\mathrm s^2} &\\
+  \text{Tyngdeacceleration} && g &= 9.807 \frac{\mathrm m}{\mathrm s^2} &\\
+  \text{Tab i gear etc.} && R_f &= 0.9  &\\
+  \text{Radius af hjulene} && R_w &= 0.04 m
+\end{flalign*}
+
+Dette giver anledning til følgende udregninger:
+
+\begin{flalign*}
+  \text{RulleModstand af SumoBot} && RR &= Crr \cdot GVW && RR = 0.038 kg &\\
+  \text{Hældningsmodstanden} && GR &= GVW \cdot \sin{(Angle)} && GR = 0 kg &\\ 
+  \text{Samlet masse af SumoBot} && m &= \frac{\mathrm GVW}{\mathrm g} && m = 0.255 \frac{\mathrm kg \cdot s^2}{\mathrm m}  &\\
+  \text{Accelerationskraften} && FA &= m \cdot a && FA = 0.255 kg &\\
+  \text{Minimum trækkraft nødvendig} && TTE &= RR + GR + FA && TTE = 0.292 kg &\\
+  \text{Minimumskrav med 1 hjul} && T &= R_f \cdot TTE \cdot R_w && T = 1.053 kg \cdot cm &\\
+  \text{Minimumskrav ved 2 hjul} && T_m &= \frac{\mathrm T}{\mathrm 2} && T_m = 0.526 kg\cdot cm&\\
+\end{flalign*}
+
+Det vil sige, at ifølge udregningen, da vil det kræve et minimumsmomentkrav på "0.526 kg-cm" pr. motor, at få Sumobot med fuld vægtbelastning til at accelerer med \SI{1}{\meter\per\second\squared}. 
+
+ \figref{Strukturering/SumoBot/systemSekvensDiagram_SumoBot.png}
+Ud fra den overordnede analyse "delafsnit X" af systemet udearbejdes der nogle krav til de enkelte delblokke samt beskriver deres
+funktionalitet.
 
 \fig{Strukturering/SumoBot/systemSekvensDiagram_SumoBot.png}{0.8}{SumoBot System Sekvensdiagram}
+
 
 \subsection{Attack Sensor}
 \fig{Analyse/SumoBot/ibd_sumobot_attacksensor.png}{0.60}{Attack Sensor IBD}
@@ -21,14 +74,15 @@ SumoBots funktionalitet er overordnet skitseret i \figref{Strukturering/SumoBot/
 \BlokSpacer{0cm}
 \end{PartBlokDescription}
 
-Attack Sencor er den del af SumoBotten der registrerer at den er blevet påkørt af en anden SumoBot.
-2 switches monteres på bagsiden af hver SumoBot og registrere kollision.
+Attack Sensor er den del af SumoBotten der registrerer at den er blevet påkørt af en anden SumoBot.
+2-3 Attack Sensorer monteres på bagsiden af hver SumoBot og registrere kollision.
+På baggrund af funktionaliteten af sensoren, lægges der stor fokus på robustheden i valget af sensor. 
 
 \textbf{Krav}
 \begin{itemize}
-\item Skal kunne holde til påkørsel fra alle tænklige retninger.
+\item Skal kunne registrere vandret tryk fra sumobot.
 \item Skal kunne håndtere 5V med mellem 0 og 20 mA.
-\item Skal kunne holde til minimum 1000 tryk.
+\item Skal kunne holde til minimum 10000 tryk.
 \end{itemize}
 
 
@@ -52,7 +106,7 @@ Nedenstående krav er specificeret ved 25 grader celsius.
 \\
 \textbf{Krav}
 \begin{itemize}
-\item Skal kunne levere en stabil 5V DC forsyning  med maks afvigelse på  4.85 < 5.00 < 5.15 V.
+\item Skal kunne levere en stabil 5V DC forsyning  med maks afvigelse på  4.80 < 5.00 < 5.20 V ved 25 grader.
 \item Skal kunne lervare minimum 500 mA.
 \item Skal kunne køre stabilt med et 7 til 12V DC input.
 \item Skal kunne videresende Batteri forsyningen.
@@ -90,7 +144,7 @@ Microkontrolleren er den del af SumoBotten der styrer motorstyringen ud fra indp
 \item Skal kunne kommunikere  over WIFI.
 \item Skal have minimum 10 In/Out ben.
 \item Skal kunne køre 5V DC.
-\item Skal kunne levere 3.3V DC på output benene.
+\item Skal kunne levere mellem 3.3V og 5V DC på output benene.
 \item Må Maks være 12x4x4 cm.
 \end{itemize}
 
@@ -114,9 +168,8 @@ I og med at Sumobot er trådløs, er det essentielt at have et batteri monteret,
 \textbf{Krav}
 \begin{itemize}
 \item Må maks være 10x10x5 cm. \tbr
-\item Skal kunne lervere 3A.
-\item skal have minimum 7000 mAh. \tbr
-\item Skal være et lithium batteri.
+\item Skal kunne levere 2.5 Ampere.
+\item skal have minimum 1000 mAh. \tbr
 \item 9 V spænding\tbr
 \end{itemize}
 
@@ -137,17 +190,16 @@ I og med at Sumobot er trådløs, er det essentielt at have et batteri monteret,
 
 Blokken \textit{motor} repræsenterer selve motoren. Dens opgave er at flytte SumoBot rundt på spillepladen.
 I valg af motor sætter de fysiske dementioner (20x20x20) af SumoBot atter en begrænsning. Et andet aspekt der er værd at tage i betragtning er momentet i valget af motor.
-Et andet aspekt i valg af motor motor, er at hver bil består af 2 motorer. Der skal altså i alt bruges 4 styk til projektet. \tbd
+Et andet aspekt i valg af motor, er at hver bil består af 2 motorer. Der skal altså i alt bruges 4 styk til projektet. \tbr
 \\
+
 \textbf{Krav}
 \begin{itemize}
+\item Skal have et moment på minimum 0.526 kg-cm.
 \item Skal være en DC motor.
-\item Må Maks være 8x6x6 cm.
-\item Skal kunne afgive en moment på 1 NM fra 0 RPM.\tbr
+\item Må maksimalt være være 8x4x4 cm med akse.
 \end{itemize}
 
-
-\tbr
 \subsection{Motorstyring}
 \fig{Analyse/SumoBot/ibd_sumobot_motorstyring.png}{0.36}{Attack Sensor IBD}
 
@@ -179,5 +231,6 @@ Motorstyringen tager sig af styring af de 2 fastmonterede motorer på SumoBotten
 \item Skal kunne klare 12V DC indgang / udgang. 
 \item Må ikke være større end 5x5x5 cm
 \end{itemize}
+
 
 

@@ -11,13 +11,8 @@ Delta Sigma ADC komponenten på PSoC kan enten konfigueres ved firmware eller ve
 For at få bedst mulig interface til mikrofonforstærker og filter er der på baggrund af applikationsnoten AN58304, s. 3 \tbr REFERENCE  ... valgt port [P0:7] som indgang til ADC'en, da denne er en af de foreskrevne analoge porte med bedst performance. 
 
 \subsubsection{Input range}
-\begin{figure}
-    \centering
-    \includegraphics{figs/Design/Styringsenhed/inputrange.PNG}
-    \caption{Forskellige input modes for Delta Sigma ADC}
-    \label{fig:ADC_inputrange}
-\end{figure}
-For at få så meget headroom og derved opløsning som muligt, konfigueres ADC'en til (i princippet) rail to rail operation. Men ved denne konfiguration i PSoC aktiveres en buffer på indgangen for at give mulighed for at forstærke indganssignalet. Dette fravælges (bufferen bypasses), for at opnå størst muligt headroom og derved opløsning, se Figur \ref{fig:ADC_inputrange}. Hertil opnås den højest mulige indgangsimpedans,  da anvendelsen af denne buffer er på bekostning af indgangsimpedansen.\tbr REFERENCE TIL DELTA SIGMA ADC, s. 12. Hvis der herved opstår problemer med overstyring af ADC'en, kan der konfigureres til rail-to-rail med buffer gain på 1. 
+\fig{Design/Styringsenhed/inputrange}{0.8}{Forskellige input modes for Delta Sigma ADC}
+For at få så meget headroom og derved opløsning som muligt, konfigueres ADC'en til (i princippet) rail to rail operation. Men ved denne konfiguration i PSoC aktiveres en buffer på indgangen for at give mulighed for at forstærke indganssignalet. Dette fravælges (bufferen bypasses), for at opnå størst muligt headroom og derved opløsning, se Figur \figref{Design/Styringsenhed/inputrange}. Hertil opnås den højest mulige indgangsimpedans,  da anvendelsen af denne buffer er på bekostning af indgangsimpedansen.\tbr REFERENCE TIL DELTA SIGMA ADC, s. 12. Hvis der herved opstår problemer med overstyring af ADC'en, kan der konfigureres til rail-to-rail med buffer gain på 1. 
 
 \subsubsection{Input mode}
 \subsubsection{Referencespændinger}
@@ -27,11 +22,49 @@ PSoC 5LP har interne referencespændinger med en tolerance på +- 0.1\%. \tbr Re
 
 \subsubsection{Interrupt, polling, DMA}
 
+\subsection{Analog signalbehandling}
+
+\fig{Design/Styringsenhed/MFBFilterOutput}{0.9}{}
+
+\fig{Design/Styringsenhed/MFBFilterCircuit}{1}{Kredsløbsdiagram, design lånt fra \cite{ADCMFBTI}}
+
+
+\fig{Design/Styringsenhed/StyringsFlow}{0.3}{Flow der viser funktionaliteten af filteret}
+Der ses bort fra \SI{-3}{\dB} dæmpningen ved de to knækfrekvenser, da denne på nuværende tidspunkt ikke vurderes at have en større betydning --- dette korrigeres hvis det volder problemer ifb. ADC-konverteringen.
+
+Ved at lade lavpasledet dæmpe med \SI{40}{\dB\per dec} ved 3\kHz, bør aliaseringsproblemer kunne undgåes når signal sendes videre til ADC'en.
+
+For at kunne aflæse signalet korrekt på ADC'en er signalet nødt til at fluktuere omking et fast punkt, hvor der her vælges \(\frac{V_{CC}}{2}\), hvorved et med der svinger m. 0 til VCC. 
+Ændring af amplitude samt evt. ekstra \emph{offsetbiasing} bør finde sted i signalkonditioneringen.
+
+For at fastsætte en endelig gain er en reel test af mikrofonen nødvendig, dog antages det at 
+\begin{equation}
+    \textrm{Mikrofon spændingsoutput}\approx \SI{8}{mV} \tbr
+\end{equation}
+
+Her af
+\begin{equation}
+    \frac{\textrm{Maksimal spænding}}{\textrm{Mikrofon output}} = \textrm{Gain}
+\end{equation} 
+
+Kan niveauet fastsættes udfra en antagelse om en outputspænding fra mikrofonen på \SI{8(2)}{mV} 
+\begin{equation}
+    \begin{split}
+        \textrm{Gain} &\approx  300\\
+       300 \cdot \SI{8}{mV} &= \SI{2.4}{V}
+    \end{split}
+\end{equation}
+
+Ved nærmere analyse af den valgte mikrofon egenskaber, kan gainniveauet justeres efter behov --- dette bør kunne udføres uden nogle vanskeligheder i et senere forløb.
+
+Outputimpedansen for signalbehandlingsmodulet har ikke den store betydning, men bør holdes i omegnen af \SIrange{1}{10}{\kohm} for ikke at skabe probelmer med videre interfacing af moduler. 
 
 
 
 
 \subsection{DSP blokken}
+
+\fig{Design/Styringsenhed/StyringsenhedFFTFlowChart}{.7}{Flowchart der viser hvordan FFT-metoden}
 
 \begin{functionDescription}
     {uint8 DoFFT(uint8* inputArray, uint16* FFTResultPtr)}
@@ -41,3 +74,28 @@ PSoC 5LP har interne referencespændinger med en tolerance på +- 0.1\%. \tbr Re
     FFTResultPTR: Pointer til den de udregnede FFT koefficienter}
     {Ingen}
 \end{functionDescription}
+
+\subsubsection{FFT-metode}
+FFT-metoden er opbygget efter en optimeringsmåde af Fourier transformationen\footnote{Herfra: FT}, set i \eqref{eq:styringsenhed:design:FourierTransform}
+\begin{equation}\label{eq:styringsenhed:design:FourierTransform}
+    \begin{split}
+        % F(\omega) =\mathcal{F}\{f(t)\} &=  \int\limits_{-\infty}^{ +\infty}{\E{ - \J\omega t}f(t)}{t} \\
+G(t) = \frac{a_0}{2} + \summ{k = 1}{n}{a_k \cos k 2\pi\, f t + b_k \sin 2\pi\, f t}  
+    \end{split}
+\end{equation}
+
+Optimeringsprocessen foregår ved en såkaldt Fast Fourier Transform\footnote{Herfra: FFT}.
+
+Ved en FT skal $N$ antal koefficienter opnåes for at få et retvisende resultat af frekvenssprektret, her  afspejler koefficient en faktor af en trigonometrisk funktion, her sinus og cosinus der ganges på grundtonen $\omega = 2 \pi f$, med en faktor$k$, hvorved at antallet af udregninger der skal laves er $\approx N^2$. Det viser sig dog at man ved optimering kan approksimerere koefficienter ved at bruge en FFT\cite{Bronshtein2015}.
+
+Her omskrives udtrykket fra \eqref{eq:styringsenhed:design:FourierTransform} så 
+\begin{equation}
+    \cos k t = \frac{1}{2} \left(\E{ \J k 2\pi f t} +\E{ -\J k 2\pi f t}\right),\quad 
+    \sin k t = \frac{\J}{2} \left(\E{ -\J k 2\pi f t} -\E{\J k 2\pi f t}\right) 
+\end{equation}
+Hvilket giver 
+\begin{equation}
+   g(t) = \frac{1}{2}a_0 \summ{k = 1}{n}{\frac{a_k - \J b_k}{2} \E{\J k 2\pi f t} + \frac{a_k + \J b_k}{2} \E{ - \J k 2\pi f t}}
+\end{equation} 
+
+\tbr
